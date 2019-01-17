@@ -1,3 +1,3 @@
-# flip-flopper.auth.auth-server
+# daily-avatar.auth.auth-server
 
 authentication server

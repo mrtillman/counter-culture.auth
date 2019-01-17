@@ -1,3 +1,3 @@
-# flip-flopper.auth
+# daily-avatar.auth
 
 authentication logic
