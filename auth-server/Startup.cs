@@ -17,8 +17,6 @@ using MySql.Data.MySqlClient;
 using repositories;
 using repositories.models;
 using services;
-using NJsonSchema;
-using NSwag.AspNetCore;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -68,7 +66,6 @@ namespace authentication_server
              provider => new UserRepository(connection),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
-            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,15 +84,6 @@ namespace authentication_server
                 policy.AllowAnyMethod();
                 policy.AllowAnyHeader();
                 policy.AllowCredentials();
-            });
-            app.UseSwaggerUi3WithApiExplorer(settings =>
-            {
-                settings.GeneratorSettings.DefaultPropertyNameHandling = 
-                    PropertyNameHandling.CamelCase;
-                settings.PostProcess = document =>
-                {
-                    document.Info.Title = "Authentication Server";
-                };
             });
             app.UseAuthentication();
             // app.UseHttpsRedirection();
