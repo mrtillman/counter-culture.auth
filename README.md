@@ -1,3 +1,3 @@
 # daily-avatar.auth
 
-authentication logic
+authentication server
