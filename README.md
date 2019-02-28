@@ -1,3 +1,3 @@
-# daily-avatar.auth
+# counter-culture.auth
 
 authentication server
