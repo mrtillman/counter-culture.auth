@@ -43,8 +43,19 @@ namespace authentication_server.Controllers
         [AllowAnonymous]
         [Route("authenticate")]
         public ActionResult Authenticate([FromBody] Credentials credentials){
-            string hashedPassword = SHA256Hash.Compute(credentials.Password);
-            var user = Users.Find(credentials.Username, hashedPassword);
+            return _authenticate(credentials.Username, credentials.Password);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("login")]
+        public ActionResult Login([FromForm] UserForm userForm) {
+            return _authenticate(userForm.Username, userForm.Password);
+        }
+
+        private ActionResult _authenticate(string Username, string Password){
+            string hashedPassword = SHA256Hash.Compute(Password);
+            var user = Users.Find(Username, hashedPassword);
             string accessToken = Users.Authenticate(user);
             
             if(string.IsNullOrEmpty(accessToken)) 

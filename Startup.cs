@@ -78,15 +78,15 @@ namespace authentication_server
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
             app.UseCors(policy => {
                 policy.AllowAnyOrigin();
                 policy.AllowAnyMethod();
                 policy.AllowAnyHeader();
-                policy.AllowCredentials();
+                policy.WithHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");
             });
             app.UseAuthentication();
-            // app.UseHttpsRedirection();
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions(){
