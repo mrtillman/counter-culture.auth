@@ -11,12 +11,14 @@ namespace repositories
         public UserRepository(MySqlConnection _connection)
         {
             connection = _connection;
+            _checkConnection();
         }
 
         private MySqlConnection connection { get; set; }
 
         public User Find(string username, string password)
         {
+            _checkConnection();
             User user = new User();
             var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
             var command = new MySqlCommand(query, connection);
@@ -32,6 +34,7 @@ namespace repositories
         }
 
         public bool Exists(string username){
+            _checkConnection();
             var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
             var command = new MySqlCommand(query, connection);
             bool exists = false;
@@ -45,10 +48,17 @@ namespace repositories
 
         public bool Create(string username, string password)
         {
+            _checkConnection();
             var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
             return command.ExecuteNonQuery() == 1;
+        }
+
+        private void _checkConnection() {
+            if(connection.State == ConnectionState.Closed){
+                connection.Open();
+            }
         }
     }
 }
