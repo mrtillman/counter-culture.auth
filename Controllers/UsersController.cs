@@ -50,16 +50,21 @@ namespace authentication_server.Controllers
         [AllowAnonymous]
         [Route("login")]
         public ActionResult Login([FromForm] UserForm userForm) {
-            return _authenticate(userForm.Username, userForm.Password);
+            return _authenticate(userForm.Username, userForm.Password, true);
         }
 
-        private ActionResult _authenticate(string Username, string Password){
+        private ActionResult _authenticate(string Username, string Password, bool performRedirect = false){
             string hashedPassword = SHA256Hash.Compute(Password);
             var user = Users.Find(Username, hashedPassword);
             string accessToken = Users.Authenticate(user);
             
-            if(string.IsNullOrEmpty(accessToken)) 
-                return BadRequest("Invalid username or password");
+            if(string.IsNullOrEmpty(accessToken)) {
+              return BadRequest("Invalid username or password");
+            }
+            
+            if(performRedirect) {
+              return Redirect($"http://localhost:8080#token={accessToken}");
+            }
 
             return Ok(accessToken);
         }
