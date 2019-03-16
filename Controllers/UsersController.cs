@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using services;
 using repositories.models;
 using services.helpers;
@@ -17,11 +18,14 @@ namespace authentication_server.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        public UsersController(IUserService UserService)
+        public UsersController(IUserService UserService, IHostingEnvironment hostingEnvironment)
         {
             Users = UserService;
+            _hostingEnvironment = hostingEnvironment;
         }
+
         public IUserService Users { get; set; }
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         [HttpGet]
         public ActionResult<User> Get(){
@@ -63,7 +67,11 @@ namespace authentication_server.Controllers
             }
             
             if(performRedirect) {
-              return Redirect($"http://localhost:8080#token={accessToken}");
+              var redirectOrigin = "https://www.counter-culture.io";
+              if(_hostingEnvironment.IsDevelopment()){
+                  redirectOrigin = "http://localhost:8080";
+              }
+              return Redirect($"{redirectOrigin}#token={accessToken}");
             }
 
             return Ok(accessToken);
