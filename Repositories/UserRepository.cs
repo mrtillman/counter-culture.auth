@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.Data.Common;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using repositories.models;
 
 namespace repositories
@@ -16,14 +18,14 @@ namespace repositories
 
         private MySqlConnection connection { get; set; }
 
-        public User Find(string username, string password)
+        public async Task<User> Find(string username, string password)
         {
-            _checkConnection();
+            await _checkConnectionAsync();
             User user = new User();
             var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
             var command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.Text;
-            using(MySqlDataReader rdr = command.ExecuteReader()){
+            using(DbDataReader rdr = await command.ExecuteReaderAsync()){
                 if(!rdr.HasRows) return null;
                 rdr.Read();
                 user.ID = rdr.GetFieldValue<int>(0);
@@ -58,6 +60,12 @@ namespace repositories
         private void _checkConnection() {
             if(connection.State == ConnectionState.Closed){
                 connection.Open();
+            }
+        }
+
+        private async Task _checkConnectionAsync() {
+            if(connection.State == ConnectionState.Closed){
+                await Task.Run(() => connection.OpenAsync());
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using repositories;
 using repositories.models;
 using System.Linq;
@@ -17,11 +18,11 @@ namespace services
         }
         public IUserRepository UserRepo { get; set; }
         private readonly AppSecrets _secrets;
-        public User Find(string username, string password)
+        public async Task<User> Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
-            return UserRepo.Find(username, password);
+            return await UserRepo.Find(username, password);
         }
 
         public bool Create(string username, string password){

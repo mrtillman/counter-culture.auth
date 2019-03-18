@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using repositories.models;
 
 namespace repositories
@@ -7,7 +8,7 @@ namespace repositories
     public interface IUserRepository
     {
         bool Exists(string username);
-        User Find(string username, string password);
+        Task<User> Find(string username, string password);
         bool Create(string username, string password);
     }
 }
