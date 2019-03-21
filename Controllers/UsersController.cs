@@ -21,11 +21,11 @@ namespace authentication_server.Controllers
         public UsersController(IUserService UserService, IHostingEnvironment hostingEnvironment)
         {
             Users = UserService;
-            _hostingEnvironment = hostingEnvironment;
+            env = hostingEnvironment;
         }
 
         public IUserService Users { get; set; }
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IHostingEnvironment env;
 
         [HttpGet]
         public ActionResult<User> Get(){
@@ -68,10 +68,10 @@ namespace authentication_server.Controllers
             
             if(performRedirect) {
               var redirectOrigin = "https://www.counter-culture.io";
-              if(_hostingEnvironment.IsDevelopment()){
+              if(env.IsDevelopment()){
                   redirectOrigin = "http://localhost:8080";
               }
-              return Redirect($"{redirectOrigin}#token={accessToken}");
+              return Redirect($"{redirectOrigin}/#token={accessToken}");
             }
 
             return Ok(accessToken);

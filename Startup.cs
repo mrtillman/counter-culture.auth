@@ -75,11 +75,6 @@ namespace authentication_server
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-                app.UseHttpsRedirection();
-            }
             app.UseCors(policy => {
                 policy.AllowAnyOrigin();
                 policy.AllowAnyMethod();
