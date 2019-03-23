@@ -13,7 +13,6 @@ namespace repositories
         public UserRepository(MySqlConnection _connection)
         {
             connection = _connection;
-            _checkConnection();
         }
 
         private MySqlConnection connection { get; set; }
@@ -35,37 +34,31 @@ namespace repositories
             return user;
         }
 
-        public bool Exists(string username){
-            _checkConnection();
+        public async Task<bool> Exists(string username){
+            await _checkConnectionAsync();
             var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
             var command = new MySqlCommand(query, connection);
             bool exists = false;
             command.CommandType = CommandType.Text;
-            using(MySqlDataReader rdr = command.ExecuteReader()){
+            using(DbDataReader rdr = await command.ExecuteReaderAsync()){
                 rdr.Read();
                 exists = rdr.GetFieldValue<long>(0) > 0;
             }
             return exists;
         }
 
-        public bool Create(string username, string password)
+        public async Task<bool> Create(string username, string password)
         {
-            _checkConnection();
+            await _checkConnectionAsync();
             var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
-            return command.ExecuteNonQuery() == 1;
-        }
-
-        private void _checkConnection() {
-            if(connection.State == ConnectionState.Closed){
-                connection.Open();
-            }
+            return await command.ExecuteNonQueryAsync() == 1;
         }
 
         private async Task _checkConnectionAsync() {
             if(connection.State == ConnectionState.Closed){
-                await Task.Run(() => connection.OpenAsync());
+                await connection.OpenAsync();
             }
         }
     }

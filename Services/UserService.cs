@@ -25,12 +25,12 @@ namespace services
             return await UserRepo.Find(username, password);
         }
 
-        public bool Create(string username, string password){
-            return UserRepo.Create(username, password);
+        public async Task<bool> Create(string username, string password){
+            return await UserRepo.Create(username, password);
         }
 
-        public bool Exists(string username){
-            return UserRepo.Exists(username);
+        public async Task<bool> Exists(string username){
+            return await UserRepo.Exists(username);
         }
 
         public string Authenticate(User user){

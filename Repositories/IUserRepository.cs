@@ -7,8 +7,8 @@ namespace repositories
 {
     public interface IUserRepository
     {
-        bool Exists(string username);
+        Task<bool> Exists(string username);
         Task<User> Find(string username, string password);
-        bool Create(string username, string password);
+        Task<bool> Create(string username, string password);
     }
 }
