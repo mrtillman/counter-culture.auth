@@ -26,7 +26,7 @@ namespace authentication_server
 
             return  WebHost.CreateDefaultBuilder(args)
                     .UseConfiguration(config)
-                    .UseUrls("http://+:5000")
+                    .UseUrls("http://0.0.0.0:5000")
                     .UseStartup<Startup>();
         }
           
