@@ -63,7 +63,7 @@ namespace authentication_server.Controllers
             string accessToken = Users.Authenticate(user);
             
             if(string.IsNullOrEmpty(accessToken)) {
-              return BadRequest("Invalid username or password");
+              return Unauthorized("Invalid username or password");
             }
             
             if(performRedirect) {
