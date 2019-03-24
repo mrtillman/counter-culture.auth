@@ -19,7 +19,6 @@ namespace repositories
 
         public async Task<User> Find(string username, string password)
         {
-            await _checkConnectionAsync();
             User user = new User();
             var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
             var command = new MySqlCommand(query, connection);
@@ -35,7 +34,6 @@ namespace repositories
         }
 
         public async Task<bool> Exists(string username){
-            await _checkConnectionAsync();
             var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
             var command = new MySqlCommand(query, connection);
             bool exists = false;
@@ -49,17 +47,11 @@ namespace repositories
 
         public async Task<bool> Create(string username, string password)
         {
-            await _checkConnectionAsync();
             var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
             return await command.ExecuteNonQueryAsync() == 1;
         }
 
-        private async Task _checkConnectionAsync() {
-            if(connection.State == ConnectionState.Closed){
-                await connection.OpenAsync();
-            }
-        }
     }
 }
