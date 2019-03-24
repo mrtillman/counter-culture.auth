@@ -10,5 +10,6 @@ namespace repositories
         Task<bool> Exists(string username);
         Task<User> Find(string username, string password);
         Task<bool> Create(string username, string password);
+        IUserRepository Reconnect();
     }
 }

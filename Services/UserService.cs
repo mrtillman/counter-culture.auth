@@ -6,6 +6,7 @@ using repositories.models;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using services.helpers;
+using MySql.Data.MySqlClient;
 
 namespace services
 {
@@ -16,13 +17,25 @@ namespace services
             UserRepo = UserRepository;
             _secrets = appSecrets.Value;
         }
+        
         public IUserRepository UserRepo { get; set; }
         private readonly AppSecrets _secrets;
+
         public async Task<User> Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
-            return await UserRepo.Find(username, password);
+
+            try
+            {
+                return await UserRepo.Find(username, password);    
+            }
+            catch (MySqlException ex)
+            {
+                return await UserRepo.Reconnect()
+                                     .Find(username, password);
+            }
+            
         }
 
         public async Task<bool> Create(string username, string password){

@@ -61,9 +61,8 @@ namespace authentication_server
                 };
             });
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            connection.Open();
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
-             provider => new UserRepository(connection),
+             provider => new UserRepository(connection, appSecrets),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
         }

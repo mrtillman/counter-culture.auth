@@ -10,12 +10,17 @@ namespace repositories
 {
     public class UserRepository : IUserRepository
     {
-        public UserRepository(MySqlConnection _connection)
+        public UserRepository(MySqlConnection _connection, AppSecrets _appSecrets)
         {
             connection = _connection;
+            if(connection.State == ConnectionState.Closed){
+                connection.Open();
+            }
+            appSecrets = _appSecrets;
         }
 
         private MySqlConnection connection { get; set; }
+        private AppSecrets appSecrets { get; set; }
 
         public async Task<User> Find(string username, string password)
         {
@@ -51,6 +56,12 @@ namespace repositories
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
             return await command.ExecuteNonQueryAsync() == 1;
+        }
+
+        public IUserRepository Reconnect(){
+            connection = new MySqlConnection(appSecrets.MySQLConnectionString);
+            connection.Open();
+            return this;
         }
 
     }
