@@ -21,10 +21,13 @@ namespace services
         public IUserRepository UserRepo { get; set; }
         private readonly AppSecrets _secrets;
 
+        //[MySqlTimeoutExceptionFilter]
         public async Task<User> Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
+            
+            // return await UserRepo.Find(username, password);
 
             try
             {
@@ -46,7 +49,7 @@ namespace services
             return await UserRepo.Exists(username);
         }
 
-        public string Authenticate(User user){
+        public AuthResponse Authenticate(User user){
             if(user == null) return null;
             return JWTAuthenticator.Authenticate(user, _secrets.Secret);
         }

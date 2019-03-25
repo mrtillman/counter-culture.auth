@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,12 @@ namespace authentication_server.Controllers
 
         [HttpGet]
         public ActionResult<User> Get(){
-            return Ok(HttpContext.User.Identity.Name);
+            var UserIdClaim = HttpContext.User.Claims.First(claim => claim.Type == "UserId");
+            User user = new User(){
+                ID = int.Parse(UserIdClaim.Value),
+                Username = HttpContext.User.Identity.Name
+            };
+            return Ok(user);
         }
 
         [HttpPost]
@@ -60,9 +66,9 @@ namespace authentication_server.Controllers
         private async Task<ActionResult> _authenticate(string Username, string Password, bool performRedirect = false){
             string hashedPassword = SHA256Hash.Compute(Password);
             var user = await Users.Find(Username, hashedPassword);
-            string accessToken = Users.Authenticate(user);
+            AuthResponse authResponse = Users.Authenticate(user);
             
-            if(string.IsNullOrEmpty(accessToken)) {
+            if(authResponse == null) {
               return Unauthorized("Invalid username or password");
             }
             
@@ -71,10 +77,10 @@ namespace authentication_server.Controllers
               if(env.IsDevelopment()){
                   redirectOrigin = "http://localhost:8080";
               }
-              return Redirect($"{redirectOrigin}/#token={accessToken}");
+              return Redirect($"{redirectOrigin}/#token={authResponse.access_token}");
             }
 
-            return Ok(accessToken);
+            return Ok(authResponse);
         }
 
     }

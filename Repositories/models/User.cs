@@ -5,5 +5,4 @@ namespace repositories.models {
         public int ID { get; set; }
         public string Username { get; set; }
     }
-
 }
