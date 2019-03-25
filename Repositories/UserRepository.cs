@@ -22,18 +22,29 @@ namespace repositories
         private MySqlConnection connection { get; set; }
         private AppSecrets appSecrets { get; set; }
 
-        public async Task<User> Find(string username, string password)
+        public User Find(string username, string password)
         {
             User user = new User();
             var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
             var command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.Text;
-            using(DbDataReader rdr = await command.ExecuteReaderAsync()){
-                if(!rdr.HasRows) return null;
-                rdr.Read();
-                user.ID = rdr.GetFieldValue<int>(0);
-                user.Username = rdr.GetFieldValue<string>(1);
-                rdr.Close();
+            try
+            {
+                using(DbDataReader rdr = command.ExecuteReader()){
+                    if(!rdr.HasRows) return null;
+                    rdr.Read();
+                    user.ID = rdr.GetFieldValue<int>(0);
+                    user.Username = rdr.GetFieldValue<string>(1);
+                    rdr.Close();
+                }
+            } catch (MySqlException ex) {
+                Console.WriteLine(ex);
+                // TODO: inspect exception and throw
+                // custom MySqlTimeoutException if
+                // connection timed out (broken pipe).
+                // otherwise, allow the MySqlException
+                // to bubble up
+                return new User() { ID = 0 };
             }
             return user;
         }

@@ -52,20 +52,20 @@ namespace authentication_server.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("authenticate")]
-        public async Task<ActionResult> Authenticate([FromBody] Credentials credentials){
-            return await _authenticate(credentials.Username, credentials.Password);
+        public ActionResult Authenticate([FromBody] Credentials credentials){
+            return _authenticate(credentials.Username, credentials.Password);
         }
 
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
-        public async Task<ActionResult> Login([FromForm] UserForm userForm) {
-            return await _authenticate(userForm.Username, userForm.Password, true);
+        public ActionResult Login([FromForm] UserForm userForm) {
+            return _authenticate(userForm.Username, userForm.Password, true);
         }
 
-        private async Task<ActionResult> _authenticate(string Username, string Password, bool performRedirect = false){
+        private ActionResult _authenticate(string Username, string Password, bool performRedirect = false){
             string hashedPassword = SHA256Hash.Compute(Password);
-            var user = await Users.Find(Username, hashedPassword);
+            var user = Users.Find(Username, hashedPassword);
             AuthResponse authResponse = Users.Authenticate(user);
             
             if(authResponse == null) {

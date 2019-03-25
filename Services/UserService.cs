@@ -21,24 +21,25 @@ namespace services
         public IUserRepository UserRepo { get; set; }
         private readonly AppSecrets _secrets;
 
-        //[MySqlTimeoutExceptionFilter]
-        public async Task<User> Find(string username, string password)
+        // [MySqlTimeoutExceptionFilter]
+        public User Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
             
             // return await UserRepo.Find(username, password);
-
-            try
-            {
-                return await UserRepo.Find(username, password);    
-            }
-            catch (MySqlException ex)
-            {
-                return await UserRepo.Reconnect()
-                                     .Find(username, password);
-            }
             
+            User user = UserRepo.Find(username, password);
+            
+            // TODO: instead of checking if user.ID == 0
+            // catch custom MySqlTimeoutException and
+            // handle this logic in the MySqlTimeoutExceptionFilter
+            if(user != null && user.ID == 0) {
+                user = UserRepo.Reconnect()
+                               .Find(username, password);
+            }
+
+            return user;
         }
 
         public async Task<bool> Create(string username, string password){
