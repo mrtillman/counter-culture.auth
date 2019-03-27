@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using repositories;
 using repositories.models;
@@ -29,13 +30,23 @@ namespace services
             
             // return await UserRepo.Find(username, password);
             
-            User user = UserRepo.Find(username, password);
-            
-            // TODO: instead of checking if user.ID == 0
-            // catch custom MySqlTimeoutException and
-            // handle this logic in the MySqlTimeoutExceptionFilter
-            if(user != null && user.ID == 0) {
-                user = UserRepo.Reconnect()
+            User user = null;
+
+            try
+            {
+                user = UserRepo.Find(username, password);
+            } catch (System.IO.EndOfStreamException ex) {
+		        Console.WriteLine(ex);
+            } catch (System.IO.IOException ex){
+		        Console.WriteLine(ex);
+            } catch (MySqlException ex){
+                Console.WriteLine(ex);
+            }
+
+            if(UserRepo.IsDisconnected){
+                Console.WriteLine("trying reconnect...");
+                Thread.Sleep(1000);
+                return UserRepo.Reconnect()
                                .Find(username, password);
             }
 

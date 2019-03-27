@@ -18,6 +18,12 @@ namespace repositories
             }
             appSecrets = _appSecrets;
         }
+        
+        public bool IsDisconnected {
+            get {
+                return connection.State == ConnectionState.Closed;
+            }
+        }
 
         private MySqlConnection connection { get; set; }
         private AppSecrets appSecrets { get; set; }
@@ -28,25 +34,17 @@ namespace repositories
             var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
             var command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.Text;
-            try
-            {
-                using(DbDataReader rdr = command.ExecuteReader()){
-                    if(!rdr.HasRows) return null;
-                    rdr.Read();
-                    user.ID = rdr.GetFieldValue<int>(0);
-                    user.Username = rdr.GetFieldValue<string>(1);
-                    rdr.Close();
-                }
-            } catch (MySqlException ex) {
-                Console.WriteLine(ex);
-                // TODO: inspect exception and throw
-                // custom MySqlTimeoutException if
-                // connection timed out (broken pipe).
-                // otherwise, allow the MySqlException
-                // to bubble up
-                return new User() { ID = 0 };
+            
+            using(DbDataReader rdr = command.ExecuteReader()){
+                if(!rdr.HasRows) return null;
+                rdr.Read();
+                user.ID = rdr.GetFieldValue<int>(0);
+                user.Username = rdr.GetFieldValue<string>(1);
+                rdr.Close();
             }
+
             return user;
+
         }
 
         public async Task<bool> Exists(string username){
