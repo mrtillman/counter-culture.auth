@@ -5,8 +5,10 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using repositories.models;
 
-namespace services.helpers {
+namespace authentication_server.Helpers {
+
     public static class JWTAuthenticator {
+
         public static AuthResponse Authenticate(User user, string secret){
             if(user == null) return null;
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -32,5 +34,7 @@ namespace services.helpers {
                 expiration_date = descriptor.Expires
             });
         }
+        
     }
+
 }

@@ -6,7 +6,7 @@ using repositories;
 using repositories.models;
 using System.Linq;
 using Microsoft.Extensions.Options;
-using services.helpers;
+using authentication_server.Helpers;
 using MySql.Data.MySqlClient;
 
 namespace services
@@ -22,33 +22,16 @@ namespace services
         public IUserRepository UserRepo { get; set; }
         private readonly AppSecrets _secrets;
 
-        // [MySqlTimeoutExceptionFilter]
         public User Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
             
-            // return await UserRepo.Find(username, password);
-            
             User user = null;
-
-            try
-            {
+            
+            handleIOException(() => {
                 user = UserRepo.Find(username, password);
-            } catch (System.IO.EndOfStreamException ex) {
-		        Console.WriteLine(ex);
-            } catch (System.IO.IOException ex){
-		        Console.WriteLine(ex);
-            } catch (MySqlException ex){
-                Console.WriteLine(ex);
-            }
-
-            if(UserRepo.IsDisconnected){
-                Console.WriteLine("trying reconnect...");
-                Thread.Sleep(1000);
-                return UserRepo.Reconnect()
-                               .Find(username, password);
-            }
+            });
 
             return user;
         }
@@ -64,6 +47,19 @@ namespace services
         public AuthResponse Authenticate(User user){
             if(user == null) return null;
             return JWTAuthenticator.Authenticate(user, _secrets.Secret);
+        }
+
+        private void handleIOException(Action action){
+            try
+            {
+                action();
+            } catch (System.IO.EndOfStreamException ex) {
+                throw new RepositoryIOException(ex.Message, ex);
+            } catch (System.IO.IOException ex){
+                throw new RepositoryIOException(ex.Message, ex);
+            } catch (MySqlException ex){ 
+                throw new RepositoryIOException(ex.Message, ex);
+            }
         }
     }
 }

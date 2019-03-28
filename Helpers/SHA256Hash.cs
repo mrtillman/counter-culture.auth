@@ -2,12 +2,15 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace services.helpers {
+namespace authentication_server.Helpers {
+
     public static class SHA256Hash {
+        
         public static string Compute(string input){
             byte[] hashed = hash(input);
             return stringify(hashed);
         }
+
         private static byte[] hash(string input){
             var inputBytes = Encoding.UTF8.GetBytes(input);
             byte[] hashed = null;
@@ -28,4 +31,5 @@ namespace services.helpers {
         }
 
     }
+
 }

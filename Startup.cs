@@ -21,6 +21,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using authentication_server.Helpers;
 
 namespace authentication_server
 {
@@ -38,7 +39,9 @@ namespace authentication_server
         {
             var appSecrets = Configuration.Get<AppSecrets>();
             services.Configure<AppSecrets>(Configuration);
-            services.AddMvc();
+            services.AddMvc(options => {
+                options.Filters.Add(new RepositoryIOExceptionFilter());
+            });
             services.AddApiVersioning();
             services.AddAuthentication(options => 
             {
