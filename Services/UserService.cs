@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CounterCulture.Repositories;
-using CounterCulture.Repositories.Models;
 using System.Linq;
 using Microsoft.Extensions.Options;
-using CounterCulture.Auth.Helpers;
 using MySql.Data.MySqlClient;
+using CounterCulture.Repositories;
+using CounterCulture.Repositories.Models;
+using CounterCulture.Auth.Helpers;
 
 namespace CounterCulture.Services
 {
@@ -15,7 +15,7 @@ namespace CounterCulture.Services
     {
         public UserService(IUserRepository UserRepository, IOptions<AppSecrets> appSecrets)
         {
-            UserRepo = UserRepository;
+            UserRepo = UserRepoProxy<IUserRepository>.Create(UserRepository);
             _secrets = appSecrets.Value;
         }
         
