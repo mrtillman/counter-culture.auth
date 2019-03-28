@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using repositories.models;
+using CounterCulture.Repositories.Models;
 
-namespace services {
+namespace CounterCulture.Services {
     public interface IUserService
     {
         Task<bool> Exists(string username);

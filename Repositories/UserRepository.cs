@@ -4,9 +4,9 @@ using System.Data.Common;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using repositories.models;
+using CounterCulture.Repositories.Models;
 
-namespace repositories
+namespace CounterCulture.Repositories
 {
     public class UserRepository : IUserRepository
     {

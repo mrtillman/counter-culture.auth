@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using repositories.models;
+using CounterCulture.Repositories.Models;
 
-namespace repositories
+namespace CounterCulture.Repositories
 {
     public interface IUserRepository
     {

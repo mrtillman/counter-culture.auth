@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using repositories;
-using repositories.models;
+using CounterCulture.Repositories;
+using CounterCulture.Repositories.Models;
 using System.Linq;
 using Microsoft.Extensions.Options;
-using authentication_server.Helpers;
+using CounterCulture.Auth.Helpers;
 using MySql.Data.MySqlClient;
 
-namespace services
+namespace CounterCulture.Services
 {
     public class UserService : IUserService
     {

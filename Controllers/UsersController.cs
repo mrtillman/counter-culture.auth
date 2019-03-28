@@ -6,12 +6,12 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using services;
-using repositories.models;
-using services.helpers;
+using CounterCulture.Services;
+using CounterCulture.Repositories.Models;
+using CounterCulture.Auth.Helpers;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
-namespace authentication_server.Controllers
+namespace CounterCulture.Auth.Controllers
 {
     [ApiVersion( "1.0" )]
     [Route("api/v{version:apiVersion}/[controller]")]

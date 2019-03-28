@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
-    "authentication_server": {
+    "CounterCulture.Auth": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "/",

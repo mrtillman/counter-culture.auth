@@ -3,9 +3,9 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-using repositories.models;
+using CounterCulture.Repositories.Models;
 
-namespace authentication_server.Helpers {
+namespace CounterCulture.Auth.Helpers {
 
     public static class JWTAuthenticator {
 

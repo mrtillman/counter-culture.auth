@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace repositories.models {
+namespace CounterCulture.Repositories.Models {
 
   public class UserForm {
     

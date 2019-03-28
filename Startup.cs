@@ -14,16 +14,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
-using repositories;
-using repositories.models;
-using services;
+using CounterCulture.Repositories;
+using CounterCulture.Repositories.Models;
+using CounterCulture.Services;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using authentication_server.Helpers;
+using CounterCulture.Auth.Helpers;
 
-namespace authentication_server
+namespace CounterCulture
 {
     public class Startup
     {
@@ -39,9 +39,7 @@ namespace authentication_server
         {
             var appSecrets = Configuration.Get<AppSecrets>();
             services.Configure<AppSecrets>(Configuration);
-            services.AddMvc(options => {
-                options.Filters.Add(new RepositoryIOExceptionFilter());
-            });
+            services.AddMvc();
             services.AddApiVersioning();
             services.AddAuthentication(options => 
             {

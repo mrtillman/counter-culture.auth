@@ -1,6 +1,6 @@
 using System;
 
-namespace authentication_server.Helpers {
+namespace CounterCulture.Auth.Helpers {
     
     [System.Serializable]
     public class RepositoryIOException : Exception
