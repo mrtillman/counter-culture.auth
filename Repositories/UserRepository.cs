@@ -47,24 +47,24 @@ namespace CounterCulture.Repositories
 
         }
 
-        public async Task<bool> Exists(string username){
+        public bool Exists(string username){
             var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
             var command = new MySqlCommand(query, connection);
             bool exists = false;
             command.CommandType = CommandType.Text;
-            using(DbDataReader rdr = await command.ExecuteReaderAsync()){
+            using(DbDataReader rdr = command.ExecuteReader()){
                 rdr.Read();
                 exists = rdr.GetFieldValue<long>(0) > 0;
             }
             return exists;
         }
 
-        public async Task<bool> Create(string username, string password)
+        public bool Create(string username, string password)
         {
             var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
-            return await command.ExecuteNonQueryAsync() == 1;
+            return command.ExecuteNonQuery() == 1;
         }
 
         public IUserRepository Reconnect(){
