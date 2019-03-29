@@ -32,8 +32,8 @@ namespace CounterCulture.Auth.Helpers
         } catch (Exception ex) {
           IUserRepository repo = _userRepo as UserRepository;
           if(repo.IsDisconnected){
-            repo = repo.Reconnect();
             Thread.Sleep(1000);
+            repo = repo.Reconnect();
             return targetMethod.Invoke(repo, args);
           } else {
             throw ex;
