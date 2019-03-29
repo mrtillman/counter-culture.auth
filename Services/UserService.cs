@@ -15,7 +15,7 @@ namespace CounterCulture.Services
     {
         public UserService(IUserRepository UserRepository, IOptions<AppSecrets> appSecrets)
         {
-            UserRepo = UserRepoProxy<IUserRepository>.Create(UserRepository);
+            UserRepo = UserRepository;
             _secrets = appSecrets.Value;
         }
         
@@ -26,14 +26,7 @@ namespace CounterCulture.Services
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
-            
-            User user = null;
-            
-            handleIOException(() => {
-                user = UserRepo.Find(username, password);
-            });
-
-            return user;
+            return UserRepo.Find(username, password);
         }
 
         public async Task<bool> Create(string username, string password){
@@ -49,17 +42,5 @@ namespace CounterCulture.Services
             return JWTAuthenticator.Authenticate(user, _secrets.Secret);
         }
 
-        private void handleIOException(Action action){
-            try
-            {
-                action();
-            } catch (System.IO.EndOfStreamException ex) {
-                throw new RepositoryIOException(ex.Message, ex);
-            } catch (System.IO.IOException ex){
-                throw new RepositoryIOException(ex.Message, ex);
-            } catch (MySqlException ex){ 
-                throw new RepositoryIOException(ex.Message, ex);
-            }
-        }
     }
 }

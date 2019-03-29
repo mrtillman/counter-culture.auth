@@ -62,8 +62,9 @@ namespace CounterCulture
                 };
             });
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
+            UserRepository repo = new UserRepository(connection, appSecrets);
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
-             provider => new UserRepository(connection, appSecrets),
+             provider => UserRepoProxy<IUserRepository>.Create(repo),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
         }
