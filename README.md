@@ -1,6 +1,11 @@
 # counter-culture.auth
 
 This project was designed to facilitate bearer token authentication.
+ 
+You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S17wPS3o).
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/0dce1d0a523b04ee3cb3)
+
 
 ## Getting Started
 
@@ -18,26 +23,7 @@ dotnet restore
 dotnet run
 ```
 
-## Get Access Token
-
-|Method|URL|
-|---|---|
-|POST|http://localhost:5000/api/v1/users/authenticate|
-
-Response:
-
-```sh
-{
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI1IiwidW5pcXVlX25hbWUiOiJwZXRlciIsIm5iZiI6MTU1MzkwODY5OSwiZXhwIjoxNTUzOTk1MDk5LCJpYXQiOjE1NTM5MDg2OTl9.OsGH5S2fCj_5t2bq5NFhnG7QqK3nz9O4O0pCyl-B8p8",
-    "token_type": "bearer",
-    "expires_in": 86399,
-    "expiration_date": "2019-03-31T01:18:19.8646858Z",
-    "refresh_token": null
-}
-```
-
-## Form Authentication
-Open [http://localhost:5000](http://localhost:5000) to view the login page in the browser. Upon successful login, the page will redirect to the app, so be sure [counter-culture.app](https://github.com/mrtillman/counter-culture.app) is running at [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser. Upon successful login, the page will redirect to http://localhost:8080, so be sure [counter-culture.app](https://github.com/mrtillman/counter-culture.app) is up and running on port 8080.
 
 ## Deployment
 
