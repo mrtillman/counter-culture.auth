@@ -77,4 +77,4 @@ Start the container on the remote production server:
 docker run -p 5000:5000 -d username/counter-culture.auth
 ```
 
-For more details, see the [Frequently used Docker CLI commands](https://github.com/mrtillman/counter-culture.dev/blob/master/docker/cli-commands.md).
+For more details, see the [Frequently used Docker CLI commands](https://github.com/mrtillman/counter-culture.docs/blob/master/docker/cli-commands.md).
