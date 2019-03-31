@@ -38,16 +38,16 @@ namespace CounterCulture.Auth.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult Post([FromBody] Credentials credentials){
-            if(Users.Exists(credentials.Username)){
-                var  message = $"The username \"{credentials.Username}\" is already taken";
-                return BadRequest(message);
-            }
-            string hashedPassword = SHA256Hash.Compute(credentials.Password);
-            return Ok(Users.Create(credentials.Username, hashedPassword));
-        }
+        // [HttpPost]
+        // [AllowAnonymous]
+        // public ActionResult Post([FromBody] Credentials credentials){
+        //     if(Users.Exists(credentials.Username)){
+        //         var  message = $"The username \"{credentials.Username}\" is already taken";
+        //         return BadRequest(message);
+        //     }
+        //     string hashedPassword = SHA256Hash.Compute(credentials.Password);
+        //     return Ok(Users.Create(credentials.Username, hashedPassword));
+        // }
 
         [HttpPost]
         [AllowAnonymous]
