@@ -20,6 +20,7 @@ Next, start the auth server:
 ```sh
 cd counter-culture.auth
 dotnet restore
+dotnet build
 dotnet run
 ```
 
