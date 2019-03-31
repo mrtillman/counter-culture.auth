@@ -30,7 +30,7 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser. U
 Sign in to the remote server and clone the repo:
 
 ```sh
-ssh user@counter-culture.io
+ssh username@counter-culture.io
 cd ~/auth
 git clone https://github.com/mrtillman/counter-culture.auth.git
 ```
