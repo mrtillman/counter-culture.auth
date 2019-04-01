@@ -6,6 +6,10 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please ref
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/0dce1d0a523b04ee3cb3)
 
+## Authentication
+
+With the exception of `` and ``, All API requests must include a valid bearer token.<br/>
+To learn how to get a token, see [Get a Token](https://github.com/mrtillman/counter-culture.docs/blob/master/auth/get-a-token.md).
 
 ## Getting Started
 
@@ -15,7 +19,15 @@ First, clone the Git repo:
 git clone https://github.com/mrtillman/counter-culture.auth.git
 ```
 
-Next, start the auth server:
+Next, create `appsecrets.json` in the project root:
+```sh
+{
+  "MySQLConnectionString": "<MySQLConnectionString>",
+  "Secret": "<app-secret>"
+}
+```
+
+Start the auth server:
 
 ```sh
 cd counter-culture.auth
@@ -36,20 +48,14 @@ cd ~/auth
 git clone https://github.com/mrtillman/counter-culture.auth.git
 ```
 
+Remember to create `appsecrets.json`.
+
 Next, use the production launch settings:
 
 ```sh
 cd Properties/
 mv launchSettings.prod.json launchSettings.json
 cd ..
-```
-
-Create `appsecrets.json` in the project root:
-```sh
-{
-  "MySQLConnectionString": "<MySQLConnectionString>",
-  "Secret": "<app-secret>"
-}
 ```
 
 Containerize the auth server:
