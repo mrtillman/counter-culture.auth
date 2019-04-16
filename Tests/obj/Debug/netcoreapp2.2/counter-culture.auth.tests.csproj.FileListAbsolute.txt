@@ -1,0 +1,17 @@
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.tests.deps.json
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.tests.runtimeconfig.json
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.tests.runtimeconfig.dev.json
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.tests.dll
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.tests.pdb
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.dll
+/home/stephen/counter-culture/auth/Tests/bin/Debug/netcoreapp2.2/counter-culture.auth.pdb
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.csprojAssemblyReference.cache
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.csproj.CoreCompileInputs.cache
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.AssemblyInfoInputs.cache
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.AssemblyInfo.cs
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.csproj.CopyComplete
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.dll
+/home/stephen/counter-culture/auth/Tests/obj/Debug/netcoreapp2.2/counter-culture.auth.tests.pdb

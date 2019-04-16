@@ -1,0 +1,136 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/stephen/counter-culture/auth/Tests/counter-culture.auth.tests.csproj": {}
+  },
+  "projects": {
+    "/home/stephen/counter-culture/auth/Server/counter-culture.auth.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/stephen/counter-culture/auth/Server/counter-culture.auth.csproj",
+        "projectName": "counter-culture.auth",
+        "projectPath": "/home/stephen/counter-culture/auth/Server/counter-culture.auth.csproj",
+        "packagesPath": "/home/stephen/.nuget/packages/",
+        "outputPath": "/home/stephen/counter-culture/auth/Server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/stephen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[0.49.3, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "/home/stephen/counter-culture/auth/Tests/counter-culture.auth.tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/stephen/counter-culture/auth/Tests/counter-culture.auth.tests.csproj",
+        "projectName": "counter-culture.auth.tests",
+        "projectPath": "/home/stephen/counter-culture/auth/Tests/counter-culture.auth.tests.csproj",
+        "packagesPath": "/home/stephen/.nuget/packages/",
+        "outputPath": "/home/stephen/counter-culture/auth/Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/stephen/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "/home/stephen/counter-culture/auth/Server/counter-culture.auth.csproj": {
+                "projectPath": "/home/stephen/counter-culture/auth/Server/counter-culture.auth.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.0.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.10.1, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
