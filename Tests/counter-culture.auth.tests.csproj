@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Server\counter-culture.auth.csproj" />
+    <ProjectReference Include="..\Server\counter-culture.auth.server.csproj" />
   </ItemGroup>
 
 </Project>
