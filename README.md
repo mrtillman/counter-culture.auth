@@ -1,5 +1,10 @@
 # counter-culture.auth
 
+[![Build Status](https://travis-ci.com/mrtillman/counter-culture.auth.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.auth)
+[![Coverage Status](https://coveralls.io/repos/github/mrtillman/counter-culture.auth/badge.svg?branch=master)](https://coveralls.io/github/mrtillman/counter-culture.auth?branch=master)
+
+---
+
 This project was designed to facilitate bearer token authentication.
  
 You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S17wPS3o).

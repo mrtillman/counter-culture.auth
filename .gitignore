@@ -35,6 +35,8 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 
-coverage.json
+coverage.*
 [Cc]overage/
 .coveralls.yml
+
+tools/
