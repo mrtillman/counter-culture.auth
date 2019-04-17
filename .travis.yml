@@ -1,5 +1,7 @@
 language: csharp
 solution: counter-culture.auth.sln
+mono: none
+dotnet: 2.2.203
 script:
   - dotnet restore
   - dotnet test
