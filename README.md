@@ -1,7 +1,9 @@
-# counter-culture.auth
+# counter-culture.secure
 
+<!--
 [![Build Status](https://travis-ci.com/mrtillman/counter-culture.auth.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.auth)
 [![Coverage Status](https://coveralls.io/repos/github/mrtillman/counter-culture.auth/badge.svg?branch=master)](https://coveralls.io/github/mrtillman/counter-culture.auth?branch=master)
+--->
 
 ---
 
@@ -20,7 +22,7 @@ With the exception of `/api/v1/users/authenticate` and `/api/v1/users/login`, al
 First, clone the Git repo:
 
 ```sh
-git clone https://github.com/mrtillman/counter-culture.auth.git
+git clone https://github.com/mrtillman/counter-culture.secure.git
 ```
 
 Next, create `appsecrets.json` in the project root:
@@ -31,12 +33,10 @@ Next, create `appsecrets.json` in the project root:
 }
 ```
 
-Start the auth server:
+Start the server:
 
 ```sh
-cd counter-culture.auth
-dotnet restore
-dotnet build
+cd counter-culture.secure/Server
 dotnet run
 ```
 

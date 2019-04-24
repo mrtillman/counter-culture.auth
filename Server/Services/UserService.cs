@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Repositories.Models;
-using CounterCulture.Auth.Helpers;
+using CounterCulture.Secure.Helpers;
 
 namespace CounterCulture.Services
 {

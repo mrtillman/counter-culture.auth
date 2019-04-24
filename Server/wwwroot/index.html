@@ -9,7 +9,7 @@
 <body>
     <form 
         id="loginForm"
-        action="https://auth.counter-culture.io/api/v1/users/login" 
+        action="https://secure.counter-culture.io/api/v1/users/login" 
         method="post">
         <input type="text" name="Username" placeholder="Username">
         <br/>
@@ -21,7 +21,7 @@
         window.onload = function(){
             const form = document.getElementById("loginForm");
             if (window.location.protocol.indexOf('http:') > -1) {
-                form.action = form.action.replace("https://auth.counter-culture.io", "http://localhost:5000");
+                form.action = form.action.replace("https://secure.counter-culture.io", "http://localhost:5000");
             }
         }
     </script>

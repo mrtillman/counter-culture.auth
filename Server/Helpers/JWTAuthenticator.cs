@@ -5,7 +5,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using CounterCulture.Repositories.Models;
 
-namespace CounterCulture.Auth.Helpers {
+namespace CounterCulture.Secure.Helpers {
 
     public static class JWTAuthenticator {
 

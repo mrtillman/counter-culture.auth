@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using CounterCulture.Services;
 using CounterCulture.Repositories.Models;
-using CounterCulture.Auth.Helpers;
+using CounterCulture.Secure.Helpers;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
-namespace CounterCulture.Auth.Controllers
+namespace CounterCulture.Secure.Controllers
 {
     [ApiVersion( "1.0" )]
     [Route("api/v{version:apiVersion}/[controller]")]

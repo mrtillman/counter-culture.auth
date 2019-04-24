@@ -21,7 +21,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using CounterCulture.Auth.Helpers;
+using CounterCulture.Secure.Helpers;
 
 namespace CounterCulture
 {

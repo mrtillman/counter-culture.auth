@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "counter-culture.auth.tests", "Tests\counter-culture.auth.tests.csproj", "{9FA287E3-AD0E-4182-9ED0-46EA0644E735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "counter-culture.secure.tests", "Tests\counter-culture.secure.tests.csproj", "{9FA287E3-AD0E-4182-9ED0-46EA0644E735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
