@@ -1,6 +1,6 @@
 dist: bionic
 language: csharp
-solution: counter-culture.auth.sln
+solution: counter-culture.secure.sln
 mono: none
 dotnet: 2.2
 script:
