@@ -1,9 +1,7 @@
 # counter-culture.secure
 
-<!--
-[![Build Status](https://travis-ci.com/mrtillman/counter-culture.auth.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.auth)
-[![Coverage Status](https://coveralls.io/repos/github/mrtillman/counter-culture.auth/badge.svg?branch=master)](https://coveralls.io/github/mrtillman/counter-culture.auth?branch=master)
---->
+[![Build Status](https://travis-ci.com/mrtillman/counter-culture.secure.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.secure)
+[![Coverage Status](https://coveralls.io/repos/github/mrtillman/counter-culture.secure/badge.svg?branch=master)](https://coveralls.io/github/mrtillman/counter-culture.secure?branch=master)
 
 ---
 
