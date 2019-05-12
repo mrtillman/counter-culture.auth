@@ -24,6 +24,10 @@ namespace CounterCulture.Services {
             return null;
         }
 
+        public OAuthClient GetClient(string clientId) {
+            return OAuthRepo.GetOAuthClient(clientId);
+        }
+
         private string _generateClientId() {
             var clientId = Guid.NewGuid().ToString();
             return _hexEncode(clientId);

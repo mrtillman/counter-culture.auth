@@ -9,5 +9,6 @@ namespace CounterCulture.Repositories
     {
         bool IsDisconnected { get; }
         bool SaveOAuthClient(OAuthClient client);
+        OAuthClient GetOAuthClient(string clientId);
     }
 }

@@ -41,5 +41,23 @@ namespace CounterCulture.Repositories
             return command.ExecuteNonQuery() == 1;
         }
 
+        public OAuthClient GetOAuthClient(string clientId) {
+            var client = new OAuthClient();
+            var builder = new StringBuilder();
+            builder.Append("SELECT app_type, app_name, app_description, client_id, client_secret, redirect_uri, homepage_uri, grant_types, scope, user_id FROM `oauth_clients` ");
+            builder.Append($"WHERE client_id = '{clientId}';");
+            var cmdText = builder.ToString();
+            var command = new MySqlCommand(cmdText, connection);
+            command.CommandType = CommandType.Text;
+            using(DbDataReader rdr = command.ExecuteReader()){
+                if(!rdr.HasRows) return null;
+                rdr.Read();
+                client.app_type = rdr.GetFieldValue<string>(0);
+                client.app_name = rdr.GetFieldValue<string>(1);
+                rdr.Close();
+            }
+            return client;
+        }
+
     }
 }

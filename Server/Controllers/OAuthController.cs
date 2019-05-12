@@ -46,8 +46,8 @@ namespace CounterCulture.Secure.Controllers
         [Route("authorize")]
         [Produces("text/html")]
         public ActionResult Authorize([FromQuery] AuthRequest authReq){
-            return Ok("<html><p>Authorize App</p></html>");
-            //Ok(authReq.response_type);
+            var client = OAuth.GetClient(authReq.client_id);
+            return Ok($"<html><p>Authorize {client.app_name}</p></html>");
         }
 
         // [HttpPost]
