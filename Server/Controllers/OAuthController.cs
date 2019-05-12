@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +39,15 @@ namespace CounterCulture.Secure.Controllers
         [Route("register")]
         public ActionResult Register([FromBody] OAuthClient client) {
             return Ok(OAuth.RegisterClient(client));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("authorize")]
+        [Produces("text/html")]
+        public ActionResult Authorize([FromQuery] AuthRequest authReq){
+            return Ok("<html><p>Authorize App</p></html>");
+            //Ok(authReq.response_type);
         }
 
         // [HttpPost]

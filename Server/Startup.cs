@@ -39,7 +39,7 @@ namespace CounterCulture
         {
             var appSecrets = Configuration.Get<AppSecrets>();
             services.Configure<AppSecrets>(Configuration);
-            services.AddMvc();
+            services.AddMvc(options => options.OutputFormatters.Add(new HtmlOutputFormatter()));
             services.AddApiVersioning();
             services.AddAuthentication(options => 
             {
