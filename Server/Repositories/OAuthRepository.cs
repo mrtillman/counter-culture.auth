@@ -33,8 +33,8 @@ namespace CounterCulture.Repositories
         {
             var builder = new StringBuilder();
             builder.Append("INSERT INTO `oauth_clients` ");
-            builder.Append("(app_name, app_description, client_id, client_secret, redirect_uri, grant_types, scope, user_id) ");
-            builder.Append($"VALUES ('{client.app_name}', '{client.app_description}', '{client.client_id}', '{client.client_secret}', '{client.redirect_uri}', '{client.grant_types}', '{client.scope}', '{client.user_id}');");
+            builder.Append("(app_type, app_name, app_description, client_id, client_secret, redirect_uri, homepage_uri, grant_types, scope, user_id) ");
+            builder.Append($"VALUES ('{client.app_type}', '{client.app_name}', '{client.app_description}', '{client.client_id}', '{client.client_secret}', '{client.redirect_uri}', '{client.homepage_uri}' '{client.grant_types}', '{client.scope}', '{client.user_id}');");
             var cmdText = builder.ToString();
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
