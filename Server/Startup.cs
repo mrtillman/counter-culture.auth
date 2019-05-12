@@ -62,11 +62,16 @@ namespace CounterCulture
                 };
             });
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            UserRepository repo = new UserRepository(connection, appSecrets);
+            UserRepository userRepo = new UserRepository(connection, appSecrets);
+            OAuthRepository oauthRepo = new OAuthRepository(connection, appSecrets);
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
-             provider => UserRepoProxy<IUserRepository>.Create(repo),
+             provider => UserRepoProxy<IUserRepository>.Create(userRepo),
+             ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IOAuthRepository),
+             provider => UserRepoProxy<IOAuthRepository>.Create(oauthRepo),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOAuthService, OAuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
