@@ -30,8 +30,8 @@ namespace CounterCulture.Secure.Controllers
             env = hostingEnvironment;
         }
 
-        public IUserService Users { get; set; }
-        public IOAuthService OAuth { get; set; }
+        private readonly IUserService Users;
+        private readonly IOAuthService OAuth;
         private readonly IHostingEnvironment env;
 
         [HttpPost]

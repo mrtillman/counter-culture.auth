@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using CounterCulture.Secure.Helpers;
+using StackExchange.Redis;
 
 namespace CounterCulture
 {
@@ -64,11 +65,15 @@ namespace CounterCulture
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
             UserRepository userRepo = new UserRepository(connection, appSecrets);
             OAuthRepository oauthRepo = new OAuthRepository(connection, appSecrets);
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
              provider => UserRepoProxy<IUserRepository>.Create(userRepo),
              ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IOAuthRepository),
              provider => UserRepoProxy<IOAuthRepository>.Create(oauthRepo),
+             ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(ICacheService),
+             provider => new CacheService(redis),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOAuthService, OAuthService>();
