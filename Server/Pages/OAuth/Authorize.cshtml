@@ -1,0 +1,9 @@
+@page
+@using RazorPagesIntro.Pages
+@model AuthorizeModel
+
+<form method="POST" action="#">
+  <p>Authorize @Model.Client.app_name</p>
+  <input type="submit" value="Ok">
+  <input type="button" value="Cancel">
+</form>

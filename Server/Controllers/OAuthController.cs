@@ -41,15 +41,6 @@ namespace CounterCulture.Secure.Controllers
             return Ok(OAuth.RegisterClient(client));
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("authorize")]
-        [Produces("text/html")]
-        public ActionResult Authorize([FromQuery] AuthRequest authReq){
-            var client = OAuth.GetClient(authReq.client_id);
-            return Ok($"<html><p>Authorize {client.app_name}</p></html>");
-        }
-
         // [HttpPost]
         // [AllowAnonymous]
         // [Route("access_token")]
