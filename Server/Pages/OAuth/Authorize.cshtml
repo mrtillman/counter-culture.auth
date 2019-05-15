@@ -1,9 +1,13 @@
 @page
-@using RazorPagesIntro.Pages
-@model AuthorizeModel
+@model CounterCulture.Pages.AuthorizeModel
 
-<form method="POST" action="#">
+<form 
+    method="POST"
+    asp-page="Authorize"
+    asp-page-handler="ClientAuthorization">
   <p>Authorize @Model.Client.app_name</p>
+  <input type="hidden" name="client_id" value="@Model.Client.client_id" />
+  <input type="hidden" name="redirect_uri" value="@Model.Client.redirect_uri" />
   <input type="submit" value="Ok">
   <input type="button" value="Cancel">
 </form>

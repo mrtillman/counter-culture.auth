@@ -1,31 +1,13 @@
 @page
+@model CounterCulture.Pages.IndexModel
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>counter-culture.secure</title>
-</head>
-<body>
-    <form 
-        id="loginForm"
-        action="https://secure.counter-culture.io/api/v1/users/login" 
-        method="post">
-        <input type="text" name="Username" placeholder="Username">
-        <br/>
-        <input type="password" name="Password" placeholder="Password">
-        <br/>
-        <input type="submit" value="Login">
-    </form>
-    <script>
-        window.onload = function(){
-            const form = document.getElementById("loginForm");
-            if (window.location.protocol.indexOf('http:') > -1) {
-                form.action = form.action.replace("https://secure.counter-culture.io", "http://localhost:5000");
-            }
-        }
-    </script>
-</body>
-</html>
+<form 
+    method="post"
+    asp-page="Index"
+    asp-page-handler="Login">
+    <input type="text" name="Username" placeholder="Username">
+    <br/>
+    <input type="password" name="Password" placeholder="Password">
+    <br/>
+    <input type="submit" value="Login">
+</form>

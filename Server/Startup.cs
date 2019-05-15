@@ -40,7 +40,7 @@ namespace CounterCulture
         {
             var appSecrets = Configuration.Get<AppSecrets>();
             services.Configure<AppSecrets>(Configuration);
-            services.AddMvc(options => options.OutputFormatters.Add(new HtmlOutputFormatter()));
+            services.AddMvc();
             services.AddApiVersioning();
             services.AddAuthentication(options => 
             {
@@ -98,6 +98,7 @@ namespace CounterCulture
             app.UseStaticFiles(new StaticFileOptions(){
                 RequestPath = new PathString("")
             });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

@@ -54,6 +54,14 @@ namespace CounterCulture.Repositories
                 rdr.Read();
                 client.app_type = rdr.GetFieldValue<string>(0);
                 client.app_name = rdr.GetFieldValue<string>(1);
+                client.app_description = rdr.GetFieldValue<string>(2);
+                client.client_id = rdr.GetFieldValue<string>(3);
+                client.client_secret = rdr.GetFieldValue<string>(4);
+                client.redirect_uri = rdr.GetFieldValue<string>(5);
+                client.homepage_uri = rdr.GetFieldValue<string>(6);
+                client.grant_types = rdr.GetFieldValue<string>(7);
+                client.scope = rdr.GetFieldValue<string>(8);
+                client.user_id = rdr.GetFieldValue<string>(9);
                 rdr.Close();
             }
             return client;

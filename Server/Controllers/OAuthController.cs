@@ -21,18 +21,18 @@ namespace CounterCulture.Secure.Controllers
     public class OAuthController : ControllerBase
     {
         public OAuthController(
-            IUserService UserService, 
             IOAuthService OAuthService, 
-            IHostingEnvironment hostingEnvironment)
+            IHostingEnvironment hostingEnvironment,
+            ICacheService CacheService)
         {
-            Users = UserService;
             OAuth = OAuthService;
             env = hostingEnvironment;
+            Cache = CacheService;
         }
 
-        private readonly IUserService Users;
         private readonly IOAuthService OAuth;
         private readonly IHostingEnvironment env;
+        private readonly ICacheService Cache;
 
         [HttpPost]
         [AllowAnonymous]

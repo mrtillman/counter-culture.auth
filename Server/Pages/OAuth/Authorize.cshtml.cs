@@ -5,21 +5,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
 using CounterCulture.Repositories.Models;
 
-namespace RazorPagesIntro.Pages
+namespace CounterCulture.Pages
 {
     public class AuthorizeModel : PageModel
     {
         public AuthorizeModel(
             IUserService UserService, 
             IOAuthService OAuthService, 
-            IHostingEnvironment hostingEnvironment,
-            ICacheService CacheService)
+            IHostingEnvironment hostingEnvironment)
         {
             Users = UserService;
             OAuth = OAuthService;
             env = hostingEnvironment;
             Client = new OAuthClient();
-            Cache = CacheService;
         }
 
         public IUserService Users { get; set; }
@@ -27,16 +25,16 @@ namespace RazorPagesIntro.Pages
         public OAuthClient Client { get; set; }
 
         private readonly IHostingEnvironment env;
-        private readonly ICacheService Cache;
 
         public void OnGet([FromQuery] AuthRequest authReq)
         {
             Client = OAuth.GetClient(authReq.client_id);
-            //string code = "authorization_code";
-            //Cache.Set("code", code);
-            // Console.WriteLine();
-            // Console.WriteLine(Cache.Get("code"));
-            // Console.WriteLine();
+        }
+
+        public IActionResult OnPostClientAuthorization(string client_id, string redirect_uri) {
+            var authorization_code = "567888";
+            //Cache.Set("code", authorization_code);
+            return Redirect($"{redirect_uri}#code={authorization_code}");
         }
     }
 }
