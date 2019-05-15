@@ -9,6 +9,5 @@ namespace CounterCulture.Services {
         bool Exists(string username);
         User Find(string username, string password);
         bool Create(string username, string password);
-        AuthResponse Authenticate(User user);
     }
 }

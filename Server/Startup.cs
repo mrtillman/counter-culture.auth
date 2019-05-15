@@ -21,7 +21,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using CounterCulture.Secure.Helpers;
+using CounterCulture.Helpers;
 using StackExchange.Redis;
 
 namespace CounterCulture

@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Repositories.Models;
-using CounterCulture.Secure.Helpers;
 
 namespace CounterCulture.Services
 {
@@ -35,12 +34,7 @@ namespace CounterCulture.Services
 
         public bool Exists(string username){
             return UserRepo.Exists(username);
-        }
-
-        public AuthResponse Authenticate(User user){
-            if(user == null) return null;
-            return JWTAuthenticator.Authenticate(user, _secrets.Secret);
-        }
+        }        
 
     }
 }

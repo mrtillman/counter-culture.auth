@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CounterCulture.Repositories;
 using MySql.Data.MySqlClient;
 
-namespace CounterCulture.Secure.Helpers
+namespace CounterCulture.Helpers
 {
     public class UserRepoProxy<T> : DispatchProxy
     {

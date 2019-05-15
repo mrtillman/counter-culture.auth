@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using CounterCulture.Repositories;
 using CounterCulture.Repositories.Models;
-using CounterCulture.Secure.Helpers;
+using CounterCulture.Helpers;
 
 namespace CounterCulture.Services {
     public class OAuthService : IOAuthService
