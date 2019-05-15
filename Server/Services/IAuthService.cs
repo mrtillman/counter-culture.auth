@@ -1,5 +1,6 @@
 using System;
-using CounterCulture.Helpers;
+using CounterCulture.Utilities;
+using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Services 
 {

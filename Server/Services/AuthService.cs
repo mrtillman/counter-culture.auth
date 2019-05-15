@@ -1,5 +1,6 @@
 using System;
-using CounterCulture.Helpers;
+using CounterCulture.Utilities;
+using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Services
 {
@@ -7,7 +8,7 @@ namespace CounterCulture.Services
     {
       public AuthResponse Authenticate(User user){
             if(user == null) return null;
-            return JWTAuthenticator.Authenticate(user, _secrets.Secret);
+            return JWTAuthenticator.Authenticate(user, "_secrets.Secret");
       }
     }
 }

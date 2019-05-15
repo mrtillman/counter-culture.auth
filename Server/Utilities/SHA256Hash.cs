@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace CounterCulture.Helpers {
+namespace CounterCulture.Utilities {
 
     public static class SHA256Hash {
         
