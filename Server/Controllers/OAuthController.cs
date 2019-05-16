@@ -18,22 +18,20 @@ namespace CounterCulture.Controllers
     public class OAuthController : BaseController
     {
         public OAuthController(
-            IAuthService AuthService,
             ICacheService CacheService,
-            IHostingEnvironment hostingEnvironment,
-            IOAuthService OAuthService
-            )
+            IOAuthService OAuthService)
+            :base(CacheService)
         {
-            Auth = AuthService;
-            Cache = CacheService;
-            env = hostingEnvironment;
             OAuth = OAuthService;
         }
 
-        private readonly IAuthService Auth;
-        private readonly IOAuthService OAuth;
-        private readonly IHostingEnvironment env;
-        private readonly ICacheService Cache;
+        private readonly IOAuthService OAuth;  
+
+        [HttpGet]
+        public ActionResult<OAuthClient> Get() {
+            var claim = HttpContext.User.Claims.ElementAt(1);
+            return Ok(claim.Value);
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -42,11 +40,38 @@ namespace CounterCulture.Controllers
             return Ok(OAuth.RegisterClient(client));
         }
 
-        // [HttpPost]
-        // [AllowAnonymous]
-        // [Route("access_token")]
-        // public ActionResult AccessToken([FromBody] Credentials credentials){
-        //     return _authenticate(credentials.Username, credentials.Password);
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("access_token")]
+        public ActionResult AccessToken(string authorization_code){
+            if(String.IsNullOrEmpty(authorization_code)){
+                return Unauthorized();
+            }
+            var client_id = Cache.Get(authorization_code);
+            if(String.IsNullOrEmpty(client_id)){
+                return Unauthorized();
+            }
+            Cache.Delete(authorization_code);
+            var client = OAuth.GetClient(client_id);
+            if(client == null){
+                return Unauthorized();
+            }
+            var authResponse = OAuth.Authenticate(client);
+            if(authResponse == null){
+                return Unauthorized();
+            }
+            return Ok(authResponse);
+        }
+
+        // protected ActionResult _authenticate(string Username, string Password){
+
+        //     AuthResponse authResponse = Auth.Authenticate(user);
+
+        //     if(authResponse == null) {
+        //         return Unauthorized();
+        //     }
+
+        //     return Ok(authResponse);
         // }
 
         // [HttpPost]

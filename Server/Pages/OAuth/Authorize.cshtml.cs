@@ -10,21 +10,20 @@ namespace CounterCulture.Pages
     public class AuthorizeModel : PageModel
     {
         public AuthorizeModel(
-            IUserService UserService, 
-            IOAuthService OAuthService, 
-            IHostingEnvironment hostingEnvironment)
+            ICacheService CacheService, 
+            IOAuthService OAuthService,
+            IUserService UserService)
         {
-            Users = UserService;
+            Cache = CacheService;
             OAuth = OAuthService;
-            env = hostingEnvironment;
-            Client = new OAuthClient();
+            Users = UserService;
         }
 
-        public IUserService Users { get; set; }
-        public IOAuthService OAuth { get; set; }
-        public OAuthClient Client { get; set; }
+        private ICacheService Cache { get; set; }
+        private IOAuthService OAuth { get; set; }
+        private IUserService Users { get; set; }
 
-        private readonly IHostingEnvironment env;
+        public OAuthClient Client { get; set; }
 
         public void OnGet([FromQuery] AuthRequest authReq)
         {
@@ -32,8 +31,8 @@ namespace CounterCulture.Pages
         }
 
         public IActionResult OnPostClientAuthorization(string client_id, string redirect_uri) {
-            var authorization_code = "567888";
-            //Cache.Set("code", authorization_code);
+            var authorization_code = Guid.NewGuid().ToString();
+            Cache.Set(authorization_code, client_id);
             return Redirect($"{redirect_uri}#code={authorization_code}");
         }
     }

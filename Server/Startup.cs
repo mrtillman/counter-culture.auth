@@ -74,11 +74,10 @@ namespace CounterCulture
             services.Add(new ServiceDescriptor(typeof(ICacheService),
              provider => new CacheService(redis),
              ServiceLifetime.Scoped));
-            services.Add(new ServiceDescriptor(typeof(IAuthService),
-             provider => new AuthService(appSecrets),
+            services.Add(new ServiceDescriptor(typeof(IOAuthService),
+             provider => new OAuthService(appSecrets, oauthRepo),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IOAuthService, OAuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

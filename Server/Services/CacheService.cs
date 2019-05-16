@@ -22,5 +22,9 @@ namespace CounterCulture.Services
         public bool Set(string key, string value){
           return db.StringSet(key, value);
         }
+
+        public bool Delete(string key){
+          return db.KeyDelete(key);
+        }
     }
 }

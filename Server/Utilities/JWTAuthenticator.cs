@@ -9,15 +9,15 @@ namespace CounterCulture.Utilities {
 
     public static class JWTAuthenticator {
 
-        public static AuthResponse Authenticate(User user, string secret){
-            if(user == null) return null;
+        public static AuthResponse Authenticate(OAuthClient client, string secret){
+            if(client == null) return null;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);
             var tomorrow = DateTime.UtcNow.AddDays(1);
             var descriptor = new SecurityTokenDescriptor(){
                 Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim("UserId", user.ID.ToString()),
-                    new Claim(ClaimTypes.Name, user.Username)
+                    new Claim("scope", client.scope),
+                    new Claim(ClaimTypes.Name, client.app_name)
                 }),
                 Expires = tomorrow,
                 SigningCredentials = new SigningCredentials(

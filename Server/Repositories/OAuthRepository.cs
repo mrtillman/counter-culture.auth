@@ -28,7 +28,7 @@ namespace CounterCulture.Repositories
         private MySqlConnection connection { get; set; }
         private AppSecrets appSecrets { get; set; }
 
-        public bool SaveOAuthClient(OAuthClient client)
+        public bool Save(OAuthClient client)
         {
             var builder = new StringBuilder();
             builder.Append("INSERT INTO `oauth_clients` ");
@@ -40,13 +40,25 @@ namespace CounterCulture.Repositories
             return command.ExecuteNonQuery() == 1;
         }
 
-        public OAuthClient GetOAuthClient(string clientId) {
-            var client = new OAuthClient();
+        public OAuthClient Get(string client_id) {
             var builder = new StringBuilder();
             builder.Append("SELECT app_type, app_name, app_description, client_id, client_secret, redirect_uri, homepage_uri, grant_types, scope, user_id FROM `oauth_clients` ");
-            builder.Append($"WHERE client_id = '{clientId}';");
+            builder.Append($"WHERE client_id = '{client_id}';");
             var cmdText = builder.ToString();
-            var command = new MySqlCommand(cmdText, connection);
+            return selectClient(cmdText);
+        }
+
+        public OAuthClient Find(string client_id, string secret) {
+            var builder = new StringBuilder();
+            builder.Append("SELECT app_type, app_name, app_description, client_id, client_secret, redirect_uri, homepage_uri, grant_types, scope, user_id FROM `oauth_clients` ");
+            builder.Append($"WHERE client_id = '{client_id}' AND client_secret = '{secret}';");
+            var cmdText = builder.ToString();
+            return selectClient(cmdText);
+        }
+
+        private OAuthClient selectClient(string query){
+            var client = new OAuthClient();
+            var command = new MySqlCommand(query, connection);
             command.CommandType = CommandType.Text;
             using(DbDataReader rdr = command.ExecuteReader()){
                 if(!rdr.HasRows) return null;

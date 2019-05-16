@@ -23,13 +23,15 @@ namespace CounterCulture.Pages
 
         public IActionResult OnPostLogin(User user)
         {
+            // user.Username
+            var authorization_code = Guid.NewGuid();
+            //Cache.Set(user.Username, authorization_code);
+
             var redirectOrigin = "https://www.counter-culture.io";
             if(env.IsDevelopment()){
                 redirectOrigin = $"http://localhost:8080";
             }
-            // user.Username
-            var authorization_code = "123555";
-            //Cache.Set(user.Username, authorization_code);
+            
             return Redirect($"{redirectOrigin}#code={authorization_code}");
         }
     }

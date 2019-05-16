@@ -18,5 +18,12 @@ namespace CounterCulture.Controllers
     [ApiController]
     public class BaseController : ControllerBase {
 
+        public BaseController(ICacheService CacheService)
+        {
+            Cache = CacheService;
+        }
+
+        protected ICacheService Cache { get; set; }
+
     }
 }
