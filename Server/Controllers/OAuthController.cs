@@ -13,22 +13,24 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace CounterCulture.Controllers
 {
-    [ApiVersion( "1.0" )]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
+    
     [Authorize]
-    public class OAuthController : ControllerBase
+    public class OAuthController : BaseController
     {
         public OAuthController(
-            IOAuthService OAuthService, 
+            IAuthService AuthService,
+            ICacheService CacheService,
             IHostingEnvironment hostingEnvironment,
-            ICacheService CacheService)
+            IOAuthService OAuthService
+            )
         {
-            OAuth = OAuthService;
-            env = hostingEnvironment;
+            Auth = AuthService;
             Cache = CacheService;
+            env = hostingEnvironment;
+            OAuth = OAuthService;
         }
 
+        private readonly IAuthService Auth;
         private readonly IOAuthService OAuth;
         private readonly IHostingEnvironment env;
         private readonly ICacheService Cache;

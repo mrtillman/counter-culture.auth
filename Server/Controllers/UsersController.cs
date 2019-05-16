@@ -12,23 +12,23 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace CounterCulture.Controllers
 {
-    [ApiVersion( "1.0" )]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
+    
     [Authorize]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
-        public UsersController(IUserService UserService, IHostingEnvironment hostingEnvironment)
+        public UsersController(IAuthService AuthService, IUserService UserService, IHostingEnvironment hostingEnvironment)
         {
+            Auth = AuthService;
             Users = UserService;
             env = hostingEnvironment;
         }
 
+        public IAuthService Auth { get; set; }
         public IUserService Users { get; set; }
         private readonly IHostingEnvironment env;
 
         [HttpGet]
-        public ActionResult<User> Get(){
+        public ActionResult<User> Get() {
             var UserIdClaim = HttpContext.User.Claims.First(claim => claim.Type == "UserId");
             User user = new User(){
                 ID = int.Parse(UserIdClaim.Value),
@@ -65,7 +65,7 @@ namespace CounterCulture.Controllers
         private ActionResult _authenticate(string Username, string Password, bool performRedirect = false){
             string hashedPassword = SHA256Hash.Compute(Password);
             var user = Users.Find(Username, hashedPassword);
-            AuthResponse authResponse = Users.Authenticate(user);
+            AuthResponse authResponse = Auth.Authenticate(user);
             
             if(authResponse == null) {
               return Unauthorized("Invalid username or password");
