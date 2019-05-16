@@ -6,9 +6,17 @@ namespace CounterCulture.Services
 {
     public class AuthService : IAuthService
     {
-      public AuthResponse Authenticate(User user){
-            if(user == null) return null;
-            return JWTAuthenticator.Authenticate(user, "_secrets.Secret");
+
+      public AuthService(AppSecrets _appSecrets){
+        appSecrets = _appSecrets;
       }
+
+      private AppSecrets appSecrets { get; set; }
+
+      public AuthResponse Authenticate(User user){
+        if(user == null) return null;
+        return JWTAuthenticator.Authenticate(user, appSecrets.Secret);
+      }
+      
     }
 }

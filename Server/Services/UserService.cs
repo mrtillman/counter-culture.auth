@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;

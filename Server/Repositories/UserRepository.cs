@@ -3,7 +3,6 @@ using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Repositories

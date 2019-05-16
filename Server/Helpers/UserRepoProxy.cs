@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using CounterCulture.Repositories;
 using MySql.Data.MySqlClient;
 

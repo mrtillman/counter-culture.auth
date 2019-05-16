@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -74,6 +73,9 @@ namespace CounterCulture
              ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(ICacheService),
              provider => new CacheService(redis),
+             ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IAuthService),
+             provider => new AuthService(appSecrets),
              ServiceLifetime.Scoped));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOAuthService, OAuthService>();
