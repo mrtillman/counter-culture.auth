@@ -1,8 +1,16 @@
 using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CounterCulture.Repositories.Models {
-    public class Credentials {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+
+  public class Credentials {
+
+    [FromForm]
+    public string Username { get; set; }
+
+    [FromForm]
+    public string Password { get; set; }
+
+  }
+
 }

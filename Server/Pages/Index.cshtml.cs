@@ -4,28 +4,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
 using CounterCulture.Repositories.Models;
+using CounterCulture.Utilities;
 
 namespace CounterCulture.Pages
 {
     public class IndexModel : PageModel
     {
         public IndexModel(
-            IHostingEnvironment hostingEnvironment)
+            ICacheService CacheService,
+            IHostingEnvironment hostingEnvironment,
+            IUserService UserService)
         {
+            Cache = CacheService;
             env = hostingEnvironment;
+            Users = UserService;
         }
 
-        private readonly IHostingEnvironment env;
+        private ICacheService Cache { get; set; }
+        private IHostingEnvironment env  { get; set; }
+        private IUserService Users  { get; set; }
 
-        public void OnGet(){
-
-        }
-
-        public IActionResult OnPostLogin(User user)
+        public IActionResult OnPostLogin([FromForm] Credentials creds)
         {
-            // user.Username
-            var authorization_code = Guid.NewGuid();
-            //Cache.Set(user.Username, authorization_code);
+            var hashedPassword = SHA256Hash.Compute(creds.Password);
+            var user = Users.Find(creds.Username, hashedPassword);
+            
+            if(user == null){
+                return Unauthorized();
+            }
+
+            var client_id = "66323930643364332D376534312D343237302D616331632D633936643665653365666661";
+            var authorization_code = Guid.NewGuid().ToString();
+            Cache.Set(authorization_code, client_id);
+            Cache.Set($"user_id:{authorization_code}", $"{user.ID}");
 
             var redirectOrigin = "https://www.counter-culture.io";
             if(env.IsDevelopment()){
@@ -33,6 +44,7 @@ namespace CounterCulture.Pages
             }
             
             return Redirect($"{redirectOrigin}#code={authorization_code}");
+            
         }
     }
 }

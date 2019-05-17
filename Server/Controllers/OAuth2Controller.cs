@@ -15,9 +15,9 @@ namespace CounterCulture.Controllers
 {
     
     [Authorize]
-    public class OAuthController : BaseController
+    public class OAuth2Controller : BaseController
     {
-        public OAuthController(
+        public OAuth2Controller(
             ICacheService CacheService,
             IOAuthService OAuthService)
             :base(CacheService)
@@ -48,6 +48,7 @@ namespace CounterCulture.Controllers
                 return Unauthorized();
             }
             var client_id = Cache.Get(authorization_code);
+            var user_id = Cache.Get($"user_id:{authorization_code}");
             if(String.IsNullOrEmpty(client_id)){
                 return Unauthorized();
             }
