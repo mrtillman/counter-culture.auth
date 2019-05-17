@@ -66,10 +66,10 @@ namespace CounterCulture
             OAuthRepository oauthRepo = new OAuthRepository(connection, appSecrets);
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
-             provider => UserRepoProxy<IUserRepository>.Create(userRepo),
+             provider => RepoProxy<IUserRepository>.Create(userRepo),
              ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IOAuthRepository),
-             provider => UserRepoProxy<IOAuthRepository>.Create(oauthRepo),
+             provider => RepoProxy<IOAuthRepository>.Create(oauthRepo),
              ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(ICacheService),
              provider => new CacheService(redis),

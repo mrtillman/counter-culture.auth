@@ -10,5 +10,6 @@ namespace CounterCulture.Repositories
         bool Save(OAuthClient client);
         OAuthClient Get(string client_id);
         OAuthClient Find(string client_id, string secret);
+        IOAuthRepository Reconnect();
     }
 }

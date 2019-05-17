@@ -7,25 +7,11 @@ using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository, IBaseRepository, IUserRepository
     {
-        public UserRepository(MySqlConnection _connection, AppSecrets _appSecrets)
-        {
-            connection = _connection;
-            if(connection.State == ConnectionState.Closed){
-                connection.Open();
-            }
-            appSecrets = _appSecrets;
-        }
-        
-        public bool IsDisconnected {
-            get {
-                return connection.State == ConnectionState.Closed;
-            }
-        }
-
-        private MySqlConnection connection { get; set; }
-        private AppSecrets appSecrets { get; set; }
+        public UserRepository(
+            MySqlConnection _connection, AppSecrets _appSecrets)
+            :base(_connection, _appSecrets){ }
 
         public User Find(string username, string password)
         {
@@ -70,6 +56,10 @@ namespace CounterCulture.Repositories
             connection = new MySqlConnection(appSecrets.MySQLConnectionString);
             connection.Open();
             return this;
+        }
+
+        object IBaseRepository.Reconnect(){
+            return Reconnect();
         }
 
     }

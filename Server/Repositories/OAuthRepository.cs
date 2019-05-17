@@ -8,25 +8,11 @@ using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Repositories
 {
-    public class OAuthRepository : IOAuthRepository
+    public class OAuthRepository : BaseRepository, IBaseRepository, IOAuthRepository
     {
-        public OAuthRepository(MySqlConnection _connection, AppSecrets _appSecrets)
-        {
-            connection = _connection;
-            if(connection.State == ConnectionState.Closed){
-                connection.Open();
-            }
-            appSecrets = _appSecrets;
-        }
-
-        public bool IsDisconnected {
-            get {
-                return connection.State == ConnectionState.Closed;
-            }
-        }
-
-        private MySqlConnection connection { get; set; }
-        private AppSecrets appSecrets { get; set; }
+        public OAuthRepository(
+            MySqlConnection _connection, AppSecrets _appSecrets)
+            :base(_connection, _appSecrets){ }
 
         public bool Save(OAuthClient client)
         {
@@ -76,6 +62,17 @@ namespace CounterCulture.Repositories
                 rdr.Close();
             }
             return client;
+        }
+
+
+        public IOAuthRepository Reconnect(){
+            connection = new MySqlConnection(appSecrets.MySQLConnectionString);
+            connection.Open();
+            return this;
+        }
+        
+        object IBaseRepository.Reconnect(){
+            return Reconnect();
         }
 
     }
