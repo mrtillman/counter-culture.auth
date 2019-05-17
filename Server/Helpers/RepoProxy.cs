@@ -33,19 +33,8 @@ namespace CounterCulture.Helpers
           var repo =  _repo as IBaseRepository;
 
           if(repo.IsDisconnected){
-            Thread.Sleep(10000);
-            if(_repo.GetType() == typeof(IOAuthRepository)){
-              return targetMethod.Invoke(
-                ((IOAuthRepository)repo).Reconnect(), args);
-            } 
-            else 
-            if(_repo.GetType() == typeof(IUserRepository)){
-              return targetMethod.Invoke(
-                ((IUserRepository)repo).Reconnect(), args);
-            }
-            else{
-              throw ex;
-            }
+            Thread.Sleep(1000);
+            return targetMethod.Invoke(repo.Reconnect(), args);
           } else {
             throw ex;
           }
