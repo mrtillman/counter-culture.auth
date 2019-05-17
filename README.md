@@ -13,7 +13,8 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please ref
 
 ## Authentication
 
-With the exception of `/api/v1/users/authenticate` and `/api/v1/users/login`, all endpoints require a valid bearer token. To learn how to get a token, see [Get a Token](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/get-a-token.md).
+With the exception of `/api/v1/oauth2/access_token`, all endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/register-app.md) and then [send an authorization request](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/authorization-request.md).
+
 
 ## Getting Started
 
@@ -27,6 +28,7 @@ Next, create `appsecrets.json` in the project root:
 ```sh
 {
   "MySQLConnectionString": "<MySQLConnectionString>",
+  "RedisConnectionString": "<RedisConnectionString>"
   "Secret": "<app-secret>"
 }
 ```
