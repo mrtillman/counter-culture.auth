@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using CounterCulture.Repositories;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 
 namespace CounterCulture.Helpers

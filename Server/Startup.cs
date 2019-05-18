@@ -27,12 +27,14 @@ namespace CounterCulture
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILoggerFactory _LoggerFactory)
         {
             Configuration = configuration;
+            LoggerFactory = _LoggerFactory;
         }
 
         public IConfiguration Configuration { get; }
+        private ILoggerFactory LoggerFactory { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -62,8 +64,10 @@ namespace CounterCulture
                 };
             });
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            UserRepository userRepo = new UserRepository(connection, appSecrets);
-            OAuthRepository oauthRepo = new OAuthRepository(connection, appSecrets);
+            UserRepository userRepo = new UserRepository(
+                connection, appSecrets, LoggerFactory.CreateLogger<UserRepository>());
+            OAuthRepository oauthRepo = new OAuthRepository(
+                connection, appSecrets, LoggerFactory.CreateLogger<OAuthRepository>());
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
             services.Add(new ServiceDescriptor(typeof(IUserRepository),
              provider => RepoProxy<IUserRepository>.Create(userRepo),
@@ -81,7 +85,9 @@ namespace CounterCulture
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

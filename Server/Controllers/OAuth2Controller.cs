@@ -70,43 +70,5 @@ namespace CounterCulture.Controllers
             return Ok(authResponse);
         }
 
-        // protected ActionResult _authenticate(string Username, string Password){
-
-        //     AuthResponse authResponse = Auth.Authenticate(user);
-
-        //     if(authResponse == null) {
-        //         return Unauthorized();
-        //     }
-
-        //     return Ok(authResponse);
-        // }
-
-        // [HttpPost]
-        // [AllowAnonymous]
-        // [Route("login")]
-        // public ActionResult Login([FromForm] UserForm userForm) {
-        //     return _authenticate(userForm.Username, userForm.Password, true);
-        // }
-
-        // private ActionResult _authenticate(string Username, string Password, bool performRedirect = false){
-        //     string hashedPassword = SHA256Hash.Compute(Password);
-        //     var user = Users.Find(Username, hashedPassword);
-        //     AuthResponse authResponse = Users.Authenticate(user);
-            
-        //     if(authResponse == null) {
-        //       return Unauthorized("Invalid username or password");
-        //     }
-            
-        //     if(performRedirect) {
-        //       var redirectOrigin = "https://www.counter-culture.io";
-        //       if(env.IsDevelopment()){
-        //           redirectOrigin = "http://localhost:8080";
-        //       }
-        //       return Redirect($"{redirectOrigin}/#token={authResponse.access_token}");
-        //     }
-
-        //     return Ok(authResponse);
-        // }
-
     }
 }

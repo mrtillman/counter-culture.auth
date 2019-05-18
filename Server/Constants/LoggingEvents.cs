@@ -4,6 +4,7 @@ namespace CounterCulture.Constants
 {
     public static class LoggingEvents
     {
-        public const string RegisterApp = "register:app";
+        public static readonly string PersistOAuthClient = $"{LoggingActions.Persist}:oauth_client";
+        public static readonly string RegisterApp = $"{LoggingActions.Register}:app";
     }
 }

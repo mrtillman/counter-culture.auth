@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.Common;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using CounterCulture.Repositories.Models;
@@ -10,8 +11,14 @@ namespace CounterCulture.Repositories
     public class UserRepository : BaseRepository, IBaseRepository, IUserRepository
     {
         public UserRepository(
-            MySqlConnection _connection, AppSecrets _appSecrets)
-            :base(_connection, _appSecrets){ }
+            MySqlConnection _connection, 
+            AppSecrets _appSecrets, 
+            ILogger<UserRepository> LoggerService)
+            :base(_connection, _appSecrets){ 
+                Logger = LoggerService;
+            }
+
+        ILogger<UserRepository> Logger { get; set; }
 
         public User Find(string username, string password)
         {

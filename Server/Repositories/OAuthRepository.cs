@@ -2,8 +2,11 @@
 using System.Text;
 using System.Data;
 using System.Data.Common;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using CounterCulture.Constants;
 using CounterCulture.Repositories.Models;
 
 namespace CounterCulture.Repositories
@@ -11,11 +14,18 @@ namespace CounterCulture.Repositories
     public class OAuthRepository : BaseRepository, IBaseRepository, IOAuthRepository
     {
         public OAuthRepository(
-            MySqlConnection _connection, AppSecrets _appSecrets)
-            :base(_connection, _appSecrets){ }
+            MySqlConnection _connection,
+            AppSecrets _appSecrets,
+            ILogger<OAuthRepository> LoggerService)
+            :base(_connection, _appSecrets) { 
+                Logger = LoggerService; 
+            }
+
+        private ILogger<OAuthRepository> Logger { get; set; }
 
         public bool Save(OAuthClient client)
         {
+            Logger.LogInformation(LoggingEvents.PersistOAuthClient, appSecrets.MySQLConnectionString);
             /*
             var builder = new StringBuilder();
             builder.Append("INSERT INTO `oauth_clients` ");
