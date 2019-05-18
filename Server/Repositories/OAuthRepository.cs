@@ -25,8 +25,6 @@ namespace CounterCulture.Repositories
 
         public bool Save(OAuthClient client)
         {
-            Logger.LogInformation(LoggingEvents.PersistOAuthClient, appSecrets.MySQLConnectionString);
-            /*
             var builder = new StringBuilder();
             builder.Append("INSERT INTO `oauth_clients` ");
             builder.Append("(app_type, app_name, app_description, client_id, client_secret, redirect_uri, homepage_uri, grant_types, scope, user_id) ");
@@ -35,8 +33,6 @@ namespace CounterCulture.Repositories
             var command = new MySqlCommand(cmdText, connection);
             command.CommandType = CommandType.Text;
             return command.ExecuteNonQuery() == 1;
-            */
-            return true;
         }
 
         public OAuthClient Get(string client_id) {

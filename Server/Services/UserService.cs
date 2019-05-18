@@ -11,7 +11,8 @@ namespace CounterCulture.Services
 {
     public class UserService : IUserService
     {
-        public UserService(IUserRepository UserRepository, IOptions<AppSecrets> appSecrets)
+        public UserService(
+            IUserRepository UserRepository, IOptions<AppSecrets> appSecrets)
         {
             UserRepo = UserRepository;
             _secrets = appSecrets.Value;

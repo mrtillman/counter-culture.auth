@@ -12,9 +12,9 @@ namespace CounterCulture.Helpers
     {
       private T _repo;
 
-      public static T Create(T UserRepo){
+      public static T Create(T repo){
         object repoProxy = Create<T, RepoProxy<T>>();
-        ((RepoProxy<T>)repoProxy).SetParameters(UserRepo);
+        ((RepoProxy<T>)repoProxy).SetParameters(repo);
         return (T)repoProxy;
       }
 

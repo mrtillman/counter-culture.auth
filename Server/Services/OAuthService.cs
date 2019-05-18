@@ -4,23 +4,25 @@ using System.Collections.Generic;
 using CounterCulture.Repositories;
 using CounterCulture.Repositories.Models;
 using CounterCulture.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace CounterCulture.Services {
+
     public class OAuthService : IOAuthService
     {
         public OAuthService(
-            AppSecrets _appSecrets,
-            IOAuthRepository OAuthRepository){
-            appSecrets = _appSecrets;
+            IOAuthRepository OAuthRepository, IOptions<AppSecrets> appSecrets)
+        {
             OAuthRepo = OAuthRepository;
+            _secrets = appSecrets.Value;
         }
 
-        private AppSecrets appSecrets { get; set; }
         private IOAuthRepository OAuthRepo { get; set; }
+        private readonly AppSecrets _secrets;
         
         public AuthResponse Authenticate(OAuthClient client){
             if(client == null) return null;
-            return JWTAuthenticator.Authenticate(client, appSecrets.Secret);
+            return JWTAuthenticator.Authenticate(client, _secrets.Secret);
         }
 
         public OAuthClient GetClient(string client_id) {
