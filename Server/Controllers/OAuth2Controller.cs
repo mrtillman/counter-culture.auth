@@ -6,7 +6,9 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using CounterCulture.Services;
+using CounterCulture.Constants;
 using CounterCulture.Repositories.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -19,13 +21,16 @@ namespace CounterCulture.Controllers
     {
         public OAuth2Controller(
             ICacheService CacheService,
+            ILogger<OAuth2Controller> LoggerService,
             IOAuthService OAuthService)
             :base(CacheService)
         {
             OAuth = OAuthService;
+            Logger = LoggerService;
         }
 
-        private readonly IOAuthService OAuth;  
+        private IOAuthService OAuth { get; set; }
+        private ILogger<OAuth2Controller> Logger { get; set; }
 
         [HttpGet]
         public ActionResult<OAuthClient> Get() {
@@ -37,6 +42,7 @@ namespace CounterCulture.Controllers
         [AllowAnonymous]
         [Route("register")]
         public ActionResult Register([FromBody] OAuthClient client) {
+            Logger.LogInformation(LoggingEvents.RegisterApp, client.app_name);
             return Ok(OAuth.RegisterClient(client));
         }
 

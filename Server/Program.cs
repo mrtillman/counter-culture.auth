@@ -26,6 +26,13 @@ namespace CounterCulture
             return  WebHost.CreateDefaultBuilder(args)
                     .UseConfiguration(config)
                     .UseUrls("http://0.0.0.0:5000")
+                    .ConfigureLogging((hostingContext, logging) => {
+                        logging.ClearProviders();
+                        logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                        logging.AddConsole();
+                        logging.AddDebug();
+                        logging.AddEventSourceLogger();
+                     })
                     .UseStartup<Startup>();
         }
           
