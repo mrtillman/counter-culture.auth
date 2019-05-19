@@ -33,10 +33,11 @@ namespace CounterCulture.Pages
                 return Unauthorized();
             }
 
+            // TODO: pull client_id from env.client_id
             var client_id = "66323930643364332D376534312D343237302D616331632D633936643665653365666661";
             var authorization_code = Guid.NewGuid().ToString();
-            Cache.Set(authorization_code, client_id);
-            Cache.Set($"user_id:{authorization_code}", $"{user.ID}");
+            
+            Cache.Set(authorization_code, $"{client_id}:{user.ID}");
 
             var redirectOrigin = "https://www.counter-culture.io";
             if(env.IsDevelopment()){

@@ -7,6 +7,7 @@ namespace CounterCulture.Services {
     {
         bool Exists(string username);
         User Find(string username, string password);
+        User FindById(int userId);
         bool Create(string username, string password);
     }
 }

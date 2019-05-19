@@ -34,8 +34,12 @@ namespace CounterCulture.Controllers
 
         [HttpGet]
         public ActionResult<OAuthClient> Get() {
-            var claim = HttpContext.User.Claims.ElementAt(1);
-            return Ok(claim.Value);
+            if (!User.Identity.IsAuthenticated){
+                return Unauthorized();
+            }
+            var claim = User.Claims.ElementAt(0);
+            var client_id = claim.Value;
+            return Ok(OAuth.GetClient(client_id));
         }
 
         [HttpPost]
@@ -53,16 +57,19 @@ namespace CounterCulture.Controllers
             if(String.IsNullOrEmpty(authorization_code)){
                 return Unauthorized();
             }
-            var client_id = Cache.Get(authorization_code);
-            var user_id = Cache.Get($"user_id:{authorization_code}");
-            if(String.IsNullOrEmpty(client_id)){
+            var auth = Cache.Get(authorization_code);
+            if(String.IsNullOrEmpty(auth)){
                 return Unauthorized();
             }
             Cache.Delete(authorization_code);
+            var auth_parts = auth.Split(':');
+            var client_id = auth_parts[0];
+            var user_id = auth_parts[1];
             var client = OAuth.GetClient(client_id);
             if(client == null){
                 return Unauthorized();
             }
+            client.user_id = user_id;
             var authResponse = OAuth.Authenticate(client);
             if(authResponse == null){
                 return Unauthorized();

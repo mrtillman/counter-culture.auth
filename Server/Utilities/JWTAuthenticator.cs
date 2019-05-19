@@ -16,8 +16,9 @@ namespace CounterCulture.Utilities {
             var tomorrow = DateTime.UtcNow.AddDays(1);
             var descriptor = new SecurityTokenDescriptor(){
                 Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim("scope", client.scope),
-                    new Claim(ClaimTypes.Name, client.app_name)
+                    new Claim("client_id", client.client_id),
+                    new Claim("user_id", client.user_id),
+                    new Claim("scope", client.scope)
                 }),
                 Expires = tomorrow,
                 SigningCredentials = new SigningCredentials(

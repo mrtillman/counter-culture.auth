@@ -28,6 +28,10 @@ namespace CounterCulture.Services
             return UserRepo.Find(username, password);
         }
 
+        public User FindById(int userId){
+            return UserRepo.FindById(userId);
+        }
+
         public bool Create(string username, string password){
             return UserRepo.Create(username, password);
         }
