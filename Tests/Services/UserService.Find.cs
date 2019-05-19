@@ -3,7 +3,7 @@ using System;
 using CounterCulture.Services;
 using CounterCulture.Repositories;
 using Microsoft.Extensions.Options;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
