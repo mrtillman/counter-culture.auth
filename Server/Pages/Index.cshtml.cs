@@ -33,9 +33,8 @@ namespace CounterCulture.Pages
                 return Unauthorized();
             }
 
-            // TODO: pull client_id from env.client_id
-            var client_id = "66323930643364332D376534312D343237302D616331632D633936643665653365666661";
             var authorization_code = Guid.NewGuid().ToString();
+            var client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
             
             Cache.Set(authorization_code, $"{client_id}:{user.ID}");
 

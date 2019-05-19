@@ -27,12 +27,16 @@ namespace CounterCulture.Pages
 
         public void OnGet([FromQuery] AuthRequest authReq)
         {
+            // TODO: prompt for user login
             Client = OAuth.GetClient(authReq.client_id);
         }
 
         public IActionResult OnPostClientAuthorization(string client_id, string redirect_uri) {
             var authorization_code = Guid.NewGuid().ToString();
-            Cache.Set(authorization_code, client_id);
+            // TODO: get user id from the 
+            // current user who is logged in
+            var userID = 12; 
+            Cache.Set(authorization_code, $"{client_id}:{userID}");
             return Redirect($"{redirect_uri}#code={authorization_code}");
         }
     }

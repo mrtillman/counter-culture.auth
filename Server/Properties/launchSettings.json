@@ -22,6 +22,7 @@
       "launchUrl": "/",
       "applicationUrl": "http://0.0.0.0:5000",
       "environmentVariables": {
+        "CLIENT_ID":"66323930643364332D376534312D343237302D616331632D633936643665653365666661",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }

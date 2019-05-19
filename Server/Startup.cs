@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using CounterCulture.Helpers;
 using StackExchange.Redis;
+using Newtonsoft.Json;
 
 namespace CounterCulture
 {
@@ -41,7 +42,10 @@ namespace CounterCulture
         {
             var appSecrets = Configuration.Get<AppSecrets>();
             services.Configure<AppSecrets>(Configuration);
-            services.AddMvc();
+            services.AddMvc()
+                    .AddJsonOptions(options => {
+                        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    });
             services.AddApiVersioning();
             services.AddAuthentication(options => 
             {
