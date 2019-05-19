@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 
 namespace CounterCulture.Services
 {

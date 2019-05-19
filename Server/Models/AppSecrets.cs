@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Repositories.Models {
+namespace CounterCulture.Models {
     public class AppSecrets {
         public string MySQLConnectionString { get; set; }
         public string Secret { get; set; }

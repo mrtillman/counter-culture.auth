@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 
 namespace CounterCulture.Pages
 {

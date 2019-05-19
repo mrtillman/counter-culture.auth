@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 
 namespace CounterCulture.Repositories
 {

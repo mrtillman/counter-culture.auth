@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 using CounterCulture.Services;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

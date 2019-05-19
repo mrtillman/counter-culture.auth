@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using CounterCulture.Services;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Repositories.Models {
+namespace CounterCulture.Models {
     public class OAuthClient {
       public string app_type { get; set; }
       public string app_name { get; set; }

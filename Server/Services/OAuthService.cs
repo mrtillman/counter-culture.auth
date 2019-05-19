@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using CounterCulture.Repositories;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.Extensions.Options;
 

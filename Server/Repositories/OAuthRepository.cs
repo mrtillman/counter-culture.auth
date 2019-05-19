@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using CounterCulture.Constants;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 
 namespace CounterCulture.Repositories
 {

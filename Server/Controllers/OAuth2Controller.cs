@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using CounterCulture.Services;
 using CounterCulture.Constants;
-using CounterCulture.Repositories.Models;
+using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
 

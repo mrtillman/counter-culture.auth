@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Repositories.Models {
+namespace CounterCulture.Models {
     public class AuthRequest {
         public string response_type { get; set; }
         public string client_id { get; set; }

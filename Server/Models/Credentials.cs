@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CounterCulture.Repositories.Models {
+namespace CounterCulture.Models {
 
   public class Credentials {
 
