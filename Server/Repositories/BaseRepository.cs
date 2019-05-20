@@ -10,22 +10,11 @@ namespace CounterCulture.Repositories
 {
     public class BaseRepository
     {
-        public BaseRepository(MySqlConnection _connection, AppSecrets _appSecrets)
+        public BaseRepository(SecureDbContext _context)
         {
-            connection = _connection;
-            if(connection.State == ConnectionState.Closed){
-                connection.Open();
-            }
-            appSecrets = _appSecrets;
+            context = _context;
         }
 
-        public bool IsDisconnected {
-            get {
-                return connection.State == ConnectionState.Closed;
-            }
-        }
-
-        protected MySqlConnection connection { get; set; }
-        protected AppSecrets appSecrets { get; set; }
+        protected readonly SecureDbContext context;
     }
 }

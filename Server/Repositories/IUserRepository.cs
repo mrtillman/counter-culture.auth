@@ -6,7 +6,6 @@ namespace CounterCulture.Repositories
 {
     public interface IUserRepository
     {
-        bool IsDisconnected { get; }
         bool Exists(string username);
         User Find(string username, string password);
         UserProfile FindById(int userId);

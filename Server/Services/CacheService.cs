@@ -6,13 +6,13 @@ namespace CounterCulture.Services
 {
     public class CacheService : ICacheService
     {
-        public CacheService(ConnectionMultiplexer _redis)
+        public CacheService(IConnectionMultiplexer _redis)
         {
             redis = _redis;
             db = redis.GetDatabase();
         }
         
-        private readonly ConnectionMultiplexer redis;
+        private readonly IConnectionMultiplexer redis;
         private readonly IDatabase db;
 
         public string Get(string key) {

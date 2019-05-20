@@ -12,5 +12,7 @@ namespace CounterCulture.Repositories
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<OAuthClient> OAuthClients { get; set; }
+
     }
 }

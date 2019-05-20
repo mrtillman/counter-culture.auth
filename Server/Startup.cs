@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using CounterCulture.Helpers;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 
@@ -63,24 +62,13 @@ namespace CounterCulture
                     ValidateAudience = false
                 };
             });
-            MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            // UserRepository userRepo = new UserRepository(
-            //     connection, appSecrets, LoggerFactory.CreateLogger<UserRepository>());
-            OAuthRepository oauthRepo = new OAuthRepository(
-                connection, appSecrets, LoggerFactory.CreateLogger<OAuthRepository>());
+            
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
-            services.Add(new ServiceDescriptor(typeof(IOAuthRepository),
-             provider => RepoProxy<IOAuthRepository>.Create(oauthRepo),
-             ServiceLifetime.Scoped));
-            // services.Add(new ServiceDescriptor(typeof(IUserRepository),
-            //  provider => RepoProxy<IUserRepository>.Create(userRepo),
-            //  ServiceLifetime.Scoped));
-            services.Add(new ServiceDescriptor(typeof(ICacheService),
-             provider => new CacheService(redis),
-             ServiceLifetime.Scoped));
-
-            services.AddScoped<IOAuthService, OAuthService>();
+            services.AddSingleton<IConnectionMultiplexer>(redis);
+            services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IOAuthRepository, OAuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOAuthService, OAuthService>();
             services.AddScoped<IUserService, UserService>();
         }
 

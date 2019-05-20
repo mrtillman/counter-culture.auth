@@ -11,33 +11,36 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace CounterCulture.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository, IUserRepository
     {
         public UserRepository(
             SecureDbContext _context,
-            ILogger<UserRepository> LoggerService){
-                this.context = _context;
+            ILogger<UserRepository> LoggerService)
+            :base(_context){
                 Logger = LoggerService;
             }
-        public bool IsDisconnected { get; set; }
-        private readonly SecureDbContext context;
+        
         ILogger<UserRepository> Logger { get; set; }
         
         public User Find(string username, string password)
         {
           return context.Users
-                         .FirstOrDefault(user => 
-                               user.Username == username 
-                               && user.Password == password);
+                        .FirstOrDefault(user => 
+                          (user.Username == username 
+                              && user.Password == password));
         }
 
         public UserProfile FindById(int userId)
         {
-            return context.UserProfiles.FirstOrDefault(profile => profile.UserID == userId);
+            return context.UserProfiles
+                          .FirstOrDefault(profile => 
+                            profile.UserID == userId);
         }
 
         public bool Exists(string username){
-            return context.Users.Where(user => user.Username == username).Count() == 1;
+            return context.Users
+                          .FirstOrDefault(user => 
+                            user.Username == username) != null;
         }
 
         public bool Create(string username, string password)
