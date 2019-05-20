@@ -11,92 +11,43 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace CounterCulture.Repositories
 {
-    public class UserRepository : IUserRepository// BaseRepository, IBaseRepository, 
+    public class UserRepository : IUserRepository
     {
         public UserRepository(
-            SecureDbContext context,
+            SecureDbContext _context,
             ILogger<UserRepository> LoggerService){
-            //:base(_connection, _appSecrets){ 
-                _context = context;
+                this.context = _context;
                 Logger = LoggerService;
             }
         public bool IsDisconnected { get; set; }
-        private readonly SecureDbContext _context;
+        private readonly SecureDbContext context;
         ILogger<UserRepository> Logger { get; set; }
         
-        public UserForm Find(string username, string password)
+        public User Find(string username, string password)
         {
-          return _context.Users
-                .Where(user => 
-                  user.Username == username 
-                  && user.Password == password)
-                .FirstOrDefault();
-            //return _context.Users.Where()
-                           
-            // User user = new User();
-            // var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
-            // var command = new MySqlCommand(query, connection);
-            // command.CommandType = CommandType.Text;
-            
-            // using(DbDataReader rdr = command.ExecuteReader()){
-            //     if(!rdr.HasRows) return null;
-            //     rdr.Read();
-            //     user.ID = rdr.GetFieldValue<int>(0);
-            //     user.Username = rdr.GetFieldValue<string>(1);
-            //     rdr.Close();
-            // }
-
-            //return user;
-
+          return context.Users
+                         .FirstOrDefault(user => 
+                               user.Username == username 
+                               && user.Password == password);
         }
 
-        public User FindById(int userId)
+        public UserProfile FindById(int userId)
         {
-            return new User();
-            // User user = new User();
-            // var query = $"SELECT * FROM `Users` WHERE ID = {userId};";
-            // var command = new MySqlCommand(query, connection);
-            // command.CommandType = CommandType.Text;
-            // using(DbDataReader rdr = command.ExecuteReader()){
-            //     if(!rdr.HasRows) return null;
-            //     rdr.Read();
-            //     user.ID = rdr.GetFieldValue<int>(0);
-            //     user.Username = rdr.GetFieldValue<string>(1);
-            //     rdr.Close();
-            // }
-            // return user;
+            return context.UserProfiles.FirstOrDefault(profile => profile.UserID == userId);
         }
 
         public bool Exists(string username){
-            return true;
-            // var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
-            // var command = new MySqlCommand(query, connection);
-            // bool exists = false;
-            // command.CommandType = CommandType.Text;
-            // using(DbDataReader rdr = command.ExecuteReader()){
-            //     rdr.Read();
-            //     exists = rdr.GetFieldValue<long>(0) > 0;
-            // }
-            // return exists;
+            return context.Users.Where(user => user.Username == username).Count() == 1;
         }
 
-        // public bool Create(string username, string password)
-        // {
-        //     var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
-        //     var command = new MySqlCommand(cmdText, connection);
-        //     command.CommandType = CommandType.Text;
-        //     return command.ExecuteNonQuery() == 1;
-        // }
-
-        // public IUserRepository Reconnect(){
-        //     connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-        //     connection.Open();
-        //     return this;
-        // }
-
-        // object IBaseRepository.Reconnect(){
-        //     return Reconnect();
-        // }
+        public bool Create(string username, string password)
+        {
+            context.Users.Add(new User(){ 
+              Username = username,
+              Password = password
+            });
+            return context.SaveChanges() == 1;
+        }
 
     }
 }

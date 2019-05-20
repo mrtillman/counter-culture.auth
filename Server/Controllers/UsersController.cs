@@ -33,7 +33,7 @@ namespace CounterCulture.Controllers
         private ILogger<UsersController> Logger { get; set; }
 
         [HttpGet]
-        public ActionResult<User> Get() {
+        public ActionResult<UserProfile> Get() {
             if (!User.Identity.IsAuthenticated){
                 return Unauthorized();
             }

@@ -1,0 +1,5 @@
+appsettings
+appsettings.dev.json
+appsecrets
+appsettings.*
+appsecrets.*

@@ -9,7 +9,8 @@ namespace CounterCulture.Repositories
     {
         public SecureDbContext(DbContextOptions<SecureDbContext> options)
             : base(options) { }
-        public DbSet<UserForm> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
     }
 }

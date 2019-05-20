@@ -19,7 +19,7 @@ namespace CounterCulture.Services
         
         public IUserRepository UserRepo { get; set; }
 
-        public UserForm Find(string username, string password)
+        public User Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
@@ -27,12 +27,12 @@ namespace CounterCulture.Services
             return UserRepo.Find(username, password);
         }
 
-        public User FindById(int userId){
+        public UserProfile FindById(int userId){
             return UserRepo.FindById(userId);
         }
 
         public bool Create(string username, string password){
-            return true; //UserRepo.Create(username, password);
+            return UserRepo.Create(username, password);
         }
 
         public bool Exists(string username){
