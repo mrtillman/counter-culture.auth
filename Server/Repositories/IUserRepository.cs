@@ -8,9 +8,9 @@ namespace CounterCulture.Repositories
     {
         bool IsDisconnected { get; }
         bool Exists(string username);
-        User Find(string username, string password);
+        UserForm Find(string username, string password);
         User FindById(int userId);
-        bool Create(string username, string password);
-        IUserRepository Reconnect();
+        // bool Create(string username, string password);
+        // IUserRepository Reconnect();
     }
 }

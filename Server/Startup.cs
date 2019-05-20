@@ -64,21 +64,23 @@ namespace CounterCulture
                 };
             });
             MySqlConnection connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            UserRepository userRepo = new UserRepository(
-                connection, appSecrets, LoggerFactory.CreateLogger<UserRepository>());
+            // UserRepository userRepo = new UserRepository(
+            //     connection, appSecrets, LoggerFactory.CreateLogger<UserRepository>());
             OAuthRepository oauthRepo = new OAuthRepository(
                 connection, appSecrets, LoggerFactory.CreateLogger<OAuthRepository>());
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
             services.Add(new ServiceDescriptor(typeof(IOAuthRepository),
              provider => RepoProxy<IOAuthRepository>.Create(oauthRepo),
              ServiceLifetime.Scoped));
-            services.Add(new ServiceDescriptor(typeof(IUserRepository),
-             provider => RepoProxy<IUserRepository>.Create(userRepo),
-             ServiceLifetime.Scoped));
+            // services.Add(new ServiceDescriptor(typeof(IUserRepository),
+            //  provider => RepoProxy<IUserRepository>.Create(userRepo),
+            //  ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(ICacheService),
              provider => new CacheService(redis),
              ServiceLifetime.Scoped));
+
             services.AddScoped<IOAuthService, OAuthService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
         }
 

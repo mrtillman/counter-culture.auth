@@ -6,7 +6,7 @@ namespace CounterCulture.Services {
     public interface IUserService
     {
         bool Exists(string username);
-        User Find(string username, string password);
+        UserForm Find(string username, string password);
         User FindById(int userId);
         bool Create(string username, string password);
     }

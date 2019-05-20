@@ -4,86 +4,99 @@ using System.Data.Common;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Linq;
 using CounterCulture.Models;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace CounterCulture.Repositories
 {
-    public class UserRepository : BaseRepository, IBaseRepository, IUserRepository
+    public class UserRepository : IUserRepository// BaseRepository, IBaseRepository, 
     {
         public UserRepository(
-            MySqlConnection _connection, 
-            AppSecrets _appSecrets, 
-            ILogger<UserRepository> LoggerService)
-            :base(_connection, _appSecrets){ 
+            SecureDbContext context,
+            ILogger<UserRepository> LoggerService){
+            //:base(_connection, _appSecrets){ 
+                _context = context;
                 Logger = LoggerService;
             }
-
+        public bool IsDisconnected { get; set; }
+        private readonly SecureDbContext _context;
         ILogger<UserRepository> Logger { get; set; }
-
-        public User Find(string username, string password)
+        
+        public UserForm Find(string username, string password)
         {
-            User user = new User();
-            var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
-            var command = new MySqlCommand(query, connection);
-            command.CommandType = CommandType.Text;
+          return _context.Users
+                .Where(user => 
+                  user.Username == username 
+                  && user.Password == password)
+                .FirstOrDefault();
+            //return _context.Users.Where()
+                           
+            // User user = new User();
+            // var query = $"SELECT * FROM `Users` WHERE Username = '{username}' AND Password = '{password}'";
+            // var command = new MySqlCommand(query, connection);
+            // command.CommandType = CommandType.Text;
             
-            using(DbDataReader rdr = command.ExecuteReader()){
-                if(!rdr.HasRows) return null;
-                rdr.Read();
-                user.ID = rdr.GetFieldValue<int>(0);
-                user.Username = rdr.GetFieldValue<string>(1);
-                rdr.Close();
-            }
+            // using(DbDataReader rdr = command.ExecuteReader()){
+            //     if(!rdr.HasRows) return null;
+            //     rdr.Read();
+            //     user.ID = rdr.GetFieldValue<int>(0);
+            //     user.Username = rdr.GetFieldValue<string>(1);
+            //     rdr.Close();
+            // }
 
-            return user;
+            //return user;
 
         }
 
         public User FindById(int userId)
         {
-            User user = new User();
-            var query = $"SELECT * FROM `Users` WHERE ID = {userId};";
-            var command = new MySqlCommand(query, connection);
-            command.CommandType = CommandType.Text;
-            using(DbDataReader rdr = command.ExecuteReader()){
-                if(!rdr.HasRows) return null;
-                rdr.Read();
-                user.ID = rdr.GetFieldValue<int>(0);
-                user.Username = rdr.GetFieldValue<string>(1);
-                rdr.Close();
-            }
-            return user;
+            return new User();
+            // User user = new User();
+            // var query = $"SELECT * FROM `Users` WHERE ID = {userId};";
+            // var command = new MySqlCommand(query, connection);
+            // command.CommandType = CommandType.Text;
+            // using(DbDataReader rdr = command.ExecuteReader()){
+            //     if(!rdr.HasRows) return null;
+            //     rdr.Read();
+            //     user.ID = rdr.GetFieldValue<int>(0);
+            //     user.Username = rdr.GetFieldValue<string>(1);
+            //     rdr.Close();
+            // }
+            // return user;
         }
 
         public bool Exists(string username){
-            var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
-            var command = new MySqlCommand(query, connection);
-            bool exists = false;
-            command.CommandType = CommandType.Text;
-            using(DbDataReader rdr = command.ExecuteReader()){
-                rdr.Read();
-                exists = rdr.GetFieldValue<long>(0) > 0;
-            }
-            return exists;
+            return true;
+            // var query = $"SELECT COUNT(ID) FROM `Users` WHERE Username = '{username}'";
+            // var command = new MySqlCommand(query, connection);
+            // bool exists = false;
+            // command.CommandType = CommandType.Text;
+            // using(DbDataReader rdr = command.ExecuteReader()){
+            //     rdr.Read();
+            //     exists = rdr.GetFieldValue<long>(0) > 0;
+            // }
+            // return exists;
         }
 
-        public bool Create(string username, string password)
-        {
-            var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
-            var command = new MySqlCommand(cmdText, connection);
-            command.CommandType = CommandType.Text;
-            return command.ExecuteNonQuery() == 1;
-        }
+        // public bool Create(string username, string password)
+        // {
+        //     var cmdText = $"INSERT INTO `Users` (Username, Password) VALUES ('{username}','{password}')";
+        //     var command = new MySqlCommand(cmdText, connection);
+        //     command.CommandType = CommandType.Text;
+        //     return command.ExecuteNonQuery() == 1;
+        // }
 
-        public IUserRepository Reconnect(){
-            connection = new MySqlConnection(appSecrets.MySQLConnectionString);
-            connection.Open();
-            return this;
-        }
+        // public IUserRepository Reconnect(){
+        //     connection = new MySqlConnection(appSecrets.MySQLConnectionString);
+        //     connection.Open();
+        //     return this;
+        // }
 
-        object IBaseRepository.Reconnect(){
-            return Reconnect();
-        }
+        // object IBaseRepository.Reconnect(){
+        //     return Reconnect();
+        // }
 
     }
 }
