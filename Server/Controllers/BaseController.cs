@@ -16,7 +16,7 @@ namespace CounterCulture.Controllers
     [ApiVersion( "1.0" )]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase {
+    public abstract class BaseController : ControllerBase {
 
         public BaseController(ICacheService CacheService)
         {

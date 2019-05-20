@@ -12,20 +12,24 @@ namespace CounterCulture.Services
     public class UserService : IUserService
     {
         public UserService(
-            IUserRepository UserRepository, IOptions<AppSecrets> appSecrets)
+            IUserRepository UserRepository, 
+            SecureDbContext context)
         {
             UserRepo = UserRepository;
-            _secrets = appSecrets.Value;
+            _context = context;
         }
         
         public IUserRepository UserRepo { get; set; }
-        private readonly AppSecrets _secrets;
+        private readonly SecureDbContext _context;
 
         public User Find(string username, string password)
         {
             if(String.IsNullOrEmpty(username) || 
                String.IsNullOrEmpty(password)) return null;
-            return UserRepo.Find(username, password);
+            
+            return _context.Users
+                           .Where(user => user.Username == username)
+                           .FirstOrDefault();
         }
 
         public User FindById(int userId){
