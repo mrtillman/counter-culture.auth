@@ -43,7 +43,7 @@ namespace CounterCulture.Pages
                 redirectOrigin = $"http://localhost:8080";
             }
             
-            return Redirect($"{redirectOrigin}#code={authorization_code}");
+            return Redirect($"{redirectOrigin}#authorization_code={authorization_code}");
             
         }
     }

@@ -37,7 +37,7 @@ namespace CounterCulture.Pages
             // current user who is logged in
             var userID = 12; 
             Cache.Set(authorization_code, $"{client_id}:{userID}");
-            return Redirect($"{redirect_uri}#code={authorization_code}");
+            return Redirect($"{redirect_uri}#authorization_code={authorization_code}");
         }
     }
 }
