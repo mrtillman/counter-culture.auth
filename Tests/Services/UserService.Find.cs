@@ -15,10 +15,9 @@ namespace Tests
 
         public UserService_Find() {
           var repoMock = new Mock<IUserRepository>(MockBehavior.Strict);
-          var optionsMock = new Mock<IOptions<AppSecrets>>();
           repoMock.Setup(mock => mock.Find(It.IsAny<String>(), It.IsAny<String>()))
                   .Returns(new User());
-          service = new UserService(repoMock.Object, optionsMock.Object);
+          service = new UserService(repoMock.Object);
         }
 
         [TestMethod]

@@ -33,10 +33,10 @@ namespace CounterCulture
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var appSecrets = Configuration.Get<AppSecrets>();
-            services.Configure<AppSecrets>(Configuration);
+            
             services.AddDbContext<SecureDbContext>(options => {
-                options.UseMySql(Configuration.GetConnectionString("DefaultMySQLConnection"));
+                options.UseMySql(
+                    Configuration.GetConnectionString("DefaultMySQLConnection"));
             });
             services.AddMvc()
                     .AddJsonOptions(options => {
@@ -51,20 +51,25 @@ namespace CounterCulture
             })
             .AddJwtBearer(x =>
             {
-                var key = Encoding.ASCII.GetBytes(appSecrets.Secret);
+                var signingKey = Encoding.ASCII
+                                .GetBytes(Configuration
+                                    .GetValue<string>("AppSecret"));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
             
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(appSecrets.RedisConnectionString);
-            services.AddSingleton<IConnectionMultiplexer>(redis);
+            ConnectionMultiplexer redisConnection = 
+             ConnectionMultiplexer
+            .Connect(Configuration
+                .GetConnectionString("DefaultRedisConnection"));
+            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IOAuthRepository, OAuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
