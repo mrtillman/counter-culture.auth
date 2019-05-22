@@ -7,6 +7,8 @@ namespace CounterCulture.Services {
     {
         AuthResponse Authenticate(OAuthClient client);
         OAuthClient GetClient(string client_id);
+        OAuthClient FindClient(
+            string client_id, string client_secret, string redirect_uri);
         OAuthClient RegisterClient(OAuthClient client);
     }
 }

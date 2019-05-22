@@ -12,7 +12,7 @@ namespace CounterCulture.Utilities {
         public static AuthResponse Authenticate(OAuthClient client, string secret){
             if(client == null) return null;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret);
+            var signingKey = Encoding.ASCII.GetBytes(secret);
             var tomorrow = DateTime.UtcNow.AddDays(1);
             var descriptor = new SecurityTokenDescriptor(){
                 Subject = new ClaimsIdentity(new Claim[]{
@@ -22,7 +22,7 @@ namespace CounterCulture.Utilities {
                 }),
                 Expires = tomorrow,
                 SigningCredentials = new SigningCredentials(
-                                     new SymmetricSecurityKey(key), 
+                                     new SymmetricSecurityKey(signingKey), 
                                      SecurityAlgorithms.HmacSha256Signature)
             };
             var _token = tokenHandler.CreateToken(descriptor);

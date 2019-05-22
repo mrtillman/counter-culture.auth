@@ -32,6 +32,19 @@ namespace CounterCulture.Services {
             return OAuthRepo.Get(client_id);
         }
 
+        public OAuthClient FindClient(
+            string client_id, string client_secret, string redirect_uri)
+        {
+            if(String.IsNullOrWhiteSpace(client_id)
+               || String.IsNullOrWhiteSpace(client_secret)
+               || String.IsNullOrWhiteSpace(redirect_uri)) return null;
+            var match = new OAuthClient(){
+                client_id = client_id,
+                client_secret = client_secret,
+                redirect_uri = redirect_uri
+            };
+            return OAuthRepo.Find(match);
+        }
         public OAuthClient RegisterClient(OAuthClient client) {
             client.client_id = _generateClientId();
             client.client_secret = _generateClientSecret();

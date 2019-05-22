@@ -24,14 +24,19 @@ First, clone the Git repo:
 git clone https://github.com/mrtillman/counter-culture.secure.git
 ```
 
-Next, create `appsecrets.json` in the project root:
+Next, create `appsettings.json` in the `Server/` root:
+
 ```sh
 {
-  "MySQLConnectionString": "<MySQLConnectionString>",
-  "RedisConnectionString": "<RedisConnectionString>"
-  "Secret": "<app-secret>"
+  "AppSecret": "<AppSecret>",
+  "ConnectionStrings": {
+    "DefaultMySQLConnection": "<DefaultMySQLConnection>",
+    "DefaultRedisConnection": "<DefaultRedisConnection>"
+  }
 }
 ```
+
+> It is important to note that the `AppSecret` must be at least 32 characters long - it must also match the secret from [counter-culture.api](https://github.com/mrtillman/counter-culture.api).
 
 Start the server:
 

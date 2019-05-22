@@ -53,23 +53,27 @@ namespace CounterCulture.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("access_token")]
-        public ActionResult AccessToken(string authorization_code){
-            if(String.IsNullOrEmpty(authorization_code)){
+        public ActionResult AccessToken([FromQuery] AuthRequest authReq){
+
+            if(String.IsNullOrEmpty(authReq.authorization_code)){
                 return Unauthorized();
             }
-            var auth = Cache.Get(authorization_code);
-            if(String.IsNullOrEmpty(auth)){
+            var authCacheValue = Cache.Get(authReq.authorization_code);
+            if(String.IsNullOrEmpty(authCacheValue)){
                 return Unauthorized();
             }
-            Cache.Delete(authorization_code);
-            var auth_parts = auth.Split(':');
-            var client_id = auth_parts[0];
-            var user_id = auth_parts[1];
-            var client = OAuth.GetClient(client_id);
+            // Cache.Delete(authReq.authorization_code);
+            var authParts = authCacheValue.Split(':');
+            var clientId = authParts[0];
+            var userId = authParts[1];
+            var client = OAuth.FindClient(
+                            authReq.client_id, 
+                            authReq.client_secret, 
+                            authReq.redirect_uri);
             if(client == null){
                 return Unauthorized();
             }
-            client.user_id = user_id;
+            client.user_id = userId;
             var authResponse = OAuth.Authenticate(client);
             if(authResponse == null){
                 return Unauthorized();

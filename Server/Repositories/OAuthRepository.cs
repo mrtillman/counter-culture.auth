@@ -31,11 +31,19 @@ namespace CounterCulture.Repositories
                             client.client_id == client_id);
         }
 
+        public OAuthClient Find(OAuthClient client) {
+            return context.OAuthClients
+                          .FirstOrDefault(_client =>
+                            _client.client_id == client.client_id &&
+                            _client.client_secret == client.client_secret &&
+                            _client.redirect_uri == client.redirect_uri);
+        }
+
         public OAuthClient Find(string client_id, string client_secret) {
             return context.OAuthClients
                           .FirstOrDefault(client =>
-                            (client.client_id == client_id
-                             && client.client_secret == client_secret));
+                            client.client_id == client_id &&
+                            client.client_secret == client_secret);
         }
 
     }
