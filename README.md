@@ -24,15 +24,17 @@ First, clone the Git repo:
 git clone https://github.com/mrtillman/counter-culture.secure.git
 ```
 
-Next, create `appsettings.json` in the `Server/` root:
+Next, set your `ConnectionStrings` and your 32-character `AppSecret` in `Server/appsettings.json`:
 
 ```sh
-{
+  ...
+
   "AppSecret": "<AppSecret>",
   "ConnectionStrings": {
     "DefaultMySQLConnection": "<DefaultMySQLConnection>",
     "DefaultRedisConnection": "<DefaultRedisConnection>"
   }
+
 }
 ```
 
