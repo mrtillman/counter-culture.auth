@@ -8,6 +8,7 @@ namespace CounterCulture.Models {
         public string scope { get; set; }
         public string state { get; set; }
         public string response_type { get; set; }
-        public string authorization_code { get; set; }
+        public string grant_type { get; set; }
+        public string code { get; set; }
     }
 }

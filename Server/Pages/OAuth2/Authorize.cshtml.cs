@@ -31,13 +31,19 @@ namespace CounterCulture.Pages
             Client = OAuth.GetClient(authReq.client_id);
         }
 
-        public IActionResult OnPostClientAuthorization(string client_id, string redirect_uri) {
-            var authorization_code = Guid.NewGuid().ToString();
+        public IActionResult OnPostClientAuthorization(
+            [FromQuery] AuthRequest authReq) 
+        {
+
+            var code = Guid.NewGuid().ToString();
+
             // TODO: get user id from the 
             // current user who is logged in
             var userID = 12; 
-            Cache.Set(authorization_code, $"{client_id}:{userID}");
-            return Redirect($"{redirect_uri}#authorization_code={authorization_code}");
+            
+            Cache.Set(code, $"{authReq.client_id}:{userID}");
+
+            return Redirect($"{authReq.redirect_uri}#code={code}&state={authReq.state}");
         }
     }
 }

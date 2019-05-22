@@ -53,21 +53,24 @@ namespace CounterCulture.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("access_token")]
-        public ActionResult AccessToken([FromQuery] AuthRequest authReq){
+        public ActionResult AccessToken([FromQuery] AuthRequest authReq)
+        {
 
-            if(String.IsNullOrEmpty(authReq.authorization_code)){
+            // TODO: check authReq.grant_type
+
+            if(String.IsNullOrWhiteSpace(authReq.code)){
                 return Unauthorized();
             }
-            var authCacheValue = Cache.Get(authReq.authorization_code);
-            if(String.IsNullOrEmpty(authCacheValue)){
+            var authCacheValue = Cache.Get(authReq.code);
+            if(String.IsNullOrWhiteSpace(authCacheValue)){
                 return Unauthorized();
             }
-            // Cache.Delete(authReq.authorization_code);
+            Cache.Delete(authReq.code);
             var authParts = authCacheValue.Split(':');
             var clientId = authParts[0];
             var userId = authParts[1];
             var client = OAuth.FindClient(
-                            authReq.client_id, 
+                            clientId, 
                             authReq.client_secret, 
                             authReq.redirect_uri);
             if(client == null){

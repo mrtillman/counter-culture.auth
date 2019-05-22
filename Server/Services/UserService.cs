@@ -21,8 +21,8 @@ namespace CounterCulture.Services
 
         public User Find(string username, string password)
         {
-            if(String.IsNullOrEmpty(username) || 
-               String.IsNullOrEmpty(password)) return null;
+            if(String.IsNullOrWhiteSpace(username) || 
+               String.IsNullOrWhiteSpace(password)) return null;
             
             return UserRepo.Find(username, password);
         }
