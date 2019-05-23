@@ -15,18 +15,21 @@ namespace CounterCulture.Pages
     {
         public IndexModel(
             ICacheService CacheService,
+            IConfiguration ConfigurationService,
             IHostingEnvironment hostingEnvironment,
             IUserService UserService,
             ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
+            Config = ConfigurationService;
             env = hostingEnvironment;
             Users = UserService;
             Logger = LoggerService;
         }
 
-        ILogger<IndexModel> Logger { get; set; }
+        private ILogger<IndexModel> Logger { get; set; }
 
+        private IConfiguration Config { get; set; }
         private ICacheService Cache { get; set; }
         private IHostingEnvironment env  { get; set; }
         private IUserService Users  { get; set; }
@@ -39,7 +42,7 @@ namespace CounterCulture.Pages
             var _authReq = HttpUtility.ParseQueryString(queryString);
             var state = _authReq.Get("state");
 
-            var client_id = Environment.GetEnvironmentVariable("ccult_client_id");
+            var client_id = Config["ccult_client_id"];
 
             AuthRequest authReq = new AuthRequest() {
                 client_id = client_id,

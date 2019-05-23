@@ -1,16 +1,15 @@
 FROM microsoft/dotnet:sdk AS build-env
 WORKDIR /app
 
-COPY . /app
-WORKDIR /app
+COPY *.csproj ./
+RUN dotnet restore
 
-# Restore and Build.
-RUN ["dotnet", "restore"]
-RUN ["dotnet", "build"]
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-# Container will open port 5000 allowing us to connect to it.
 EXPOSE 5000
 
-# Start the dotnet application on port 5000.
-CMD ["dotnet", "run"]
-
+FROM microsoft/dotnet:aspnetcore-runtime
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "counter-culture.secure.server.dll"]

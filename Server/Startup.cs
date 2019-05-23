@@ -36,7 +36,7 @@ namespace CounterCulture
             
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(
-                    Configuration.GetConnectionString("DefaultMySQLConnection"));
+                    Configuration["ConnectionStrings:DefaultMySQLConnection"]);
             });
             services.AddMvc()
                     .AddJsonOptions(options => {
@@ -52,7 +52,7 @@ namespace CounterCulture
             .AddJwtBearer(x =>
             {
                 var signingKey = Encoding.ASCII
-                                .GetBytes(Environment.GetEnvironmentVariable("AppSecret"));
+                                .GetBytes(Configuration["AppSecret"]);
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -66,8 +66,7 @@ namespace CounterCulture
             
             ConnectionMultiplexer redisConnection = 
              ConnectionMultiplexer
-            .Connect(Configuration
-                .GetConnectionString("DefaultRedisConnection"));
+            .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
             services.AddSingleton<IConnectionMultiplexer>(redisConnection);
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IOAuthRepository, OAuthRepository>();

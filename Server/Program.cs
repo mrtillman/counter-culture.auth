@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,15 +18,28 @@ namespace CounterCulture
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args){
-            
-            var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsecrets.json", optional: true, reloadOnChange: true)
-            .Build();
 
             return  WebHost.CreateDefaultBuilder(args)
-                    .UseConfiguration(config)
                     .UseUrls("http://0.0.0.0:5000")
+                    .ConfigureAppConfiguration((hostingContext, config) => {
+                        
+                        var env = hostingContext.HostingEnvironment;
+
+                         config
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables();
+
+                        if (env.IsDevelopment())
+                        {
+                            var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
+                            if (appAssembly != null)
+                            {
+                                config.AddUserSecrets(appAssembly, optional: true);
+                            }
+                        }
+
+                    })
                     .ConfigureLogging((hostingContext, logging) => {
                         logging.ClearProviders();
                         logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));

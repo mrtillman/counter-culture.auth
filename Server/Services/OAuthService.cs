@@ -24,7 +24,7 @@ namespace CounterCulture.Services {
         
         public AuthResponse Authenticate(OAuthClient client){
             if(client == null) return null;
-            var appSecret = Environment.GetEnvironmentVariable("AppSecret");
+            var appSecret = Config["AppSecret"];
             return JWTAuthenticator.Authenticate(client, appSecret);
         }
 
