@@ -24,15 +24,19 @@ First, clone the Git repo:
 git clone https://github.com/mrtillman/counter-culture.secure.git
 ```
 
-Next, set your `ConnectionStrings` and your 32-character `AppSecret` in `Server/appsettings.json`:
+Next, update `appsettings.json`:
 
 ```sh
   ...
 
-  "AppSecret": "<AppSecret>",
   "ConnectionStrings": {
     "DefaultMySQLConnection": "<DefaultMySQLConnection>",
     "DefaultRedisConnection": "<DefaultRedisConnection>"
+  },
+  "AppSecret": "the internet? is that thing still around?",
+  "ccult_client_id": "<ccult_client_id>",
+  "ccult_client_secret": "<ccult_client_secret>",
+  "ccult_redirect_uri": "http://localhost:8080/oauth2/callback"
   }
 
 }
@@ -47,4 +51,4 @@ cd counter-culture.secure/Server
 dotnet run
 ```
 
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser. Upon successful login, the page will redirect to http://localhost:8080, so be sure [counter-culture.app](https://github.com/mrtillman/counter-culture.app) is up and running on port 8080.
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
