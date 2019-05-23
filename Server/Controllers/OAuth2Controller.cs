@@ -66,9 +66,12 @@ namespace CounterCulture.Controllers
                 return Unauthorized();
             }
             Cache.Delete(authReq.code);
+            
+            // TODO: simplify using string extensions
             var authParts = authCacheValue.Split(':');
             var clientId = authParts[0];
             var userId = authParts[1];
+
             var client = OAuth.FindClient(
                             clientId, 
                             authReq.client_secret, 

@@ -52,7 +52,7 @@ namespace CounterCulture
             .AddJwtBearer(x =>
             {
                 var signingKey = Encoding.ASCII
-                                .GetBytes(Configuration.GetValue<string>("AppSecret"));
+                                .GetBytes(Environment.GetEnvironmentVariable("AppSecret"));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters

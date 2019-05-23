@@ -1,10 +1,13 @@
 using System;
+using System.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
 using CounterCulture.Models;
 using CounterCulture.Utilities;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace CounterCulture.Pages
 {
@@ -13,19 +16,36 @@ namespace CounterCulture.Pages
         public IndexModel(
             ICacheService CacheService,
             IHostingEnvironment hostingEnvironment,
-            IUserService UserService)
+            IUserService UserService,
+            ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
             env = hostingEnvironment;
             Users = UserService;
+            Logger = LoggerService;
         }
+
+        ILogger<IndexModel> Logger { get; set; }
 
         private ICacheService Cache { get; set; }
         private IHostingEnvironment env  { get; set; }
         private IUserService Users  { get; set; }
 
-        public IActionResult OnPostLogin([FromForm] Credentials creds)
+        public IActionResult OnPostLogin([FromForm] User creds)
         {
+            
+            var referer = Request.Headers["referer"].ToString();
+            var queryString = new Uri(referer).Query;
+            var _authReq = HttpUtility.ParseQueryString(queryString);
+            var state = _authReq.Get("state");
+
+            var client_id = Environment.GetEnvironmentVariable("ccult_client_id");
+
+            AuthRequest authReq = new AuthRequest() {
+                client_id = client_id,
+                state = state
+            };
+
             var hashedPassword = SHA256Hash.Compute(creds.Password);
             var user = Users.Find(creds.Username, hashedPassword);
             
@@ -34,19 +54,15 @@ namespace CounterCulture.Pages
             }
 
             var code = Guid.NewGuid().ToString();
-            var client_id = Environment.GetEnvironmentVariable("CLIENT_ID");
-
-            // TODO: get state query parameter from url
-            var state = "";
 
             Cache.Set(code, $"{client_id}:{user.ID}");
 
-            var redirectOrigin = "https://www.counter-culture.io";
+            var homePage = "https://www.counter-culture.io";
             if(env.IsDevelopment()){
-                redirectOrigin = $"http://localhost:8080";
+                homePage = $"http://localhost:8080";
             }
 
-            return Redirect($"{redirectOrigin}#code={code}&state={state}");
+            return Redirect($"{homePage}#code={code}&state={authReq.state}");
             
         }
     }
