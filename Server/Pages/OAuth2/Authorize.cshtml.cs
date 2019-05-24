@@ -32,7 +32,7 @@ namespace CounterCulture.Pages
         }
 
         public IActionResult OnPostClientAuthorization(
-            [FromQuery] AuthRequest authReq) 
+            [FromForm] AuthRequest authReq) 
         {
 
             var code = Guid.NewGuid().ToString();
