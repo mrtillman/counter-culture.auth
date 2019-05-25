@@ -24,7 +24,8 @@ First, clone the Git repo:
 git clone https://github.com/mrtillman/counter-culture.secure.git
 ```
 
-Next, update `appsettings.json`:
+Next, update `Server/appsettings.demo.json`<br/>
+(rename this file to `appsettings.json`):
 
 ```sh
   ...
