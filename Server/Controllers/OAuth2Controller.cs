@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,11 +72,12 @@ namespace CounterCulture.Controllers
             var authParts = authCacheValue.Split(':');
             var clientId = authParts[0];
             var userId = authParts[1];
+            var redirect_uri = HttpUtility.UrlDecode(authReq.redirect_uri);
 
             var client = OAuth.FindClient(
                             clientId, 
                             authReq.client_secret, 
-                            authReq.redirect_uri);
+                            redirect_uri);
             if(client == null){
                 return Unauthorized();
             }
