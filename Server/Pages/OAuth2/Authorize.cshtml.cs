@@ -47,7 +47,7 @@ namespace CounterCulture.Pages
             
             Cache.Set(code, $"{authReq.client_id}:{userID}");
 
-            return Redirect($"{authReq.redirect_uri}#code={code}&state={authReq.state}");
+            return Redirect($"{authReq.redirect_uri}?code={code}&state={authReq.state}");
         }
     }
 }
