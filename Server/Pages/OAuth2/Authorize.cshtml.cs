@@ -1,6 +1,8 @@
 using System;
+using System.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
 using CounterCulture.Models;
@@ -10,7 +12,7 @@ namespace CounterCulture.Pages
     public class AuthorizeModel : PageModel
     {
         public AuthorizeModel(
-            ICacheService CacheService, 
+            ICacheService CacheService,
             IOAuthService OAuthService,
             IUserService UserService)
         {
@@ -20,6 +22,7 @@ namespace CounterCulture.Pages
         }
 
         private ICacheService Cache { get; set; }
+
         private IOAuthService OAuth { get; set; }
         private IUserService Users { get; set; }
 
@@ -29,6 +32,7 @@ namespace CounterCulture.Pages
         {
             // TODO: prompt for user login
             Client = OAuth.GetClient(authReq.client_id);
+            ViewData.Add("state", authReq.state);
         }
 
         public IActionResult OnPostClientAuthorization(
