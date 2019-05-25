@@ -5,8 +5,10 @@ project.lock.json
 .DS_Store
 *.pyc
 nupkg/
-appsettings.Development*
-appsettings.Production*
+appsettings/
+appsettings.*
+!appsettings.demo
+
 
 # Visual Studio Code
 .vscode*
