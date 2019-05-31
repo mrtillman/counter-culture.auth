@@ -22,10 +22,8 @@ namespace CounterCulture.Pages
         }
 
         private ICacheService Cache { get; set; }
-
         private IOAuthService OAuth { get; set; }
         private IUserService Users { get; set; }
-
         public OAuthClient Client { get; set; }
 
         public void OnGet([FromQuery] AuthRequest authReq)
@@ -43,11 +41,11 @@ namespace CounterCulture.Pages
 
             // TODO: get user id from the 
             // current user who is logged in
-            var userID = 12; 
+            var userID = 7; 
             
             Cache.Set(code, $"{authReq.client_id}:{userID}");
 
-            return Redirect($"{authReq.redirect_uri}?code={code}&state={authReq.state}");
+            return Redirect($"{authReq.redirect_uri}#code={code}&state={authReq.state}");
         }
     }
 }
