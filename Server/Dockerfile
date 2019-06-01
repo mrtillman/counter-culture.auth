@@ -12,4 +12,5 @@ EXPOSE 5000
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "counter-culture.secure.server.dll"]
+
+ENTRYPOINT [ "dotnet", "counter-culture.secure.server.dll", "--environment=Development"]
