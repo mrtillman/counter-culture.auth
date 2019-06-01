@@ -4,6 +4,8 @@ WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
 
+ENV ASPNETCORE_ENVIRONMENT=Development
+
 COPY . ./
 RUN dotnet publish -c Release -o out
 
