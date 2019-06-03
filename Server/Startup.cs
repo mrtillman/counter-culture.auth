@@ -21,7 +21,7 @@ namespace CounterCulture
 {
   public class Startup
     {
-        public Startup(IConfiguration configuration, ILoggerFactory _LoggerFactory)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
