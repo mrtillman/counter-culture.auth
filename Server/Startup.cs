@@ -41,6 +41,7 @@ namespace CounterCulture
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
             services.AddApiVersioning();
+            services.AddIdentityCore<OAuthClient>();
             services.AddAuthentication(options => 
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
