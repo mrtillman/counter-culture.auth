@@ -22,17 +22,14 @@ namespace CounterCulture.Controllers
         public UsersController(
             ICacheService CacheService,
             ILogger<UsersController> LoggerService,
-            IUserService UserService) 
+            IUserService UserService)
             :base(CacheService)
         {
             Users = UserService;
             Logger = LoggerService;
         }
 
-        // TODO: remove 
-        // (replace with Microsoft.AspNetCore.Identity.UserManager)
         private IUserService Users { get; set; }
-
         private ILogger<UsersController> Logger { get; set; }
 
         [HttpGet]

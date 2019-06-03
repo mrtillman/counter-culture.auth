@@ -7,9 +7,6 @@ using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Models;
 
-// TODO: remove 
-// (Replace with Microsoft.AspNetCore.Identity.UserManager)
-
 namespace CounterCulture.Services
 {
     public class UserService : IUserService
