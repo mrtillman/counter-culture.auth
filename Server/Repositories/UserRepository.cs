@@ -9,6 +9,9 @@ using CounterCulture.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
+// TODO: remove 
+// (Replace with Microsoft.AspNetCore.Identity.UserManager)
+
 namespace CounterCulture.Repositories
 {
     public class UserRepository : BaseRepository, IUserRepository
