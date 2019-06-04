@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace CounterCulture
 {
@@ -67,11 +68,13 @@ namespace CounterCulture
              ConnectionMultiplexer
             .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
             services.AddSingleton<IConnectionMultiplexer>(redisConnection);
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IOAuthRepository, OAuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOAuthService, OAuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserStore<AppUser>, AppUserStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
