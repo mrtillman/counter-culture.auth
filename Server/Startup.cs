@@ -71,9 +71,7 @@ namespace CounterCulture
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IOAuthRepository, OAuthRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOAuthService, OAuthService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
         }
 

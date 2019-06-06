@@ -7,7 +7,8 @@ using CounterCulture.Repositories;
 using CounterCulture.Utilities;
 
 namespace CounterCulture.Services {
-  public class AppUserStore : IUserStore<AppUser>, IUserPasswordStore<AppUser>
+  
+  public class AppUserStore : IUserStore<AppUser>, IUserPasswordStore<AppUser>, IUserEmailStore<AppUser>
   {
     public AppUserStore(IAppUserRepository AppUserRepository)
     {
@@ -30,6 +31,11 @@ namespace CounterCulture.Services {
         
     }
 
+    public Task<AppUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+    {
+      return Task.FromResult(AppUserRepo.FindByEmail(normalizedEmail));
+    }
+
     public Task<AppUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
       return Task.FromResult(AppUserRepo.FindByID(userId));
@@ -40,6 +46,21 @@ namespace CounterCulture.Services {
       return Task.FromResult(AppUserRepo.FindByUserName(normalizedUserName));
     }
 
+    public Task<string> GetEmailAsync(AppUser user, CancellationToken cancellationToken)
+    {
+      return Task.FromResult(user.Email);
+    }
+
+    public Task<bool> GetEmailConfirmedAsync(AppUser user, CancellationToken cancellationToken)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<string> GetNormalizedEmailAsync(AppUser user, CancellationToken cancellationToken)
+    {
+      return Task.FromResult(AppUserRepo.FindUser(user).Email.ToLower());
+    }
+
     public Task<string> GetNormalizedUserNameAsync(AppUser user, CancellationToken cancellationToken)
     {
       return Task.FromResult(user.UserName);
@@ -47,7 +68,7 @@ namespace CounterCulture.Services {
 
     public Task<string> GetPasswordHashAsync(AppUser user, CancellationToken cancellationToken)
     {
-      return Task.FromResult(SHA256Hash.Compute(user.Password));
+      return Task.FromResult(user.PasswordHash);
     }
 
     public Task<string> GetUserIdAsync(AppUser user, CancellationToken cancellationToken)
@@ -63,6 +84,24 @@ namespace CounterCulture.Services {
     public Task<bool> HasPasswordAsync(AppUser user, CancellationToken cancellationToken)
     {
       return Task.FromResult(!string.IsNullOrEmpty(user.Password));
+    }
+
+    public Task SetEmailAsync(AppUser user, string email, CancellationToken cancellationToken)
+    {
+      user.Email = email;
+      return Task.CompletedTask;
+    }
+
+    public Task SetEmailConfirmedAsync(AppUser user, bool confirmed, CancellationToken cancellationToken)
+    {
+      // throw new NotImplementedException();
+      return Task.CompletedTask;
+    }
+
+    public Task SetNormalizedEmailAsync(AppUser user, string normalizedEmail, CancellationToken cancellationToken)
+    {
+      user.Email = normalizedEmail;
+      return Task.CompletedTask;
     }
 
     public Task SetNormalizedUserNameAsync(AppUser user, string normalizedName, CancellationToken cancellationToken)

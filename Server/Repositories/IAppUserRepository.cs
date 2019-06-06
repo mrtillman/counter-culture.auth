@@ -10,6 +10,7 @@ namespace CounterCulture.Repositories {
     AppUser FindByUserName(string UserName);
 
     AppUser FindByID(string UserId);
+    AppUser FindByEmail(string EmailAddress);
   }
 
 }

@@ -1,11 +1,12 @@
 using System;
 using System.Web;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 using CounterCulture.Services;
 using CounterCulture.Models;
-using CounterCulture.Utilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
@@ -17,7 +18,7 @@ namespace CounterCulture.Pages
             ICacheService CacheService,
             IConfiguration ConfigurationService,
             IHostingEnvironment hostingEnvironment,
-            IUserService UserService,
+            UserManager<AppUser> UserService,
             ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
@@ -32,11 +33,10 @@ namespace CounterCulture.Pages
         private IConfiguration Config { get; set; }
         private ICacheService Cache { get; set; }
         private IHostingEnvironment env  { get; set; }
-        private IUserService Users  { get; set; }
+        private UserManager<AppUser> Users  { get; set; }
 
-        public IActionResult OnPostLogin([FromForm] User creds)
+        public async Task<IActionResult> OnPostLogin([FromForm] User creds)
         {
-            
             var referer = Request.Headers["referer"].ToString();
             var queryString = new Uri(referer).Query;
             var _authReq = HttpUtility.ParseQueryString(queryString);
@@ -49,16 +49,14 @@ namespace CounterCulture.Pages
                 state = state
             };
 
-            var hashedPassword = SHA256Hash.Compute(creds.Password);
-            var user = Users.Find(creds.Username, hashedPassword);
-            
-            if(user == null){
+            var user = await Users.FindByEmailAsync(creds.Username);
+            if(!await Users.CheckPasswordAsync(user, creds.Password)){
                 return Unauthorized();
             }
 
             var code = Guid.NewGuid().ToString();
 
-            Cache.Set(code, $"{client_id}:{user.ID}");
+            Cache.Set(code, $"{client_id}:{user.Id}");
 
             var homePage = "https://www.counter-culture.io";
             if(env.IsDevelopment()){

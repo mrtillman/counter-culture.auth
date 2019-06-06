@@ -13,17 +13,14 @@ namespace CounterCulture.Pages
     {
         public AuthorizeModel(
             ICacheService CacheService,
-            IOAuthService OAuthService,
-            IUserService UserService)
+            IOAuthService OAuthService)
         {
             Cache = CacheService;
             OAuth = OAuthService;
-            Users = UserService;
         }
 
         private ICacheService Cache { get; set; }
         private IOAuthService OAuth { get; set; }
-        private IUserService Users { get; set; }
         public OAuthClient Client { get; set; }
 
         public void OnGet([FromQuery] AuthRequest authReq)

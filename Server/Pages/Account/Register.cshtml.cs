@@ -31,9 +31,9 @@ namespace CounterCulture.Pages
         public async Task<IActionResult> OnPostSubmitRegistration([FromForm] AppUser user)
         {
 
-          var result = await Users.CreateAsync(user);
+          var result = await Users.CreateAsync(user, user.Password);
 
-          return Page();
+          return Redirect("/");
 
         }
     }
