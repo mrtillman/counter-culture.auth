@@ -30,11 +30,11 @@ namespace CounterCulture.Pages
 
         public async Task<IActionResult> OnPostSubmitRegistration([FromForm] AppUser user)
         {
+            user.UserName = user.Email.Split('@')[0];
 
-          var result = await Users.CreateAsync(user, user.Password);
+            var result = await Users.CreateAsync(user, user.Password);
 
-          return Redirect("/");
-
+            return Redirect("/");
         }
     }
 }

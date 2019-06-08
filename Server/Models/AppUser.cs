@@ -1,13 +1,15 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace CounterCulture.Models {
-  public class AppUser
+
+  [Table("Users")]
+  public class AppUser : IdentityUser
   {
-      public string Id { get; set; }
-      public string UserName { get; set; }
-      public string Email { get; set; }
-      public string NormalizeUserName { get; set; }
+      public bool IsDeveloper { get; set; }
+      
+      [NotMapped]
       public string Password { get; set; }
-      public string PasswordHash { get; set; }
   }
 }

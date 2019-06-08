@@ -35,7 +35,7 @@ namespace CounterCulture.Pages
         private IHostingEnvironment env  { get; set; }
         private UserManager<AppUser> Users  { get; set; }
 
-        public async Task<IActionResult> OnPostLogin([FromForm] User creds)
+        public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
         {
             var referer = Request.Headers["referer"].ToString();
             var queryString = new Uri(referer).Query;
@@ -48,9 +48,12 @@ namespace CounterCulture.Pages
                 client_id = client_id,
                 state = state
             };
+            var _user = await Users.FindByEmailAsync(user.Email);
+            if(_user == null){
+                return Unauthorized();
+            }
 
-            var user = await Users.FindByEmailAsync(creds.Username);
-            if(!await Users.CheckPasswordAsync(user, creds.Password)){
+            if(!await Users.CheckPasswordAsync(_user, user.Password)){
                 return Unauthorized();
             }
 

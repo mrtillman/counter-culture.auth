@@ -51,9 +51,9 @@ namespace CounterCulture.Repositories
             user.Id == UserId);
         }
 
-        public AppUser FindByEmail(string Email)
+        public AppUser FindByEmail(string normalizedEmail)
         {
-          return Users.FirstOrDefault(user => user.Email == Email);
+          return Users.FirstOrDefault(user => user.NormalizedEmail == normalizedEmail);
         }
       }
 }

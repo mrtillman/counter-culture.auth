@@ -7,7 +7,7 @@ using CounterCulture.Repositories;
 using CounterCulture.Utilities;
 
 namespace CounterCulture.Services {
-  
+
   public class AppUserStore : IUserStore<AppUser>, IUserPasswordStore<AppUser>, IUserEmailStore<AppUser>
   {
     public AppUserStore(IAppUserRepository AppUserRepository)
@@ -23,12 +23,12 @@ namespace CounterCulture.Services {
 
     public Task<IdentityResult> DeleteAsync(AppUser user, CancellationToken cancellationToken)
     {
+      // TODO: AppUserRepo.DeleteUser(user.Id);
       throw new NotImplementedException();
     }
 
     public void Dispose()
     {
-        
     }
 
     public Task<AppUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
@@ -53,7 +53,7 @@ namespace CounterCulture.Services {
 
     public Task<bool> GetEmailConfirmedAsync(AppUser user, CancellationToken cancellationToken)
     {
-      throw new NotImplementedException();
+      return Task.FromResult(user.EmailConfirmed);
     }
 
     public Task<string> GetNormalizedEmailAsync(AppUser user, CancellationToken cancellationToken)
@@ -63,7 +63,7 @@ namespace CounterCulture.Services {
 
     public Task<string> GetNormalizedUserNameAsync(AppUser user, CancellationToken cancellationToken)
     {
-      return Task.FromResult(user.UserName);
+      return Task.FromResult(user.NormalizedUserName);
     }
 
     public Task<string> GetPasswordHashAsync(AppUser user, CancellationToken cancellationToken)
@@ -94,19 +94,19 @@ namespace CounterCulture.Services {
 
     public Task SetEmailConfirmedAsync(AppUser user, bool confirmed, CancellationToken cancellationToken)
     {
-      // throw new NotImplementedException();
+      user.EmailConfirmed = confirmed;
       return Task.CompletedTask;
     }
 
     public Task SetNormalizedEmailAsync(AppUser user, string normalizedEmail, CancellationToken cancellationToken)
     {
-      user.Email = normalizedEmail;
+      user.NormalizedEmail = normalizedEmail;
       return Task.CompletedTask;
     }
 
     public Task SetNormalizedUserNameAsync(AppUser user, string normalizedName, CancellationToken cancellationToken)
     {
-      user.NormalizeUserName = user.UserName;
+      user.NormalizedUserName = normalizedName;
       return Task.CompletedTask;
     }
 
