@@ -19,6 +19,7 @@ namespace CounterCulture.Pages
             IConfiguration ConfigurationService,
             IHostingEnvironment hostingEnvironment,
             UserManager<AppUser> UserService,
+            SignInManager<AppUser> SignInManager,
             ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
@@ -26,15 +27,19 @@ namespace CounterCulture.Pages
             env = hostingEnvironment;
             Users = UserService;
             Logger = LoggerService;
+            AppSignIn = SignInManager;
         }
 
-        private ILogger<IndexModel> Logger { get; set; }
+        ILogger<IndexModel> Logger { get; set; }
 
-        private IConfiguration Config { get; set; }
-        private ICacheService Cache { get; set; }
-        private IHostingEnvironment env  { get; set; }
-        private UserManager<AppUser> Users  { get; set; }
+        IConfiguration Config { get; set; }
+        ICacheService Cache { get; set; }
+        IHostingEnvironment env  { get; set; }
+        UserManager<AppUser> Users  { get; set; }
 
+        SignInManager<AppUser> AppSignIn { get; set; }
+
+        /*
         public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
         {
             var referer = Request.Headers["referer"].ToString();
@@ -67,7 +72,56 @@ namespace CounterCulture.Pages
             }
 
             return Redirect($"{homePage}#code={code}&state={authReq.state}");
-            
+
+        }
+        */
+
+        public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
+        {
+            // returnUrl = returnUrl ?? Url.Content("~/");
+
+            if (ModelState.IsValid)
+            {
+                // TODO: simplify with string extensions
+                var userName = user.Email.Split('@')[0];
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, 
+                // set lockoutOnFailure: true
+                var result = await AppSignIn.PasswordSignInAsync(userName, 
+                    user.Password, isPersistent: false, lockoutOnFailure: true);
+
+                if (result.Succeeded)
+                {
+                    
+                    Logger.LogInformation("User logged in.");
+
+                    var homePage = "https://www.counter-culture.io";
+                    
+                    if(env.IsDevelopment()){
+                        homePage = $"http://localhost:8080";
+                    }
+
+                    return Redirect(homePage);
+                }
+                // if (result.RequiresTwoFactor)
+                // {
+                //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                // }
+                // if (result.IsLockedOut)
+                // {
+                //     _logger.LogWarning("User account locked out.");
+                //     return RedirectToPage("./Lockout");
+                // }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return Page();
         }
     }
 }

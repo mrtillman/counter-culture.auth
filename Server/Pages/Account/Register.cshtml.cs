@@ -30,11 +30,24 @@ namespace CounterCulture.Pages
 
         public async Task<IActionResult> OnPostSubmitRegistration([FromForm] AppUser user)
         {
+            // TODO: simplify with string extensions
             user.UserName = user.Email.Split('@')[0];
 
             var result = await Users.CreateAsync(user, user.Password);
 
-            return Redirect("/");
+            if(ModelState.IsValid){
+                
+                return LocalRedirect("/");
+
+            } else {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return Page();
+            
         }
     }
 }

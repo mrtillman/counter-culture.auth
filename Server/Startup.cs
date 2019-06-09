@@ -41,6 +41,7 @@ namespace CounterCulture
                 options.UseMySql(
                     Configuration["ConnectionStrings:DefaultMySQLConnection"]);
             });
+            services.AddDefaultIdentity<AppUser>();
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -61,15 +62,15 @@ namespace CounterCulture
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = "BasicAuthentication";
+                options.DefaultScheme = "BearerAuthentication";
             })
-            .AddJwtBearer(x =>
+            .AddJwtBearer(options =>
             {
                 var signingKey = Encoding.ASCII
                                 .GetBytes(Configuration["AppSecret"]);
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(signingKey),
