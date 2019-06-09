@@ -32,10 +32,24 @@ namespace CounterCulture
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(
                     Configuration["ConnectionStrings:DefaultMySQLConnection"]);
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/";
+                options.AccessDeniedPath = "/";
+                options.SlidingExpiration = true;
             });
             services.AddMvc()
                     .AddJsonOptions(options => {
@@ -90,6 +104,7 @@ namespace CounterCulture
                 policy.AllowAnyHeader();
                 policy.WithHeaders("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization");
             });
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseMvc();
             app.UseDefaultFiles();
