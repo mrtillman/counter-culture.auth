@@ -42,7 +42,11 @@ namespace CounterCulture.Pages
         UserManager<AppUser> Users  { get; set; }
 
         SignInManager<AppUser> AppSignIn { get; set; }
-
+        public void OnGet(){
+            if(User.Identity.IsAuthenticated){
+                Response.Redirect("/Account/Home");
+            }
+        }
         /*
         public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
         {
@@ -99,6 +103,15 @@ namespace CounterCulture.Pages
                 {
                     
                     Logger.LogInformation("User logged in.");
+        
+                    var referer = Request.Headers["referer"].ToString();
+                    var queryString = new Uri(referer).Query;
+                    var queryStringValues = HttpUtility.ParseQueryString(queryString);
+                    var redirect_uri = queryStringValues.Get("redirect_uri");
+
+                    if(String.IsNullOrEmpty(redirect_uri)){
+                        redirect_uri = "/Account/Home";
+                    }
 
                     var homePage = "https://www.counter-culture.io";
                     
@@ -115,7 +128,7 @@ namespace CounterCulture.Pages
                     
                     await AuthenticationHttpContextExtensions.SignInAsync(HttpContext, CookieAuthenticationDefaults.AuthenticationScheme, principal);
                     
-                    return LocalRedirect("/Account/Home");
+                    return Redirect(redirect_uri);
                 }
                 // if (result.RequiresTwoFactor)
                 // {

@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -23,11 +24,19 @@ namespace CounterCulture.Pages
         private IOAuthService OAuth { get; set; }
         public OAuthClient Client { get; set; }
 
-        public void OnGet([FromQuery] AuthRequest authReq)
+        public IActionResult OnGet([FromQuery] AuthRequest authReq)
         {
-            // TODO: prompt for user login
-            Client = OAuth.GetClient(authReq.client_id);
-            ViewData.Add("state", authReq.state);
+            if(User.Identity.IsAuthenticated){
+                Client = OAuth.GetClient(authReq.client_id);
+                ViewData.Add("state", authReq.state);
+            } else {
+                // TODO: simplify using extensions/helper module
+                // ex: helper.GetCurrentUrl()
+                var currentUrl = $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
+                var redirect_uri = HttpUtility.UrlEncode(currentUrl);
+                return Redirect($"~/?redirect_uri={redirect_uri}");
+            }
+            return Page();
         }
 
         public IActionResult OnPostClientAuthorization(
