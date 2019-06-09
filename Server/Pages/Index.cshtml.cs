@@ -1,7 +1,10 @@
 using System;
 using System.Web;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +12,7 @@ using CounterCulture.Services;
 using CounterCulture.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CounterCulture.Pages
 {
@@ -76,20 +80,20 @@ namespace CounterCulture.Pages
         }
         */
 
-        public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
+        public async Task<IActionResult> OnPostLogin(string Email, string Password)
         {
             // returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
             {
                 // TODO: simplify with string extensions
-                var userName = user.Email.Split('@')[0];
+                var userName = Email.Split('@')[0];
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, 
                 // set lockoutOnFailure: true
                 var result = await AppSignIn.PasswordSignInAsync(userName, 
-                    user.Password, isPersistent: false, lockoutOnFailure: true);
+                    Password, isPersistent: true, lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
@@ -101,8 +105,17 @@ namespace CounterCulture.Pages
                     if(env.IsDevelopment()){
                         homePage = $"http://localhost:8080";
                     }
-
-                    return Redirect(homePage);
+                    
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Email));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
+                    //identity.AddClaim(new Claim("user_id", user.Id));
+                    var principal = new ClaimsPrincipal(identity);
+                    
+                    await AuthenticationHttpContextExtensions.SignInAsync(HttpContext, CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    
+                    return LocalRedirect("/Account/Home");
                 }
                 // if (result.RequiresTwoFactor)
                 // {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Models;
@@ -17,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 
 namespace CounterCulture
 {
@@ -37,11 +39,15 @@ namespace CounterCulture
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddIdentityCore<AppUser>();
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(
                     Configuration["ConnectionStrings:DefaultMySQLConnection"]);
             });
-            services.AddDefaultIdentity<AppUser>();
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<SecureDbContext>()
+                    .AddDefaultTokenProviders();
+            //services.AddDefaultIdentity<AppUser>();
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -52,20 +58,27 @@ namespace CounterCulture
                 options.AccessDeniedPath = "/";
                 options.SlidingExpiration = true;
             });
+            services.AddApiVersioning();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IPrincipal>(
+                provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddMvc()
                     .AddJsonOptions(options => {
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
-            services.AddApiVersioning();
-            services.AddIdentityCore<AppUser>();
             services.AddAuthentication(options => 
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = "BearerAuthentication";
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                // options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+            .AddCookie()
             .AddJwtBearer(options =>
             {
+                options.Audience = "http://counter-culture.io";
+                options.Authority = "http://counter-culture.io";
                 var signingKey = Encoding.ASCII
                                 .GetBytes(Configuration["AppSecret"]);
                 options.RequireHttpsMetadata = false;
