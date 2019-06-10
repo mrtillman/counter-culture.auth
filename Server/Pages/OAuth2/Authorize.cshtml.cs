@@ -43,13 +43,15 @@ namespace CounterCulture.Pages
             [FromForm] AuthRequest authReq) 
         {
 
+            if(!User.Identity.IsAuthenticated){
+                return Unauthorized();
+            }
+
             var code = Guid.NewGuid().ToString();
 
-            // TODO: get user id from the 
-            // current user who is logged in
-            var userID = 9; 
+            var userId = User.Claims.First().Value;            
             
-            Cache.Set(code, $"{authReq.client_id}:{userID}");
+            Cache.Set(code, $"{authReq.client_id}:{userId}");
 
             return Redirect($"{authReq.redirect_uri}#code={code}&state={authReq.state}");
         }

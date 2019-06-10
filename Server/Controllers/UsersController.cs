@@ -14,11 +14,12 @@ using CounterCulture.Constants;
 using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CounterCulture.Controllers
 {
     
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : BaseController
     {
         public UsersController(
@@ -34,7 +35,6 @@ namespace CounterCulture.Controllers
         private ILogger<UsersController> Logger { get; set; }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> Get() {
             if (!User.Identity.IsAuthenticated){
                 return Unauthorized();

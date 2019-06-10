@@ -34,7 +34,7 @@ namespace CounterCulture.Pages
 
         public void OnGet(){
             if(User.Identity.IsAuthenticated){
-                Username = User.Claims.First().Value;
+                Username = User.Claims.ElementAt(1).Value;
             }
         }
 

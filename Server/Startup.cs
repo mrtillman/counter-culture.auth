@@ -3,10 +3,10 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Models;
@@ -18,13 +18,12 @@ using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Principal;
 
 namespace CounterCulture
 {
   public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILoggerFactory _LoggerFactory)
         {
             Configuration = configuration;
         }
@@ -39,6 +38,7 @@ namespace CounterCulture
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddIdentityCore<OAuthClient>();
             services.AddIdentityCore<AppUser>();
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(
@@ -47,38 +47,24 @@ namespace CounterCulture
             services.AddIdentity<AppUser, IdentityRole>()
                     .AddEntityFrameworkStores<SecureDbContext>()
                     .AddDefaultTokenProviders();
-            //services.AddDefaultIdentity<AppUser>();
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
                 options.LoginPath = "/";
                 options.AccessDeniedPath = "/";
                 options.SlidingExpiration = true;
             });
             services.AddApiVersioning();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IPrincipal>(
-                provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddMvc()
                     .AddJsonOptions(options => {
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
-            services.AddAuthentication(options => 
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                // options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                // options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                // options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddCookie()
+            services.AddAuthentication()
+            .AddCookie(options => options.SlidingExpiration = true)
             .AddJwtBearer(options =>
             {
-                options.Audience = "http://counter-culture.io";
-                options.Authority = "http://counter-culture.io";
                 var signingKey = Encoding.ASCII
                                 .GetBytes(Configuration["AppSecret"]);
                 options.RequireHttpsMetadata = false;
@@ -91,7 +77,6 @@ namespace CounterCulture
                     ValidateAudience = false
                 };
             });
-            
             ConnectionMultiplexer redisConnection = 
              ConnectionMultiplexer
             .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);

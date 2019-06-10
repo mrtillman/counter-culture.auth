@@ -47,43 +47,7 @@ namespace CounterCulture.Pages
                 Response.Redirect("/Account/Home");
             }
         }
-        /*
-        public async Task<IActionResult> OnPostLogin([FromForm] AppUser user)
-        {
-            var referer = Request.Headers["referer"].ToString();
-            var queryString = new Uri(referer).Query;
-            var _authReq = HttpUtility.ParseQueryString(queryString);
-            var state = _authReq.Get("state");
-
-            var client_id = Config["ccult_client_id"];
-
-            AuthRequest authReq = new AuthRequest() {
-                client_id = client_id,
-                state = state
-            };
-            var _user = await Users.FindByEmailAsync(user.Email);
-            if(_user == null){
-                return Unauthorized();
-            }
-
-            if(!await Users.CheckPasswordAsync(_user, user.Password)){
-                return Unauthorized();
-            }
-
-            var code = Guid.NewGuid().ToString();
-
-            Cache.Set(code, $"{client_id}:{user.Id}");
-
-            var homePage = "https://www.counter-culture.io";
-            if(env.IsDevelopment()){
-                homePage = $"http://localhost:8080";
-            }
-
-            return Redirect($"{homePage}#code={code}&state={authReq.state}");
-
-        }
-        */
-
+        
         public async Task<IActionResult> OnPostLogin(string Email, string Password)
         {
             // returnUrl = returnUrl ?? Url.Content("~/");
@@ -112,24 +76,15 @@ namespace CounterCulture.Pages
                     if(String.IsNullOrEmpty(redirect_uri)){
                         redirect_uri = "/Account/Home";
                     }
-
-                    var homePage = "https://www.counter-culture.io";
-                    
-                    if(env.IsDevelopment()){
-                        homePage = $"http://localhost:8080";
-                    }
                     
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                    //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Email));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, userName));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
-                    //identity.AddClaim(new Claim("user_id", user.Id));
                     var principal = new ClaimsPrincipal(identity);
                     
                     await AuthenticationHttpContextExtensions.SignInAsync(HttpContext, CookieAuthenticationDefaults.AuthenticationScheme, principal);
                     
                     return Redirect(redirect_uri);
                 }
+                // TODO: implement 2fa + lockout
                 // if (result.RequiresTwoFactor)
                 // {
                 //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
