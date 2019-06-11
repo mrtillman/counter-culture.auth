@@ -68,6 +68,7 @@ namespace CounterCulture.Pages
                     
                     Logger.LogInformation("User logged in.");
         
+                    // TODO: modularize
                     var referer = Request.Headers["referer"].ToString();
                     var queryString = new Uri(referer).Query;
                     var queryStringValues = HttpUtility.ParseQueryString(queryString);

@@ -1,0 +1,29 @@
+@page
+@model CounterCulture.Pages.LogOutModel
+
+<form 
+    id="logoutForm"
+    method="post"
+    asp-page="LogOut"
+    asp-page-handler="LogOut">
+    @Html.AntiForgeryToken()
+</form>
+
+@section scripts {
+  <script>
+    window.onload = function(){
+      @if(Model.LoggedOut){
+        <text>
+          window.location = '@Model.redirect_uri' || '/';
+        </text>
+      } else {
+        <text>
+          document.getElementById("logoutForm")
+                  .submit();
+        </text>
+      }
+    }
+  </script>
+}
+
+
