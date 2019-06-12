@@ -13,11 +13,12 @@ using CounterCulture.Constants;
 using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CounterCulture.Controllers
 {
     
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class OAuth2Controller : BaseController
     {
         public OAuth2Controller(
@@ -44,7 +45,7 @@ namespace CounterCulture.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] // TODO: remove
+        [AllowAnonymous] // TODO: move to geek site
         [Route("register")]
         public ActionResult Register([FromBody] OAuthClient client) {
             Logger.LogInformation(LoggingEvents.RegisterApp, client.app_name);
@@ -66,6 +67,7 @@ namespace CounterCulture.Controllers
             if(String.IsNullOrWhiteSpace(authCacheValue)){
                 return Unauthorized();
             }
+
             Cache.Delete(authReq.code);
             
             // TODO: simplify using string extensions

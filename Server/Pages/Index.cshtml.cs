@@ -1,13 +1,18 @@
 using System;
 using System.Web;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 using CounterCulture.Services;
 using CounterCulture.Models;
-using CounterCulture.Utilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CounterCulture.Pages
 {
@@ -17,7 +22,8 @@ namespace CounterCulture.Pages
             ICacheService CacheService,
             IConfiguration ConfigurationService,
             IHostingEnvironment hostingEnvironment,
-            IUserService UserService,
+            UserManager<AppUser> UserService,
+            SignInManager<AppUser> SignInManager,
             ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
@@ -25,48 +31,79 @@ namespace CounterCulture.Pages
             env = hostingEnvironment;
             Users = UserService;
             Logger = LoggerService;
+            AppSignIn = SignInManager;
         }
 
-        private ILogger<IndexModel> Logger { get; set; }
+        ILogger<IndexModel> Logger { get; set; }
 
-        private IConfiguration Config { get; set; }
-        private ICacheService Cache { get; set; }
-        private IHostingEnvironment env  { get; set; }
-        private IUserService Users  { get; set; }
+        IConfiguration Config { get; set; }
+        ICacheService Cache { get; set; }
+        IHostingEnvironment env  { get; set; }
+        UserManager<AppUser> Users  { get; set; }
 
-        public IActionResult OnPostLogin([FromForm] User creds)
+        SignInManager<AppUser> AppSignIn { get; set; }
+        public void OnGet(){
+            if(User.Identity.IsAuthenticated){
+                Response.Redirect("/Account/Home");
+            }
+        }
+        
+        public async Task<IActionResult> OnPostLogin(string Email, string Password)
         {
-            
-            var referer = Request.Headers["referer"].ToString();
-            var queryString = new Uri(referer).Query;
-            var _authReq = HttpUtility.ParseQueryString(queryString);
-            var state = _authReq.Get("state");
+            // returnUrl = returnUrl ?? Url.Content("~/");
 
-            var client_id = Config["ccult_client_id"];
+            if (ModelState.IsValid)
+            {
+                // TODO: simplify with string extensions
+                var userName = Email.Split('@')[0];
 
-            AuthRequest authReq = new AuthRequest() {
-                client_id = client_id,
-                state = state
-            };
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, 
+                // set lockoutOnFailure: true
+                var result = await AppSignIn.PasswordSignInAsync(userName, 
+                    Password, isPersistent: true, lockoutOnFailure: true);
 
-            var hashedPassword = SHA256Hash.Compute(creds.Password);
-            var user = Users.Find(creds.Username, hashedPassword);
-            
-            if(user == null){
-                return Unauthorized();
+                if (result.Succeeded)
+                {
+                    
+                    Logger.LogInformation("User logged in.");
+        
+                    // TODO: modularize
+                    var referer = Request.Headers["referer"].ToString();
+                    var queryString = new Uri(referer).Query;
+                    var queryStringValues = HttpUtility.ParseQueryString(queryString);
+                    var redirect_uri = queryStringValues.Get("redirect_uri");
+
+                    if(String.IsNullOrEmpty(redirect_uri)){
+                        redirect_uri = "/Account/Home";
+                    }
+                    
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    var principal = new ClaimsPrincipal(identity);
+                    
+                    await AuthenticationHttpContextExtensions.SignInAsync(HttpContext, CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    
+                    return Redirect(redirect_uri);
+                }
+                // TODO: implement 2fa + lockout
+                // if (result.RequiresTwoFactor)
+                // {
+                //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                // }
+                // if (result.IsLockedOut)
+                // {
+                //     _logger.LogWarning("User account locked out.");
+                //     return RedirectToPage("./Lockout");
+                // }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
             }
 
-            var code = Guid.NewGuid().ToString();
-
-            Cache.Set(code, $"{client_id}:{user.ID}");
-
-            var homePage = "https://www.counter-culture.io";
-            if(env.IsDevelopment()){
-                homePage = $"http://localhost:8080";
-            }
-
-            return Redirect($"{homePage}#code={code}&state={authReq.state}");
-            
+            // If we got this far, something failed, redisplay form
+            return Page();
         }
     }
 }
