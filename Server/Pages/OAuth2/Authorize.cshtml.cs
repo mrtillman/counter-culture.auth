@@ -14,15 +14,19 @@ namespace CounterCulture.Pages
     {
         public AuthorizeModel(
             ICacheService CacheService,
-            IOAuthService OAuthService)
+            IOAuthService OAuthService,
+            IHostingEnvironment hostingEnvironment)
         {
             Cache = CacheService;
             OAuth = OAuthService;
+            env = hostingEnvironment;
         }
 
         private ICacheService Cache { get; set; }
         private IOAuthService OAuth { get; set; }
         public OAuthClient Client { get; set; }
+
+        IHostingEnvironment env  { get; set; }
 
         public IActionResult OnGet([FromQuery] AuthRequest authReq)
         {
@@ -32,13 +36,18 @@ namespace CounterCulture.Pages
             } else {
                 // TODO: simplify using extensions/helper module
                 // ex: helper.GetCurrentUrl()
-                var currentUrl = $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
+                var protocol = _getRequestProtocol();
+                var currentUrl = $"{protocol}://{Request.Host}{Request.Path}{Request.QueryString}";
                 var redirect_uri = HttpUtility.UrlEncode(currentUrl);
                 return Redirect($"~/?redirect_uri={redirect_uri}");
             }
             return Page();
         }
 
+        private string _getRequestProtocol(){
+            return env.IsDevelopment() ? Request.Scheme : $"{Request.Scheme}s";
+        }
+        
         public IActionResult OnPostClientAuthorization(
             [FromForm] AuthRequest authReq) 
         {

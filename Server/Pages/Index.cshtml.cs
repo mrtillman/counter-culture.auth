@@ -21,14 +21,12 @@ namespace CounterCulture.Pages
         public IndexModel(
             ICacheService CacheService,
             IConfiguration ConfigurationService,
-            IHostingEnvironment hostingEnvironment,
             UserManager<AppUser> UserService,
             SignInManager<AppUser> SignInManager,
             ILogger<IndexModel> LoggerService)
         {
             Cache = CacheService;
             Config = ConfigurationService;
-            env = hostingEnvironment;
             Users = UserService;
             Logger = LoggerService;
             AppSignIn = SignInManager;
