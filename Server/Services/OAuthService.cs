@@ -6,6 +6,7 @@ using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace CounterCulture.Services {
 
@@ -13,14 +14,18 @@ namespace CounterCulture.Services {
     {
         public OAuthService(
             IConfiguration Configuration,
-            IOAuthRepository OAuthRepository)
+            IOAuthRepository OAuthRepository,
+            ILogger<OAuthService> LoggerService)
         {
             OAuthRepo = OAuthRepository;
             Config = Configuration;
+            Logger = LoggerService;
         }
 
-        private IOAuthRepository OAuthRepo { get; set; }
-        public IConfiguration Config { get; }
+        IOAuthRepository OAuthRepo { get; set; }
+        IConfiguration Config { get; }
+
+        ILogger<OAuthService> Logger { get; set; }
         
         public AuthResponse Authenticate(OAuthClient client){
             if(client == null) return null;
@@ -46,27 +51,14 @@ namespace CounterCulture.Services {
             return OAuthRepo.Find(match);
         }
         public OAuthClient RegisterClient(OAuthClient client) {
-            client.client_id = _generateClientId();
-            client.client_secret = _generateClientSecret();
+            var e = string.Empty;
+            client.client_id = e.NewClientId();
+            client.client_secret = e.NewClientSecret();
             if(OAuthRepo.Save(client)){
                 return client;
             }
             return null;
         }
 
-        private string _generateClientId() {
-            var clientId = Guid.NewGuid().ToString();
-            return _hexEncode(clientId);
-        }
-
-        private string _generateClientSecret() {
-            return SHA256Hash.Compute(_generateClientId());
-        }
-
-        private string _hexEncode(string input){
-            var bytes = Encoding.Default.GetBytes(input);
-            var hexString = BitConverter.ToString(bytes);
-            return hexString.Replace("-","");
-        }
     }
 }
