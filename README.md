@@ -13,7 +13,7 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please ref
 
 ## Authentication
 
-With the exception of `/api/v1/oauth2/access_token`, all endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/register-app.md) and then [send an authorization request](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/authorization-request.md).
+With the exception of `/api/v1/oauth2/access_token`, all endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://geeks.counter-culture.io/register) and then [send an authorization request](https://github.com/mrtillman/counter-culture.docs/blob/master/secure/authorization-request.md).
 
 
 ## Getting Started
@@ -35,9 +35,9 @@ Next, update `Server/appsettings.demo.json`<br/>
     "DefaultRedisConnection": "<DefaultRedisConnection>"
   },
   "AppSecret": "the internet? is that thing still around?",
-  "ccult_client_id": "<ccult_client_id>",
-  "ccult_client_secret": "<ccult_client_secret>",
-  "ccult_redirect_uri": "http://localhost:8080/oauth2/callback"
+  "client_id": "<client_id>",
+  "client_secret": "<client_secret>",
+  "redirect_uri": "http://localhost:8080/oauth2/callback"
   }
 
 }

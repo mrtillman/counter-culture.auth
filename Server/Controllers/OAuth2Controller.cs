@@ -45,7 +45,7 @@ namespace CounterCulture.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] // TODO: move to geek site
+        [AllowAnonymous] // TODO: remove - require geek site token
         [Route("register")]
         public ActionResult Register([FromBody] OAuthClient client) {
             Logger.LogInformation(LoggingEvents.RegisterApp, client.app_name);
