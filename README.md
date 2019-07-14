@@ -23,7 +23,7 @@ Counter-culture.secure also requires a MySQL instance and a Redis instance.
 
 ### Installation
 
-First, clone the Git repo:
+First, clone the repo:
 
 ```sh
 git clone https://github.com/mrtillman/counter-culture.secure.git
@@ -38,8 +38,8 @@ Next, find `Server/appsettings.demo.json` and rename it to `appsettings.json`:
     "DefaultMySQLConnection": "<DefaultMySQLConnection>",
     "DefaultRedisConnection": "<DefaultRedisConnection>"
   },
-  "AppSecret": "the internet? is that thing still around?",
-  }
+  
+  "AppSecret": "the internet? is that thing still around?"
 
 }
 ```
@@ -58,7 +58,7 @@ dotnet run
 
 ### First-Party Clients
 
-At startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as OAuth 2.0 clients. To obtain the `client_id` and `client_secret` that belong to each app, use a MySQL tool such as [Workbench](https://www.mysql.com/products/workbench/) to query the `oauth_clients` table:
+At startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as OAuth 2.0 clients. To obtain the `client_id` and `client_secret` that belong to each app, use a MySQL tool such as [Workbench](https://dev.mysql.com/downloads/workbench/) to query the `oauth_clients` table:
 
 ```sql
 SELECT * FROM oauth_clients;
