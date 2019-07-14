@@ -6,6 +6,7 @@ namespace CounterCulture.Repositories
 {
     public interface IOAuthRepository
     {
+        bool isEmpty { get; }
         bool Save(OAuthClient client);
         OAuthClient Get(string client_id);
         OAuthClient Find(OAuthClient client);

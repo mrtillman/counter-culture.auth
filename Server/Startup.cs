@@ -86,6 +86,7 @@ namespace CounterCulture
             services.AddScoped<IOAuthRepository, OAuthRepository>();
             services.AddScoped<IOAuthService, OAuthService>();
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
+            services.AddTransient<IStartupFilter, OAuthStartupFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

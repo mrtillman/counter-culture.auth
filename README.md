@@ -11,9 +11,9 @@ A token server for [counter-culture.io](https://counter-culture.io).
 
 Counter-culture.secure is a REST API designed to issue, validate, renew and cancel OAuth 2.0 security tokens.
  
-You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6QQ).
+You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6L7).
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/8c1c21454555719ced60)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/0323d87983b842a1c15f)
 
 ### Prerequisites 
 
@@ -54,6 +54,14 @@ cd counter-culture.secure/Server
 
 # let it rip
 dotnet run
+```
+
+### First-Party Clients
+
+At startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as OAuth 2.0 clients. To obtain the `client_id` and `client_secret` that belong to each app, use a MySQL tool such as [Workbench](https://www.mysql.com/products/workbench/) to query the `oauth_clients` table:
+
+```sql
+SELECT * FROM oauth_clients;
 ```
 
 ## Usage

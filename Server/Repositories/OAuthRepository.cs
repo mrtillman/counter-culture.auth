@@ -19,6 +19,12 @@ namespace CounterCulture.Repositories
 
         private ILogger<OAuthRepository> Logger { get; set; }
 
+        public bool isEmpty {
+            get {
+                return context.OAuthClients.Count() == 0;
+            }
+        }
+
         public bool Save(OAuthClient client)
         {
             context.OAuthClients.Add(client);
