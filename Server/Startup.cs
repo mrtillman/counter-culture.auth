@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 namespace CounterCulture
 {
@@ -87,6 +90,12 @@ namespace CounterCulture
             services.AddScoped<IOAuthService, OAuthService>();
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
             services.AddTransient<IStartupFilter, OAuthStartupFilter>();
+            services.AddIdentityServer()
+            .AddInMemoryClients(new List<Client>())
+            .AddInMemoryIdentityResources(new List<IdentityResource>())
+            .AddInMemoryApiResources(new List<ApiResource>())
+            .AddTestUsers(new List<TestUser>())
+            .AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,6 +121,7 @@ namespace CounterCulture
                 RequestPath = new PathString("")
             });
             app.UseMvcWithDefaultRoute();
+            app.UseIdentityServer();
         }
     }
 }
