@@ -5,7 +5,7 @@ using IdentityServer4.Models;
 namespace CounterCulture.Utilities
 {
 
-  public partial class Juice
+  public partial class DataSeed
   {
 
     private static List<string> _allowedScopes
@@ -31,7 +31,11 @@ namespace CounterCulture.Utilities
                   AllowedGrantTypes = GrantTypes.ClientCredentials,
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha256())},
-                  AllowedScopes = _allowedScopes
+                  AllowedScopes = _allowedScopes,
+                  RedirectUris = {
+                    "http://localhost:8080",
+                    "https://counter-culture.io"
+                  }
               },
               new Client {
                   ClientId = "counterculturedev",
@@ -39,7 +43,11 @@ namespace CounterCulture.Utilities
                   AllowedGrantTypes = GrantTypes.ClientCredentials,
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha256())},
-                  AllowedScopes = _allowedScopes
+                  AllowedScopes = _allowedScopes,
+                  RedirectUris = {
+                    "http://localhost:9000",
+                    "https://geeks.counter-culture.io"
+                  }
               }
           };
         }

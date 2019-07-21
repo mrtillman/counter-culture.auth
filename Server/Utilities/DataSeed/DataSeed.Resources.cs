@@ -4,7 +4,7 @@ using IdentityServer4.Models;
 
 namespace CounterCulture.Utilities
 {
-  public partial class Juice
+  public partial class DataSeed
   {
     public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource> {
               new IdentityResources.OpenId(),

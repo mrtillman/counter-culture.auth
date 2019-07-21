@@ -5,7 +5,7 @@ using IdentityModel;
 using System.Security.Claims;
 
 namespace CounterCulture.Utilities { 
-  public partial class Juice {
+  public partial class DataSeed {
     public static List<TestUser> Users => new List<TestUser> {
       new TestUser {
         SubjectId = Guid.NewGuid().ToString(),

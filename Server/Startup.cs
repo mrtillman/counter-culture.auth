@@ -88,10 +88,10 @@ namespace CounterCulture
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
             services.AddTransient<IStartupFilter, OAuthStartupFilter>();
             services.AddIdentityServer()
-            .AddInMemoryClients(Juice.Clients)
-            .AddInMemoryIdentityResources(Juice.IdentityResources)
-            .AddInMemoryApiResources(Juice.ApiResources)
-            .AddTestUsers(Juice.Users)
+            .AddInMemoryClients(DataSeed.Clients)
+            .AddInMemoryIdentityResources(DataSeed.IdentityResources)
+            .AddInMemoryApiResources(DataSeed.ApiResources)
+            .AddTestUsers(DataSeed.Users)
             .AddDeveloperSigningCredential();
         }
 
