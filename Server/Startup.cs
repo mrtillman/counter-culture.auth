@@ -4,17 +4,14 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
 using CounterCulture.Repositories;
 using CounterCulture.Models;
 using CounterCulture.Services;
+using CounterCulture.Utilities;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using Newtonsoft.Json;
@@ -91,10 +88,10 @@ namespace CounterCulture
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
             services.AddTransient<IStartupFilter, OAuthStartupFilter>();
             services.AddIdentityServer()
-            .AddInMemoryClients(new List<Client>())
-            .AddInMemoryIdentityResources(new List<IdentityResource>())
-            .AddInMemoryApiResources(new List<ApiResource>())
-            .AddTestUsers(new List<TestUser>())
+            .AddInMemoryClients(Juice.Clients)
+            .AddInMemoryIdentityResources(Juice.IdentityResources)
+            .AddInMemoryApiResources(Juice.ApiResources)
+            .AddTestUsers(Juice.Users)
             .AddDeveloperSigningCredential();
         }
 
