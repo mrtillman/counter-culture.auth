@@ -26,24 +26,28 @@ namespace CounterCulture.Utilities
         {
           return new List<Client> {
               new Client {
+                  AccessTokenType = AccessTokenType.Jwt,
+                  AccessTokenLifetime = 86400,
+                  AllowedScopes = _allowedScopes,
+                  AllowedGrantTypes = GrantTypes.ClientCredentials,
                   ClientId = "countercultureapp",
                   ClientName = "counter-culture.app",
-                  AllowedGrantTypes = GrantTypes.ClientCredentials,
                   ClientSecrets = new List<Secret> {
-                      new Secret("superSecretPassword".Sha256())},
-                  AllowedScopes = _allowedScopes,
+                      new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
                     "http://localhost:8080",
                     "https://counter-culture.io"
                   }
               },
               new Client {
+                  AccessTokenType = AccessTokenType.Jwt,
+                  AccessTokenLifetime = 86400,
+                  AllowedScopes = _allowedScopes,
+                  AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                   ClientId = "counterculturedev",
                   ClientName = "counter-culture.dev",
-                  AllowedGrantTypes = GrantTypes.ClientCredentials,
                   ClientSecrets = new List<Secret> {
-                      new Secret("superSecretPassword".Sha256())},
-                  AllowedScopes = _allowedScopes,
+                      new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
                     "http://localhost:9000",
                     "https://geeks.counter-culture.io"
