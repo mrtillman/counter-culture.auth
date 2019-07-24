@@ -13,6 +13,7 @@ namespace CounterCulture.Utilities
       get
       {
         return new List<string> {
+		              "openid",
                   "counters:read",
                   "counters:write",
                   "profile:read",
@@ -29,12 +30,13 @@ namespace CounterCulture.Utilities
                   AccessTokenType = AccessTokenType.Jwt,
                   AccessTokenLifetime = 86400,
                   AllowedScopes = _allowedScopes,
-                  AllowedGrantTypes = GrantTypes.ClientCredentials,
+                  AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                   ClientId = "countercultureapp",
                   ClientName = "counter-culture.app",
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
+		                "http://localhost:3000/oauth2/callback",
                     "http://localhost:8080",
                     "https://counter-culture.io"
                   }

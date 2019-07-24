@@ -52,7 +52,7 @@ namespace CounterCulture
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                options.LoginPath = "/";
+                options.LoginPath = "/account/login";
                 options.AccessDeniedPath = "/";
                 options.SlidingExpiration = true;
             });
