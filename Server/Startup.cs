@@ -77,17 +77,24 @@ namespace CounterCulture
                     ValidateAudience = false
                 };
             });
+            string mySqlConnection = Configuration["ConnectionStrings:DefaultMySQLConnection"];
+            string migrationsAssembly = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
             ConnectionMultiplexer redisConnection = 
              ConnectionMultiplexer
             .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
+
             services.AddSingleton<IConnectionMultiplexer>(redisConnection);
             services.AddScoped<ITestUserRepository, TestUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
             services.AddIdentityServer()
-            .AddInMemoryClients(DataSeed.Clients)
-            .AddInMemoryIdentityResources(DataSeed.IdentityResources)
-            .AddInMemoryApiResources(DataSeed.ApiResources)
+            .AddOperationalStore(options =>
+                options.ConfigureDbContext = builder => 
+                    builder.UseMySql(mySqlConnection, sqlOptions => 
+                        sqlOptions.MigrationsAssembly(migrationsAssembly)))
+            .AddConfigurationStore(options =>
+                options.ConfigureDbContext = builder =>
+                    builder.UseMySql(mySqlConnection, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
             .AddDeveloperSigningCredential();
         }
 
