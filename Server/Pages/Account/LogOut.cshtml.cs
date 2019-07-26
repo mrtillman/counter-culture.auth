@@ -13,25 +13,23 @@ using CounterCulture.Models;
 using CounterCulture.Utilities;
 using System.Security.Claims;
 using System.Security.Principal;
+using IdentityServer4.Test;
 
 namespace CounterCulture.Pages
 {
     public class LogOutModel : PageModel
     {
         public LogOutModel(
-            ILogger<HomeModel> LoggerService,
-            UserManager<AppUser> UserService,
-            SignInManager<AppUser> SignInManager)
+            UserManager<TestUser> UserService,
+            SignInManager<TestUser> SignInManager)
         {
             AppSignIn = SignInManager;
-            Logger = LoggerService;
             Users = UserService;
         }
 
-        AppUser AppUser { get; set; }
-        ILogger<HomeModel> Logger { get; set; }
-        UserManager<AppUser> Users { get; set; }
-        SignInManager<AppUser> AppSignIn { get; set; }
+        TestUser TestUser { get; set; }
+        UserManager<TestUser> Users { get; set; }
+        SignInManager<TestUser> AppSignIn { get; set; }
 
         public bool LoggedOut { get; set; }
         public string redirect_uri { get; set; }  

@@ -39,13 +39,13 @@ namespace CounterCulture
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddIdentityCore<OAuthClient>();
-            services.AddIdentityCore<AppUser>();
-            services.AddDbContext<SecureDbContext>(options => {
-                options.UseMySql(
-                    Configuration["ConnectionStrings:DefaultMySQLConnection"]);
-            });
-            services.AddIdentity<AppUser, IdentityRole>()
-                    .AddEntityFrameworkStores<SecureDbContext>()
+            services.AddIdentityCore<TestUser>();
+            // services.AddDbContext<SecureDbContext>(options => {
+            //     options.UseMySql(
+            //         Configuration["ConnectionStrings:DefaultMySQLConnection"]);
+            // });
+            services.AddIdentity<TestUser, IdentityRole>()
+                    //.AddEntityFrameworkStores<SecureDbContext>()
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options =>
             {
@@ -81,17 +81,13 @@ namespace CounterCulture
              ConnectionMultiplexer
             .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
             services.AddSingleton<IConnectionMultiplexer>(redisConnection);
-            services.AddScoped<IAppUserRepository, AppUserRepository>();
+            services.AddScoped<ITestUserRepository, TestUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
-            services.AddScoped<IOAuthRepository, OAuthRepository>();
-            services.AddScoped<IOAuthService, OAuthService>();
-            services.AddScoped<IUserStore<AppUser>, AppUserStore>();
-            services.AddTransient<IStartupFilter, OAuthStartupFilter>();
+            services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
             services.AddIdentityServer()
             .AddInMemoryClients(DataSeed.Clients)
             .AddInMemoryIdentityResources(DataSeed.IdentityResources)
             .AddInMemoryApiResources(DataSeed.ApiResources)
-            .AddTestUsers(DataSeed.Users)
             .AddDeveloperSigningCredential();
         }
 

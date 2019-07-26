@@ -36,9 +36,9 @@ namespace CounterCulture.Utilities
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
-		                "http://localhost:3000/oauth2/callback",
-                    "http://localhost:8080",
-                    "https://counter-culture.io"
+		    "http://localhost:3000/oauth2/callback",
+                    "http://localhost:8080/oauth2/callback",
+                    "https://counter-culture.io/oauth2/callback"
                   }
               },
               new Client {

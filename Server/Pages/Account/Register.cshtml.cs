@@ -1,6 +1,9 @@
 using System;
 using System.Web;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +13,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using CounterCulture.Services;
 using CounterCulture.Models;
 using CounterCulture.Utilities;
+using IdentityServer4.Test;
+using IdentityServer4.Quickstart.UI;
+using IdentityModel;
 
 namespace CounterCulture.Pages
 {
@@ -17,33 +23,43 @@ namespace CounterCulture.Pages
     {
         public RegisterModel(
             ILogger<RegisterModel> LoggerService,
-            UserManager<AppUser> UserService)
+            UserManager<TestUser> UserService)
         {
             Logger = LoggerService;
             Users = UserService;
-            AppUser = new AppUser();
+            TestUser = new TestUser();
         }
 
-        public AppUser AppUser { get; set; }
+        public TestUser TestUser { get; set; }
         public ILogger<RegisterModel> Logger { get; set; }
-        public UserManager<AppUser> Users { get; set; }
+        public UserManager<TestUser> Users { get; set; }
 
-        public async Task<IActionResult> OnPostSubmitRegistration([FromForm] AppUser user)
+        //public async Task<IActionResult> OnPostSubmitRegistration([FromForm] TestUser user)
+        public async Task<IActionResult> OnPostSubmitRegistration([FromForm] TestUser user)
         {
-            // TODO: simplify with string extensions
-            user.UserName = user.Email.Split('@')[0];
-
+            // user.UserName = user.Email.Split('@')[0];
+            
+            user.SubjectId = Guid.NewGuid().ToString();
             var result = await Users.CreateAsync(user, user.Password);
 
-            if(ModelState.IsValid){
+            var claims = new List<Claim>{
+                new Claim(JwtClaimTypes.Role, "counter")
+            };
+
+            if(ModelState.IsValid && result.Succeeded){
                 
-                return LocalRedirect("/");
+                return LocalRedirect("/account/login");
 
             } else {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                if(result.Errors.Count() > 0){
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                } else {
+                    ModelState.AddModelError(string.Empty, "Unknown Error");
                 }
+                
             }
 
             return Page();
