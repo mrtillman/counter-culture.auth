@@ -70,3 +70,13 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 ## License
 [MIT](https://github.com/mrtillman/counter-culture.secure/blob/master/LICENSE.md)
+
+<!--
+dotnet ef migrations add AspIdentityTables -c SecureDbContext
+dotnet ef migrations add IS4PersistedGrants -c PersistedGrantDbContext
+dotnet ef migrations add IS4Configuration -c ConfigurationDbContext
+
+dotnet ef database update -c SecureDbContext
+dotnet ef database update -c PersistedGrantDbContext
+dotnet ef database update -c ConfigurationDbContext
+-->
