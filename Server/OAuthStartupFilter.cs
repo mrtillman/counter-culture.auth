@@ -1,56 +1,42 @@
-// using System;
-// using Microsoft.AspNetCore.Builder;
-// using Microsoft.AspNetCore.Hosting;
-// using Microsoft.AspNetCore.Hosting.Internal;
-// using Microsoft.Extensions.DependencyInjection;
-// using CounterCulture.Models;
-// using CounterCulture.Repositories;
-// using CounterCulture.Services;
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
+using IdentityServer4.EntityFramework.DbContexts;
+using CounterCulture.Utilities;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.Extensions.DependencyInjection;
 
-// public class OAuthStartupFilter : IStartupFilter
-// {
-//     private readonly IServiceProvider _serviceProvider;
-//     public OAuthStartupFilter(IServiceProvider serviceProvider)
-//     {
-//         _serviceProvider = serviceProvider;
-//     }
+public class OAuthStartupFilter : IStartupFilter
+{
 
-//     public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
-//     {
-//         using(var scope = _serviceProvider.CreateScope()){
+    private readonly IServiceProvider _serviceProvider;
+    public OAuthStartupFilter(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
-//             var oauthRepo = scope.ServiceProvider.GetRequiredService<IOAuthRepository>();
-//             var oauthService = scope.ServiceProvider.GetRequiredService<IOAuthService>();
+    public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+    {
+        using(var scope = _serviceProvider.CreateScope()){
+            var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            // seed clients
+            if(!context.Clients.Any()){
+                context.Clients.AddRange(
+                    DataSeed.Clients.Select(client => client.ToEntity()));
+            }        
 
-//             if(oauthRepo.isEmpty){
-//                 oauthService.RegisterClient(new OAuthClient() {
-//                     app_type = "web",
-//                     app_name = "counter-culture.app",
-//                     app_description = "counter app",
-//                     homepage_uri = "http://localhost:8080",
-//                     redirect_uri = "http://localhost:8080",
-//                     grant_types = "code",
-//                     scope = "read+write"
-//                 });
-//                 oauthService.RegisterClient(new OAuthClient() {
-//                     app_type = "web",
-//                     app_name = "counter-culture.dev",
-//                     app_description = "geek site",
-//                     homepage_uri = "http://localhost:9000",
-//                     redirect_uri = "http://localhost:9000",
-//                     grant_types = "code",
-//                     scope = "read+write"
-//                 });
-//             }
+            // seed identity resources
+            // seed api resources
+            // seed users
+            context.SaveChanges();
+        }
 
-//             // TODO: seed user accounts
-
-//         }
-
-//         return builder =>
-//         {
-//             builder.UseMiddleware<RequestServicesContainerMiddleware>();
-//             next(builder);
-//         };
-//     }
-// }
+        return builder =>
+        {
+            builder.UseMiddleware<RequestServicesContainerMiddleware>();
+            next(builder);
+        };
+    }
+}

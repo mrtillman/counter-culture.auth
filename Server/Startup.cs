@@ -30,6 +30,17 @@ namespace CounterCulture
 
         public IConfiguration Configuration { get; }
 
+        private string mySqlConnection {
+            get {
+                return Configuration["ConnectionStrings:DefaultMySQLConnection"];
+            }
+        }
+        private string migrationsAssembly {
+            get {
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+            }
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -38,14 +49,15 @@ namespace CounterCulture
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddIdentityCore<OAuthClient>();
-            services.AddIdentityCore<TestUser>();
-            // services.AddDbContext<SecureDbContext>(options => {
-            //     options.UseMySql(
-            //         Configuration["ConnectionStrings:DefaultMySQLConnection"]);
-            // });
-            services.AddIdentity<TestUser, IdentityRole>()
-                    //.AddEntityFrameworkStores<SecureDbContext>()
+            //services.AddIdentityCore<OAuthClient>();
+            //services.AddIdentityCore<TestUser>();
+            services.AddDbContext<SecureDbContext>(options => {
+                options.UseMySql(
+                    Configuration["ConnectionStrings:DefaultMySQLConnection"], 
+                        mySqlOptions => mySqlOptions.MigrationsAssembly(migrationsAssembly));
+            });
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<SecureDbContext>()
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options =>
             {
@@ -77,13 +89,11 @@ namespace CounterCulture
                     ValidateAudience = false
                 };
             });
-            string mySqlConnection = Configuration["ConnectionStrings:DefaultMySQLConnection"];
-            string migrationsAssembly = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            ConnectionMultiplexer redisConnection = 
-             ConnectionMultiplexer
-            .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
-
-            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
+            
+            // ConnectionMultiplexer redisConnection = 
+            //  ConnectionMultiplexer
+            // .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
+            // services.AddSingleton<IConnectionMultiplexer>(redisConnection);
             services.AddScoped<ITestUserRepository, TestUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
@@ -94,8 +104,11 @@ namespace CounterCulture
                         sqlOptions.MigrationsAssembly(migrationsAssembly)))
             .AddConfigurationStore(options =>
                 options.ConfigureDbContext = builder =>
-                    builder.UseMySql(mySqlConnection, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)))
-            .AddDeveloperSigningCredential();
+                    builder.UseMySql(mySqlConnection, sqlOptions => 
+                        sqlOptions.MigrationsAssembly(migrationsAssembly)))
+            .AddDeveloperSigningCredential()
+            .AddAspNetIdentity<IdentityUser>();
+            services.AddTransient<IStartupFilter, OAuthStartupFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
