@@ -23,24 +23,23 @@ namespace CounterCulture.Pages
     {
         public RegisterModel(
             ILogger<RegisterModel> LoggerService,
-            UserManager<TestUser> UserService)
+            UserManager<IdentityUser> UserService)
         {
             Logger = LoggerService;
             Users = UserService;
-            TestUser = new TestUser();
+            Registrant = new LoginViewModel();
         }
 
-        public TestUser TestUser { get; set; }
+        public LoginViewModel Registrant { get; set; }
         public ILogger<RegisterModel> Logger { get; set; }
-        public UserManager<TestUser> Users { get; set; }
-
-        //public async Task<IActionResult> OnPostSubmitRegistration([FromForm] TestUser user)
-        public async Task<IActionResult> OnPostSubmitRegistration([FromForm] TestUser user)
+        public UserManager<IdentityUser> Users { get; set; }
+        public async Task<IActionResult> OnPostSubmitRegistration([FromForm] LoginViewModel model)
         {
-            // user.UserName = user.Email.Split('@')[0];
+            var user = new IdentityUser(model.Username);
             
-            user.SubjectId = Guid.NewGuid().ToString();
-            var result = await Users.CreateAsync(user, user.Password);
+            user.Email = model.Username;
+            
+            var result = await Users.CreateAsync(user, model.Password);
 
             var claims = new List<Claim>{
                 new Claim(JwtClaimTypes.Role, "counter")
