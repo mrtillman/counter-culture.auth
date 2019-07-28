@@ -108,7 +108,7 @@ namespace CounterCulture
                         sqlOptions.MigrationsAssembly(migrationsAssembly)))
             .AddDeveloperSigningCredential()
             .AddAspNetIdentity<IdentityUser>();
-            services.AddTransient<IStartupFilter, OAuthStartupFilter>();
+            services.AddTransient<IStartupFilter, OnStartupFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
