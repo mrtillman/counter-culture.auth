@@ -20,16 +20,16 @@ namespace CounterCulture.Pages
     public class LogOutModel : PageModel
     {
         public LogOutModel(
-            UserManager<TestUser> UserService,
-            SignInManager<TestUser> SignInManager)
+            UserManager<IdentityUser> UserService,
+            SignInManager<IdentityUser> SignInManager)
         {
             AppSignIn = SignInManager;
             Users = UserService;
         }
 
-        TestUser TestUser { get; set; }
-        UserManager<TestUser> Users { get; set; }
-        SignInManager<TestUser> AppSignIn { get; set; }
+        IdentityUser IdentityUser { get; set; }
+        UserManager<IdentityUser> Users { get; set; }
+        SignInManager<IdentityUser> AppSignIn { get; set; }
 
         public bool LoggedOut { get; set; }
         public string redirect_uri { get; set; }  
