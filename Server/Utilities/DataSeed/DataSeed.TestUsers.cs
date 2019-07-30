@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace CounterCulture.Utilities { 
   public partial class DataSeed {
-    public static List<TestUser> Users => new List<TestUser> {
+    public static List<TestUser> TestUsers => new List<TestUser> {
       new TestUser {
         SubjectId = Guid.NewGuid().ToString(),
         Username = "bruce",

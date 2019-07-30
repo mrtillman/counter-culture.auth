@@ -49,7 +49,6 @@ namespace CounterCulture
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //services.AddIdentityCore<OAuthClient>();
             //services.AddIdentityCore<TestUser>();
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(

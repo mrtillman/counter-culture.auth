@@ -115,7 +115,6 @@ namespace IdentityServer4.Quickstart.UI
                 if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
 
-                    //var user = _users.FindByUsername(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
 
                     // only set explicit expiration here if user chooses "remember me". 
