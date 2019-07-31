@@ -45,7 +45,8 @@ namespace CounterCulture.Controllers
             IdentityUser user = null;
 
             try{
-                var userId = User.FindFirstValue(OpenIdConnectConstants.Claims.Subject);
+                var claimType = OpenIdConnectConstants.Claims.Subject;
+                var userId = User.FindFirstValue(claimType);
                 user = await Users.FindByIdAsync(userId);
             } catch (Exception ex){
                 Console.WriteLine(ex);

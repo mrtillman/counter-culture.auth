@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -131,6 +132,7 @@ namespace IdentityServer4.Quickstart.UI
 
                     // issue authentication cookie with subject ID and username
                     await HttpContext.SignInAsync(user.Id, user.UserName, props);
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                     if (context != null)
                     {

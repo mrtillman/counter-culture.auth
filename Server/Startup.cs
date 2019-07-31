@@ -18,6 +18,10 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using AspNet.Security.OpenIdConnect.Primitives;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CounterCulture
 {
@@ -44,18 +48,26 @@ namespace CounterCulture
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc()
+                    .AddJsonOptions(options => {
+                        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    });
+                    
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //services.AddIdentityCore<TestUser>();
             services.AddDbContext<SecureDbContext>(options => {
                 options.UseMySql(
                     Configuration["ConnectionStrings:DefaultMySQLConnection"], 
                         mySqlOptions => mySqlOptions.MigrationsAssembly(migrationsAssembly));
             });
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+            })
                     .AddEntityFrameworkStores<SecureDbContext>()
                     .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(options =>
@@ -68,12 +80,33 @@ namespace CounterCulture
                 options.SlidingExpiration = true;
             });
             services.AddApiVersioning();
-            services.AddMvc()
-                    .AddJsonOptions(options => {
-                        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    });
-            services.AddAuthentication()
-            .AddCookie(options => options.SlidingExpiration = true)
+            
+            services
+            .AddAuthentication( options => {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            //.AddCookie("Cookie")
+            .AddCookie(options => {
+                options.LoginPath = "/account/login";
+                options.AccessDeniedPath = "";
+                options.SlidingExpiration = true;
+                options.Cookie.Expiration = TimeSpan.FromDays(1);  
+            })
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+
+                options.ClientId = "countercultureapp";
+                options.SaveTokens = true;
+            })
+            // .AddIdentityServerAuthentication(options => {
+            //     options.Authority = "http://localhost:5000";
+            //     options.ApiName = "counterculturesecure";
+            //     options.SupportedTokens = SupportedTokens.Both;
+            //     options.RequireHttpsMetadata = false;
+            // })
             .AddJwtBearer(options =>
             {
                 var signingKey = Encoding.ASCII
@@ -93,9 +126,9 @@ namespace CounterCulture
             //  ConnectionMultiplexer
             // .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
             // services.AddSingleton<IConnectionMultiplexer>(redisConnection);
-            services.AddScoped<ITestUserRepository, TestUserRepository>();
+            //services.AddScoped<ITestUserRepository, TestUserRepository>();
             services.AddScoped<ICacheService, CacheService>();
-            services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
+            //services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
             services.AddIdentityServer()
             .AddOperationalStore(options =>
                 options.ConfigureDbContext = builder => 
@@ -105,8 +138,8 @@ namespace CounterCulture
                 options.ConfigureDbContext = builder =>
                     builder.UseMySql(mySqlConnection, sqlOptions => 
                         sqlOptions.MigrationsAssembly(migrationsAssembly)))
-            .AddDeveloperSigningCredential()
-            .AddAspNetIdentity<IdentityUser>();
+            .AddDeveloperSigningCredential();
+            //.AddAspNetIdentity<IdentityUser>();
             services.AddTransient<IStartupFilter, OnStartupFilter>();
         }
 
