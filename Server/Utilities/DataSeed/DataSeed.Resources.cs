@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using IdentityServer4.Models;
+using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace CounterCulture.Utilities
 {
@@ -11,8 +12,10 @@ namespace CounterCulture.Utilities
               new IdentityResources.Profile(),
               new IdentityResources.Email(),
               new IdentityResource {
-                  Name = "role",
-                  UserClaims = new List<string> {"role"}
+                  Name = "subject",
+                  UserClaims = new List<string> {
+                      OpenIdConnectConstants.Claims.Subject
+                  }
               }
           };
 

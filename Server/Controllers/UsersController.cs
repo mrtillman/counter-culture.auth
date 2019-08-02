@@ -42,16 +42,8 @@ namespace CounterCulture.Controllers
                 return Unauthorized();
             }
 
-            IdentityUser user = null;
-
-            try{
-                var claimType = OpenIdConnectConstants.Claims.Subject;
-                var userId = User.FindFirstValue(claimType);
-                user = await Users.FindByIdAsync(userId);
-            } catch (Exception ex){
-                Console.WriteLine(ex);
-                throw ex;
-            }
+            var userId = User.FindFirstValue(OpenIdConnectConstants.Claims.Subject);
+            IdentityUser user = await Users.FindByIdAsync(userId);
             
             return Ok(user);
         }
