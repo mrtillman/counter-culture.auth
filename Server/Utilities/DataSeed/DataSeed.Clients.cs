@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using IdentityServer4.Models;
+using CounterCulture.Constants;
 
 namespace CounterCulture.Utilities
 {
@@ -36,8 +37,8 @@ namespace CounterCulture.Utilities
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
-                    "http://localhost:8080/oauth2/callback",
-                    "https://counter-culture.io/oauth2/callback"
+                    $"{ServerUrls.APP[ENV.DEV]}/oauth2/callback",
+                    $"{ServerUrls.APP[ENV.PROD]}/oauth2/callback"
                   }
               },
               new Client {
@@ -50,8 +51,8 @@ namespace CounterCulture.Utilities
                   ClientSecrets = new List<Secret> {
                       new Secret("superSecretPassword".Sha512())},
                   RedirectUris = {
-                    "http://localhost:9000",
-                    "https://geeks.counter-culture.io"
+                    $"{ServerUrls.DEV[ENV.DEV]}/oauth2/callback",
+                    $"{ServerUrls.DEV[ENV.PROD]}/oauth2/callback"
                   }
               }
           };

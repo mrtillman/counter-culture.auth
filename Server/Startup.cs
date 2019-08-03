@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using CounterCulture.Repositories;
 using CounterCulture.Services;
+using CounterCulture.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -80,17 +81,25 @@ namespace CounterCulture
                     ValidateIssuerSigningKey = false,
                     // IssuerSigningKey = new SymmetricSecurityKey(signingKey),
                     ValidateIssuer = true,
-                    ValidIssuer = "http://localhost:5000",
+                    ValidIssuer = env.IsDevelopment() 
+                                  ? ServerUrls.SECURE[ENV.DEV] 
+                                  : ServerUrls.SECURE[ENV.PROD],
                     ValidateAudience = true,
-                    ValidAudience = "http://localhost:5000/resources"
+                    ValidAudience = env.IsDevelopment() 
+                                  ? $"{ServerUrls.SECURE[ENV.DEV]}/resources" 
+                                  : $"{ServerUrls.SECURE[ENV.PROD]}/resources",
                 };
 
             services.AddAuthentication()
             .AddCookie(options => options.SlidingExpiration = true)
             .AddJwtBearer(options =>
             {
-                options.Authority = env.IsProduction() ? "https://secure.counter-culture.io" : "http://localhost:5000";
-                options.Audience = "WebAPI";
+                options.Authority = env.IsDevelopment() 
+                                  ? ServerUrls.SECURE[ENV.DEV] 
+                                  : ServerUrls.SECURE[ENV.PROD];
+                options.Audience = env.IsDevelopment() 
+                                  ? $"{ServerUrls.SECURE[ENV.DEV]}/resources" 
+                                  : $"{ServerUrls.SECURE[ENV.PROD]}/resources";
                 options.RequireHttpsMetadata = env.IsProduction();
                 options.SaveToken = true;
                 options.TokenValidationParameters = _tokenValidationParameters;

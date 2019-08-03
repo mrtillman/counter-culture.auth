@@ -15,10 +15,14 @@ public class OnStartupFilter : IStartupFilter
 {
 
     private readonly IServiceProvider _serviceProvider;
-    public OnStartupFilter(IServiceProvider serviceProvider)
+    public OnStartupFilter(IServiceProvider serviceProvider,
+                           IHostingEnvironment hostingEnvironment)
     {
         _serviceProvider = serviceProvider;
+        _env = hostingEnvironment;
     }
+
+    public IHostingEnvironment _env { get; set; }        
 
     public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
     {
