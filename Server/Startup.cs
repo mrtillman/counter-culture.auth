@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Test;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using CounterCulture.Configuration;
 
 namespace CounterCulture
 {
@@ -29,14 +30,9 @@ namespace CounterCulture
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment env { get; set; }
-        private string mySqlConnection {
+        private string mySqlConnectionString {
             get {
                 return Configuration["ConnectionStrings:DefaultMySQLConnection"];
-            }
-        }
-        private string migrationsAssembly {
-            get {
-                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
             }
         }
 
@@ -48,15 +44,7 @@ namespace CounterCulture
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //services.AddIdentityCore<TestUser>();
-            services.AddDbContext<SecureDbContext>(options => {
-                options.UseMySql(
-                    Configuration["ConnectionStrings:DefaultMySQLConnection"], 
-                        mySqlOptions => mySqlOptions.MigrationsAssembly(migrationsAssembly));
-            });
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<SecureDbContext>()
-                    .AddDefaultTokenProviders();
+
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -66,7 +54,9 @@ namespace CounterCulture
                 options.AccessDeniedPath = "/";
                 options.SlidingExpiration = true;
             });
+
             services.AddApiVersioning();
+
             services.AddMvc()
                     .AddJsonOptions(options => {
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -76,10 +66,11 @@ namespace CounterCulture
 
             var signingKey = Encoding.ASCII
                             .GetBytes(Configuration["AppSecret"]);
+            
             var _tokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = false,
-                    // IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
                     ValidateIssuer = true,
                     ValidIssuer = env.IsDevelopment() 
                                   ? ServerUrls.SECURE[ENV.DEV] 
@@ -104,25 +95,11 @@ namespace CounterCulture
                 options.SaveToken = true;
                 options.TokenValidationParameters = _tokenValidationParameters;
             });
+
+            services.ConfigureAspNetIdentity(mySqlConnectionString);
+
+            services.ConfigureIdentityServer4(mySqlConnectionString);
             
-            // ConnectionMultiplexer redisConnection = 
-            //  ConnectionMultiplexer
-            // .Connect(Configuration["ConnectionStrings:DefaultRedisConnection"]);
-            // services.AddSingleton<IConnectionMultiplexer>(redisConnection);
-            services.AddScoped<ITestUserRepository, TestUserRepository>();
-            services.AddScoped<ICacheService, CacheService>();
-            services.AddScoped<IUserStore<TestUser>, CounterCulture.Services.TestUserStore>();
-            services.AddIdentityServer()
-            .AddDeveloperSigningCredential()
-            .AddOperationalStore(options =>
-                options.ConfigureDbContext = builder => 
-                    builder.UseMySql(mySqlConnection, sqlOptions => 
-                        sqlOptions.MigrationsAssembly(migrationsAssembly)))
-            .AddConfigurationStore(options =>
-                options.ConfigureDbContext = builder =>
-                    builder.UseMySql(mySqlConnection, sqlOptions => 
-                        sqlOptions.MigrationsAssembly(migrationsAssembly)))
-            .AddAspNetIdentity<IdentityUser>();
             services.AddTransient<IStartupFilter, OnStartupFilter>();
         }
 
