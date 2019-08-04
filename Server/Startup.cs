@@ -43,14 +43,20 @@ namespace CounterCulture
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     });
             
+            // add client-side app cookie
+            // and display cookie policy
             services.ConfigureAppCookieAndPolicy();
 
+            // cookie + jwt authentication
             services.ConfigureAuthentication(appSecret, env.IsProduction() ? ENV.PROD : ENV.DEV);
 
+            // membership system
             services.ConfigureAspNetIdentity(mySqlConnectionString);
 
+            // oauth 2.0 implementation
             services.ConfigureIdentityServer4(mySqlConnectionString);
             
+            // seed demo users, oauth 2.0 clients + resources
             services.AddTransient<IStartupFilter, OnStartupFilter>();
         }
 
