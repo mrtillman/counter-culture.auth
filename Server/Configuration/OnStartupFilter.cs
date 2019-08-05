@@ -75,25 +75,25 @@ namespace CounterCulture.Configuration
 
     public List<IdentityUser> IdentityUsers => new List<IdentityUser> {
             new IdentityUser(){
-                UserName = "clark",
+                UserName = "clark.kent@example.com",
                 NormalizedUserName = "CLARK",
                 Email = "clark.kent@example.com",
                 NormalizedEmail = "CLARK.KENT@EXAMPLE.COM"
             },
             new IdentityUser(){
-                UserName = "bruce",
+                UserName = "bruce.banner@example.com",
                 NormalizedUserName = "BRUCE",
                 Email = "bruce.banner@example.com",
                 NormalizedEmail = "BRUCE.BANNER@EXAMPLE.COM"
             },
             new IdentityUser(){
-                UserName = "peter",
+                UserName = "peter.parker@example.com",
                 NormalizedUserName = "PETER",
                 Email = "peter.parker@example.com",
                 NormalizedEmail = "PETER.PARKER@EXAMPLE.COM"
-            }
+            } //,
             // new IdentityUser(){
-            //     UserName = "tom",
+            //     UserName = "tom.ford@example.com",
             //     NormalizedUserName = "TOM",
             //     Email = "tom.ford@example.com",
             //     NormalizedEmail = "TOM.FORD@EXAMPLE.COM"
@@ -102,10 +102,10 @@ namespace CounterCulture.Configuration
         };
 
     public Dictionary<string, string> UserPasswords => new Dictionary<string, string>{
-            {"clark","WVPMHDma*kX6#JDV"},
-            {"bruce","4tVz%JZD8huTR%gc"},
-            {"peter","$3U%rhI30%K1je02"},
-            //{"tom","@QtFwZfF}3*y=/=j"}
+            { IdentityUsers[0].UserName, "WVPMHDma*kX6#JDV" },
+            { IdentityUsers[1].UserName, "4tVz%JZD8huTR%gc" },
+            { IdentityUsers[2].UserName, "$3U%rhI30%K1je02" },
+            //{ "tom.ford@example.com", "@QtFwZfF}3*y=/=j" }
         };
 
   }
