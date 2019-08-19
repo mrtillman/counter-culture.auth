@@ -57,9 +57,11 @@ namespace CounterCulture.Configuration
 
         if (!userManager.Users.Any())
         {
-          IdentityUsers.ForEach(user =>
+          DataSeed.Users.ForEach(user =>
           {
-            var result = Task.Run(() => userManager.CreateAsync(user, UserPasswords[user.UserName])).Result;
+            var result = Task.Run(() 
+              => userManager.CreateAsync(user, 
+                  DataSeed.UserPasswords[user.UserName])).Result;
           });
         }
 
@@ -72,41 +74,6 @@ namespace CounterCulture.Configuration
         next(builder);
       };
     }
-
-    public List<IdentityUser> IdentityUsers => new List<IdentityUser> {
-            new IdentityUser(){
-                UserName = "clark.kent@example.com",
-                NormalizedUserName = "CLARK",
-                Email = "clark.kent@example.com",
-                NormalizedEmail = "CLARK.KENT@EXAMPLE.COM"
-            },
-            new IdentityUser(){
-                UserName = "bruce.banner@example.com",
-                NormalizedUserName = "BRUCE",
-                Email = "bruce.banner@example.com",
-                NormalizedEmail = "BRUCE.BANNER@EXAMPLE.COM"
-            },
-            new IdentityUser(){
-                UserName = "peter.parker@example.com",
-                NormalizedUserName = "PETER",
-                Email = "peter.parker@example.com",
-                NormalizedEmail = "PETER.PARKER@EXAMPLE.COM"
-            } //,
-            // new IdentityUser(){
-            //     UserName = "tom.ford@example.com",
-            //     NormalizedUserName = "TOM",
-            //     Email = "tom.ford@example.com",
-            //     NormalizedEmail = "TOM.FORD@EXAMPLE.COM"
-            // }
-            
-        };
-
-    public Dictionary<string, string> UserPasswords => new Dictionary<string, string>{
-            { IdentityUsers[0].UserName, "WVPMHDma*kX6#JDV" },
-            { IdentityUsers[1].UserName, "4tVz%JZD8huTR%gc" },
-            { IdentityUsers[2].UserName, "$3U%rhI30%K1je02" },
-            //{ "tom.ford@example.com", "@QtFwZfF}3*y=/=j" }
-        };
 
   }
 
