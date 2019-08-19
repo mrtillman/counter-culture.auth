@@ -17,7 +17,7 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please ref
 
 ### Prerequisites 
 
-Be sure to install the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x), as counter-culture.secure is a .NET Core 2.2 Web API project.
+Be sure to install the [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x), as counter-culture.secure is a .NET Core 2.2 Web API project.
 
 This project also requires a MySQL instance.
 
@@ -47,7 +47,7 @@ To prime your MySQL instance, run the script found at `Server/Configuration/secu
  },
 ```
 
-> Be sure that the databse and user that appear in the `DefaultMySQLConnection` match the ones from `Server/Configuration/securedb.create.sql`, otherwise you will receive an error when seeding the database.
+> Be sure that the database and user that appear in the `DefaultMySQLConnection` match the ones from `Server/Configuration/securedb.create.sql`, otherwise you will receive an error when seeding the database.
 
 To seed the `secure` database, visit `counter-culture/secure/Server` from the command line and run each of the following [migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/) commands:
 
