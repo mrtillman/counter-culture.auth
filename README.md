@@ -64,11 +64,11 @@ dotnet ef database update -c SecureDbContext
 
 You should now have a bunch of tables:
 
-![oauth flow](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/server/assets/secure.tables.1.png)
+![oauth flow](https://github.com/mrtillman/counter-culture.secure/blob/dev/assets/secure.tables.1.png)
 
 Tables not shown in previous image:
 
-![oauth flow](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/server/assets/secure.tables.2.png)
+![oauth flow](https://github.com/mrtillman/counter-culture.secure/blob/dev/assets/secure.tables.2.png)
 
 ## Launching the Server
 
