@@ -64,11 +64,11 @@ dotnet ef database update -c SecureDbContext
 
 You should now have a bunch of tables:
 
-![oauth flow](https://github.com/mrtillman/counter-culture.secure/blob/dev/assets/secure.tables.1.png)
+![oauth tables 1](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/secure.tables.1.png)
 
 Tables not shown in previous image:
 
-![oauth flow](https://github.com/mrtillman/counter-culture.secure/blob/dev/assets/secure.tables.2.png)
+![oauth tables 2](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/secure.tables.2.png)
 
 ## Launching the Server
 
@@ -79,6 +79,13 @@ cd counter-culture.secure/Server
 # let it rip
 dotnet run
 ```
+
+### First-Party Clients
+
+During the initial startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console. Make note of these values. You will need them to set up counter-culture.app and counter-culture.dev:
+
+![client creds output](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/client.creds.output.png)
+
 
 ## Usage
 
