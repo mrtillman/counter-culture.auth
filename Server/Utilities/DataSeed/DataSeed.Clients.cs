@@ -70,27 +70,19 @@ namespace CounterCulture.Utilities
       Console.ForegroundColor = ConsoleColor.DarkMagenta;
       Console.WriteLine($"\nClientName: {clientInfo.Item1}");
       Console.WriteLine($"ClientId: {clientInfo.Item2}");
-      Console.WriteLine($"ClientSecret: {clientInfo.Item3}\n");
+      Console.WriteLine($"ClientSecret: {clientInfo.Item3}");
       Console.ForegroundColor = defaultColor;
     }
 
-    private static Tuple<string, string, string> CounterCultureAppInfo {
-      get {
-        return new Tuple<string, string, string>(
+    private static readonly Tuple<string, string, string> CounterCultureAppInfo = new Tuple<string, string, string>(
             "counter-culture.app",
             String.Empty.NewClientId(),
             String.Empty.NewClientSecret());
-      }
-    }
 
-    private static Tuple<string, string, string> CounterCultureDevInfo {
-      get {
-        return new Tuple<string, string, string>(
+    private static readonly Tuple<string, string, string> CounterCultureDevInfo = new Tuple<string, string, string>(
             "counter-culture.dev",
             String.Empty.NewClientId(),
             String.Empty.NewClientSecret());
-      }
-    }
   }
 
 }
