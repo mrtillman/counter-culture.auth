@@ -15,8 +15,7 @@ namespace CounterCulture.Utilities
     }
 
     public static string NewClientSecret(this string stringValue){
-      var buffer = getRandomBytes(64);
-      var suffix = Convert.ToBase64String(buffer).HexEncode();
+      var suffix = stringValue.NewClientId();
       return $"secret.{suffix.ToLower()}";
     }
     public static string HexEncode(this string stringValue){
