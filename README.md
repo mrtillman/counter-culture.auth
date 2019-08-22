@@ -84,7 +84,7 @@ dotnet run
 
 During the initial startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console. Make note of these values. You will need them to set up counter-culture.app and counter-culture.dev:
 
-![client creds output](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/client.creds.output.png)
+![client creds output](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/carbon.client.creds.png)
 
 
 ## Usage
