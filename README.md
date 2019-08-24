@@ -99,4 +99,4 @@ Open http://localhost:5000/account/login to view it in the browser. You may log 
 ## License
 [MIT](https://github.com/mrtillman/counter-culture.secure/blob/master/LICENSE.md)
 
-<p style="text-align:center;font-size:8px">Don't write code. After all the code that you don't write is the easiest to produce, debug, and maintain.<br/>~Steve Oualline</p>
+<p align="center">Don't write code. After all the code that you don't write is the easiest to produce, debug, and maintain. ~Steve Oualline</p>
