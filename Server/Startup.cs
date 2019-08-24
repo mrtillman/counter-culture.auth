@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using CounterCulture.Constants;
 using Newtonsoft.Json;
+using CounterCulture.Constants;
 using CounterCulture.Configuration;
+using CounterCulture.Services;
 
 namespace CounterCulture
 {
@@ -50,7 +51,7 @@ namespace CounterCulture
             // cookie + jwt authentication
             services.ConfigureAuthentication(appSecret, env.IsProduction() ? ENV.PROD : ENV.DEV);
 
-            // membership system
+            // membership system to manage users + roles
             services.ConfigureAspNetIdentity(mySqlConnectionString);
 
             // oauth 2.0 implementation
@@ -58,6 +59,9 @@ namespace CounterCulture
             
             // seed demo users, oauth 2.0 clients + resources
             services.AddTransient<IStartupFilter, OnStartupFilter>();
+
+            // add app version service
+            services.AddTransient<IAppVersionService, AppVersionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
