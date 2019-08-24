@@ -101,6 +101,6 @@ Open http://localhost:5000/account/login to view it in the browser. You may log 
 
 ---
 
-<h6 align="center">Don't write code. After all the code that you don't write is the easiest to produce, debug, and maintain. ~Steve Oualline</h6>
+<h6 align="center">Don't write code. After all the code that you don't write is the easiest to produce, debug, and maintain. ~ Steve Oualline</h6>
 
 ---
