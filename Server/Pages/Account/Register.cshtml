@@ -1,12 +1,15 @@
 @page
 @model CounterCulture.Pages.RegisterModel
 
-<form 
-    method="POST"
-    asp-page="Register"
-    asp-page-handler="SubmitRegistration">
-  <p>Sign Up</p>
-  <input type="email" name="Email" placeholder="Email" value="@Model.AppUser.Email" /><br/>
-  <input type="password" name="Password" placeholder="Password" value="@Model.AppUser.Password"/><br/>
-  <input type="submit" value="Ok">
-</form>
+<div>
+  <partial name="_ValidationSummary" />
+  <form 
+      method="POST"
+      asp-page="Register"
+      asp-page-handler="SubmitRegistration">
+    <p>Sign Up</p>
+    <input type="email" name="Username" placeholder="Email" value="@Model.Registrant.Username" /><br/>
+    <input type="password" name="Password" placeholder="Password" value="@Model.Registrant.Password"/><br/>
+    <input type="submit" value="Ok">
+  </form>
+</div>

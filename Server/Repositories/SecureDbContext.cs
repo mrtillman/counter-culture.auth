@@ -6,13 +6,9 @@ using CounterCulture.Models;
 
 namespace CounterCulture.Repositories
 {
-    public class SecureDbContext : IdentityDbContext<AppUser>
+    public class SecureDbContext : IdentityDbContext
     {
         public SecureDbContext(DbContextOptions<SecureDbContext> options)
-            : base(options)
-    {
-    }
-    public DbSet<OAuthClient> OAuthClients { get; set; }
-
+            : base(options) { }
     }
 }

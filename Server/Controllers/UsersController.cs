@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,9 @@ using CounterCulture.Models;
 using CounterCulture.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AspNet.Security.OpenIdConnect.Extensions;
+using AspNet.Security.OpenIdConnect.Primitives;
+using AspNet.Security.OpenIdConnect.Server;
 
 namespace CounterCulture.Controllers
 {
@@ -23,15 +27,13 @@ namespace CounterCulture.Controllers
     public class UsersController : BaseController
     {
         public UsersController(
-            ICacheService CacheService,
             ILogger<UsersController> LoggerService,
-            UserManager<AppUser> UserService)
-            :base(CacheService)
+            UserManager<IdentityUser> UserService)
         {
             Users = UserService;
             Logger = LoggerService;
         }
-        private readonly UserManager<AppUser> Users;
+        private readonly UserManager<IdentityUser> Users;
         private ILogger<UsersController> Logger { get; set; }
 
         [HttpGet]
@@ -39,20 +41,10 @@ namespace CounterCulture.Controllers
             if (!User.Identity.IsAuthenticated){
                 return Unauthorized();
             }
+
+            var userId = User.FindFirstValue(OpenIdConnectConstants.Claims.Subject);
+            IdentityUser user = await Users.FindByIdAsync(userId);
             
-            var claim = HttpContext.User.Claims.ElementAt(1);
-            var userId = claim.Value;
-
-            if(string.IsNullOrEmpty(userId)){
-                return Unauthorized();
-            }
-            
-            var user = await Users.FindByIdAsync(userId);
-
-            if(user == null){
-                return Unauthorized();
-            }
-
             return Ok(user);
         }
 
