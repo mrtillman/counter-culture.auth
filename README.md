@@ -82,10 +82,9 @@ dotnet run
 
 ### First-Party Clients
 
-During the initial startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console. Make note of these values. You will need them to set up counter-culture.app and counter-culture.dev:
+During the initial startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console, as shown in the example image below. Make note of these values as they appear in your terminal. You will need them to set up counter-culture.app and counter-culture.dev.
 
-![client creds output](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/carbon.client.creds.png)
-
+![client creds output example](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/dev/assets/carbon.client.creds.png)
 
 ## Usage
 
@@ -99,3 +98,5 @@ Open http://localhost:5000/account/login to view it in the browser. You may log 
 
 ## License
 [MIT](https://github.com/mrtillman/counter-culture.secure/blob/master/LICENSE.md)
+
+<p style="text-align:center;font-size:8px">Don't write code. After all the code that you don't write is the easiest to produce, debug, and maintain.<br/>~Steve Oualline</p>
