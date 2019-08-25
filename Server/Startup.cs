@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using CounterCulture.Constants;
 using CounterCulture.Configuration;
 using CounterCulture.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace CounterCulture
 {
@@ -77,6 +78,20 @@ namespace CounterCulture
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+
+                var forwardOptions = new ForwardedHeadersOptions
+                {
+                    // https://github.com/IdentityServer/IdentityServer4/issues/2337
+                    // https://github.com/IdentityServer/IdentityServer4/issues/1331
+                    // https://stackoverflow.com/questions/46772300/setup-identity-server-4-reverse-proxy
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                    RequireHeaderSymmetry = false
+                };
+
+                forwardOptions.KnownNetworks.Clear();
+                forwardOptions.KnownProxies.Clear();
+
+                app.UseForwardedHeaders(forwardOptions);
             }
             app.UseCors(policy => {
                 policy.AllowAnyOrigin();
