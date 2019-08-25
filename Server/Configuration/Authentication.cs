@@ -15,7 +15,7 @@ namespace CounterCulture.Configuration
   public static class AuthenticationConfiguration
   {
     public static void ConfigureAuthentication(
-      this IServiceCollection services, string appSecret, ENV environment)
+      this IServiceCollection services, string appSecret, ENV mode)
     {
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -27,18 +27,18 @@ namespace CounterCulture.Configuration
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(signingKey),
         ValidateIssuer = true,
-        ValidIssuer = ServerUrls.SECURE[environment],
+        ValidIssuer = ServerUrls.SECURE[mode],
         ValidateAudience = true,
-        ValidAudience = $"{ServerUrls.SECURE[environment]}/resources"
+        ValidAudience = $"{ServerUrls.SECURE[mode]}/resources"
       };
 
       services.AddAuthentication()
       .AddCookie(options => options.SlidingExpiration = true)
       .AddJwtBearer(options =>
       {
-        options.Authority = ServerUrls.SECURE[environment];
-        options.Audience = $"{ServerUrls.SECURE[environment]}/resources";
-        options.RequireHttpsMetadata = (environment == ENV.PROD);
+        options.Authority = ServerUrls.SECURE[mode];
+        options.Audience = $"{ServerUrls.SECURE[mode]}/resources";
+        options.RequireHttpsMetadata = (mode == ENV.PROD);
         options.SaveToken = true;
         options.TokenValidationParameters = _tokenValidationParameters;
       });
