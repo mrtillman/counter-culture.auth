@@ -1,3 +1,4 @@
+using CounterCulture.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,10 +16,12 @@ namespace CounterCulture.Configuration
       }
     }
     
-    public static void ConfigureIdentityServer4(this IServiceCollection services, string mySqlConnectionString)
+    public static void ConfigureIdentityServer4(
+      this IServiceCollection services, string mySqlConnectionString, ENV mode)
     {
 
-      services.AddIdentityServer()
+      services.AddIdentityServer(options => 
+                  options.PublicOrigin = ServerUrls.SECURE[mode])
               .AddDeveloperSigningCredential()
               .AddOperationalStore(options =>
                   options.ConfigureDbContext = builder =>
