@@ -37,6 +37,7 @@ namespace CounterCulture
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var mode = env.IsProduction() ? ENV.PROD : ENV.DEV;
 
             services.AddApiVersioning();
 
@@ -50,13 +51,13 @@ namespace CounterCulture
             services.ConfigureAppCookieAndPolicy();
 
             // cookie + jwt authentication
-            services.ConfigureAuthentication(appSecret, env.IsProduction() ? ENV.PROD : ENV.DEV);
+            services.ConfigureAuthentication(appSecret, mode);
 
             // membership system to manage users + roles
             services.ConfigureAspNetIdentity(mySqlConnectionString);
 
             // oauth 2.0 implementation
-            services.ConfigureIdentityServer4(mySqlConnectionString);
+            services.ConfigureIdentityServer4(mySqlConnectionString, mode);
             
             // seed demo users, oauth 2.0 clients + resources
             services.AddTransient<IStartupFilter, OnStartupFilter>();
@@ -73,25 +74,6 @@ namespace CounterCulture
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-
-                var forwardOptions = new ForwardedHeadersOptions
-                {
-                    // https://github.com/IdentityServer/IdentityServer4/issues/2337
-                    // https://github.com/IdentityServer/IdentityServer4/issues/1331
-                    // https://stackoverflow.com/questions/46772300/setup-identity-server-4-reverse-proxy
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
-                    RequireHeaderSymmetry = false
-                };
-
-                forwardOptions.KnownNetworks.Clear();
-                forwardOptions.KnownProxies.Clear();
-
-                app.UseForwardedHeaders(forwardOptions);
             }
             app.UseCors(policy => {
                 policy.AllowAnyOrigin();
