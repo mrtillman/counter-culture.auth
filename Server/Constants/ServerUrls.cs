@@ -14,7 +14,7 @@ namespace CounterCulture.Constants
         public static Dictionary<ENV, string> APP
             => new Dictionary<ENV, string> {
                 { ENV.DEV, "http://counter-culture:8080" },
-                { ENV.PROD, "https://counter-culture.io"}
+                { ENV.PROD, "https://www.counter-culture.io"}
             };
 
         public static Dictionary<ENV, string> DEV
