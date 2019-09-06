@@ -2,6 +2,8 @@
 
 A token server for [counter-culture.io](https://counter-culture.io).
 
+Not to be confused with the micro-frontend, [counter-culture.secure](https://gitlab.com/mrtillman/counter-culture.secure).
+
 ---
 
 [![Build Status](https://travis-ci.com/mrtillman/counter-culture.secure.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.secure)
@@ -9,10 +11,11 @@ A token server for [counter-culture.io](https://counter-culture.io).
 <a href="https://github.com/mrtillman/counter-culture.secure/releases/tag/v1.0.0-alpha">
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mrtillman/counter-culture.secure?sort=semver)
 </a>
+
 ## Getting Started
 
 Counter-culture.secure is a REST API designed to issue, validate, renew and cancel OAuth 2.0 security tokens. All endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://geeks.counter-culture.io/register) and then [send an authorization request](https://github.com/mrtillman/counter-culture.secure/wiki/How-To-Send-an-Authorization-Request).
- 
+
 You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6L7).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/0323d87983b842a1c15f)
