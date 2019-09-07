@@ -8,9 +8,9 @@ Not to be confused with the micro-frontend, [counter-culture.secure](https://git
 
 [![Build Status](https://travis-ci.com/mrtillman/counter-culture.secure.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.secure)
 [![Coverage Status](https://coveralls.io/repos/github/mrtillman/counter-culture.secure/badge.svg?branch=master)](https://coveralls.io/github/mrtillman/counter-culture.secure?branch=master)
-<a href="https://github.com/mrtillman/counter-culture.secure/releases/tag/v1.0.0-alpha">
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mrtillman/counter-culture.secure?sort=semver)
-</a>
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mrtillman/counter-culture.secure?sort=semver)](https://github.com/mrtillman/counter-culture.secure/releases/tag/v1.0.0-alpha)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mrtillman/counter-culture.secure/blob/master/LICENSE.md)
+[![website-up](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://secure.counter-culture.io/)
 
 ## Getting Started
 
