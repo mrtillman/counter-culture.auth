@@ -41,7 +41,7 @@ namespace CounterCulture.Controllers
             client.AllowedScopes = registration.AllowedScopes;
             client.RedirectUris = registration.RedirectUris;
             client.ClientSecrets = new List<Secret> {
-                new Secret(String.Empty.NewClientSecret())
+                new Secret(String.Empty.NewClientSecret().Sha256())
             };
             
             this.is4Context.Clients.Add(client.ToEntity());
