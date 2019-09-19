@@ -34,6 +34,8 @@ namespace CounterCulture.Controllers
         [Route("register")]
         public ActionResult Register([FromBody] Registration registration) {
 
+            var client_secret = String.Empty.NewClientSecret();
+
             // TODO: simplify using Automapper
             Client client = new Client();
             client.ClientId = String.Empty.NewClientId();
@@ -42,7 +44,7 @@ namespace CounterCulture.Controllers
             client.AllowedScopes = registration.AllowedScopes;
             client.RedirectUris = registration.RedirectUris;
             client.ClientSecrets = new List<Secret> {
-                new Secret(String.Empty.NewClientSecret().Sha256())
+                new Secret(client_secret.Sha256())
             };
             
             this.is4Context.Clients.Add(client.ToEntity());
@@ -50,6 +52,10 @@ namespace CounterCulture.Controllers
             this.is4Context.SaveChanges();
 
             Logger.LogInformation(LoggingEvents.RegisterApp, client.ClientName);
+
+            client.ClientSecrets = new List<Secret> {
+                new Secret(client_secret)
+            };
 
             return Ok(client);
         }
