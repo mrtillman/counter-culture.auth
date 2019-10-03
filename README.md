@@ -2,8 +2,6 @@
 
 A token server for [counter-culture.io](https://counter-culture.io).
 
-Not to be confused with the micro-frontend, [counter-culture.secure](https://gitlab.com/mrtillman/counter-culture.secure#counter-culturesecure).
-
 ---
 
 [![Build Status](https://travis-ci.com/mrtillman/counter-culture.secure.svg?branch=master)](https://travis-ci.com/mrtillman/counter-culture.secure)
