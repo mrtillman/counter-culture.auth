@@ -15,25 +15,25 @@ public class ServerUrls : IServerUrls
   public string API
   {
     get => environment.IsDevelopment()
-            ? "http://counter-culture:4000"
+            ? "http://localhost:4000"
             : "https://api.counter-culture.io";
   }
   public string APP
   {
     get => environment.IsDevelopment()
-            ? "http://counter-culture:8080"
+            ? "http://localhost:8080"
             : "https://www.counter-culture.io";
   }
   public string DEV
   {
     get => environment.IsDevelopment()
-            ? "http://counter-culture:9000"
+            ? "http://localhost:9000"
             : "https://geeks.counter-culture.io";
   }
   public string SECURE
   {
     get => environment.IsDevelopment()
-            ? "http://counter-culture:5000"
+            ? "http://localhost:5000"
             : "https://secure.counter-culture.io";
   }
 }
