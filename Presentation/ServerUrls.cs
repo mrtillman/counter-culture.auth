@@ -10,30 +10,32 @@ public class ServerUrls : IServerUrls
     environment = Environment;
   }
 
+  // TODO: register using localhost instead of host name
+
   private IHostingEnvironment environment { get; set; }
 
   public string API
   {
     get => environment.IsDevelopment()
-            ? "http://localhost:4000"
+            ? "http://counter-culture:4000"
             : "https://api.counter-culture.io";
   }
   public string APP
   {
     get => environment.IsDevelopment()
-            ? "http://localhost:8080"
+            ? "http://counter-culture:8080"
             : "https://www.counter-culture.io";
   }
   public string DEV
   {
     get => environment.IsDevelopment()
-            ? "http://localhost:9000"
+            ? "http://counter-culture:9000"
             : "https://geeks.counter-culture.io";
   }
   public string SECURE
   {
     get => environment.IsDevelopment()
-            ? "http://localhost:5000"
+            ? "http://counter-culture:5000"
             : "https://secure.counter-culture.io";
   }
 }

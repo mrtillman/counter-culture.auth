@@ -14,7 +14,7 @@ A token server for [counter-culture.io](https://counter-culture.io).
 
 Counter-culture.secure is a REST API designed to issue, validate, renew and cancel OAuth 2.0 security tokens. All endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://geeks.counter-culture.io/register) and then [send an authorization request](https://github.com/mrtillman/counter-culture.secure/wiki/How-To-Send-an-Authorization-Request).
 
-You can try it out using [Postman](https://learning.getpostman.com/). Please refer to the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6L7).
+You can try it out using [Postman](https://learning.getpostman.com/). Please see the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6L7).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/0323d87983b842a1c15f)
 
@@ -55,13 +55,13 @@ To seed the `secure` database, visit `counter-culture/Presentation` from the com
 
 ```sh
 # create tables for oauth2 clients, scopes, resources and claims
-dotnet ef database update -c ConfigurationDbContext
+$ dotnet ef database update -c ConfigurationDbContext
 
 # create tables for authorization codes, refresh tokens, and reference tokens
-dotnet ef database update -c PersistedGrantDbContext
+$ dotnet ef database update -c PersistedGrantDbContext
 
 # create asp.net identity tables for user management
-dotnet ef database update -c SecureDbContext
+$ dotnet ef database update -c SecureDbContext
 ```
 
 You should now have a bunch of tables:
@@ -75,17 +75,15 @@ Tables not shown in previous image:
 ## Launching the Server
 
 ```sh
-# enter the project root
-cd counter-culture.secure/Presentation
-
 # let it rip
-dotnet run
+dotnet run -p Presentation/Presentation.csproj
 ```
 
 ### First-Party Clients
 
-During the initial startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console, as shown in the example image below. Make note of these values as they appear in your terminal. You will need them to set up counter-culture.app and counter-culture.dev.
+During the very first startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console, as shown in the example image below. Make note of these values as they appear in your terminal. You will need them to set up counter-culture.app and counter-culture.dev.
 
+<!--TODO: move assets to Surge-->
 ![client creds output example](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/master/assets/carbon.client.creds.png)
 
 ## Usage
