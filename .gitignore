@@ -10,6 +10,8 @@ nupkg/
 appsettings/
 appsettings.json
 
+# EF Migrations
+Migrations/
 
 # Visual Studio Code
 .vscode*
