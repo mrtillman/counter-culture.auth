@@ -12,7 +12,7 @@ namespace Services
   {
 
     public CountersService(
-      IConfiguration Configuration, IHttpShim HttpShim)
+      IConfiguration Configuration, IServiceAgent HttpShim)
       : base(Configuration, HttpShim) { }
 
     public string Token { 

@@ -9,14 +9,14 @@ namespace Services
   public class BaseService
   {
 
-    public BaseService(IConfiguration Configuration, IHttpShim HttpShim)
+    public BaseService(IConfiguration Configuration, IServiceAgent HttpShim)
     {
       configuration = Configuration;
       http = HttpShim;
     }
 
     protected IConfiguration configuration { get; set; }
-    protected IHttpShim http { get; set; }
+    protected IServiceAgent http { get; set; }
 
     protected async Task<T> DeserializeResponseStringAs<T>(HttpResponseMessage response)
     {

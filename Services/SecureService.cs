@@ -16,7 +16,7 @@ namespace Services
     public SecureService(
       IConfiguration Configuration,
       IServerUrls ServerUrls,
-      IHttpShim HttpShim)
+      IServiceAgent HttpShim)
       : base(Configuration, HttpShim){ 
         serverUrls = ServerUrls;
       }
