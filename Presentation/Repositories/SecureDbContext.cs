@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using CounterCulture.Models;
+using Presentation.Models;
 
-namespace CounterCulture.Repositories
+namespace Presentation.Repositories
 {
     public class SecureDbContext : IdentityDbContext
     {

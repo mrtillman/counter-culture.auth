@@ -6,12 +6,12 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using CounterCulture.Services;
-using CounterCulture.Models;
-using CounterCulture.Utilities;
+using Presentation.Services;
+using Presentation.Models;
+using Presentation.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
-namespace CounterCulture.Controllers
+namespace Presentation.Controllers
 {
     [ApiVersion( "1.0" )]
     [Route("api/v{version:apiVersion}/[controller]")]

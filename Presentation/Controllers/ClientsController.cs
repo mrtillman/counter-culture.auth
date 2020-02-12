@@ -2,17 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using CounterCulture.Constants;
-using CounterCulture.Utilities;
+using Presentation.Constants;
+using Presentation.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using CounterCulture.Models;
+using Presentation.Models;
 using IdentityServer4.Models;
 using System.Linq;
 using System.Collections.Generic;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 
-namespace CounterCulture.Controllers
+namespace Presentation.Controllers
 {
 
   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

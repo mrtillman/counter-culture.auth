@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Models {
+namespace Presentation.Models {
     public class AuthRequest {
         public string client_id { get; set; }
         public string client_secret { get; set; }        

@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Services
+namespace Presentation.Services
 {
   public interface IAppVersionService
   {

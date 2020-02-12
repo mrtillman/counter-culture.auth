@@ -5,7 +5,7 @@ using IdentityModel;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
-namespace CounterCulture.Utilities { 
+namespace Presentation.Utilities { 
   public partial class DataSeed {
     public static List<IdentityUser> Users => new List<IdentityUser> {
             new IdentityUser(){

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace CounterCulture.Services
+namespace Presentation.Services
 {
   public class AppVersionService : IAppVersionService
   {

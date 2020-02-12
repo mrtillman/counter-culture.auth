@@ -5,11 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using CounterCulture.Configuration;
-using CounterCulture.Services;
-using CounterCulture.Constants;
+using Presentation.Configuration;
+using Presentation.Services;
+using Presentation.Constants;
 
-namespace CounterCulture
+namespace Presentation
 {
   public class Startup
     {

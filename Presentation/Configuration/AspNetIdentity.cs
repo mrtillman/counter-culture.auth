@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using CounterCulture.Repositories;
+using Presentation.Repositories;
 
-namespace CounterCulture.Configuration
+namespace Presentation.Configuration
 {
   public static class AspNetIdentityConfiguration
   {

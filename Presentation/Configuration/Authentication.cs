@@ -3,15 +3,15 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using CounterCulture.Repositories;
+using Presentation.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using CounterCulture.Constants;
+using Presentation.Constants;
 using Common;
 
-namespace CounterCulture.Configuration
+namespace Presentation.Configuration
 {
   public static class AuthenticationConfiguration
   {

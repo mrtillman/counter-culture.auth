@@ -10,14 +10,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CounterCulture.Services;
-using CounterCulture.Models;
-using CounterCulture.Utilities;
+using Presentation.Services;
+using Presentation.Models;
+using Presentation.Utilities;
 using IdentityServer4.Test;
 using IdentityServer4.Quickstart.UI;
 using IdentityModel;
 
-namespace CounterCulture.Pages
+namespace Presentation.Pages
 {
     public class RegisterModel : PageModel
     {

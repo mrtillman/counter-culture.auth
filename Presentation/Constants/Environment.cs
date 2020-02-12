@@ -1,6 +1,6 @@
 using System;
 
-namespace CounterCulture.Constants
+namespace Presentation.Constants
 {
   public enum ENV {
     DEV, PROD

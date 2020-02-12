@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CounterCulture.Pages
+namespace Presentation.Pages
 {
     public class PrivacyModel : PageModel
     {

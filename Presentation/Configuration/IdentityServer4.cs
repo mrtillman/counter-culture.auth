@@ -1,10 +1,10 @@
-using CounterCulture.Constants;
+using Presentation.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Common;
 
-namespace CounterCulture.Configuration
+namespace Presentation.Configuration
 {
   public static class IdentityServer4Configuration
   {

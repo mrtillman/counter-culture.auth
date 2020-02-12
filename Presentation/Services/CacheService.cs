@@ -1,8 +1,8 @@
 using System;
 using StackExchange.Redis;
-using CounterCulture.Services;
+using Presentation.Services;
 
-namespace CounterCulture.Services
+namespace Presentation.Services
 {
     public class CacheService : ICacheService
     {

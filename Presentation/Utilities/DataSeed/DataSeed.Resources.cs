@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using IdentityServer4.Models;
 using AspNet.Security.OpenIdConnect.Primitives;
 
-namespace CounterCulture.Utilities
+namespace Presentation.Utilities
 {
   public partial class DataSeed
   {

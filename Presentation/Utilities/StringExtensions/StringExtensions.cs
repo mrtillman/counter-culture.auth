@@ -2,9 +2,9 @@
 using System;
 using System.Text;
 using System.Security.Cryptography;
-using CounterCulture.Utilities;
+using Presentation.Utilities;
 
-namespace CounterCulture.Utilities
+namespace Presentation.Utilities
 {
 
   public static class StringExtensions

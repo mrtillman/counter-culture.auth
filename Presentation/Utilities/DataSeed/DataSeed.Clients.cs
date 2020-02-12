@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using IdentityServer4.Models;
-using CounterCulture.Constants;
+using Presentation.Constants;
 using Common;
 
-namespace CounterCulture.Utilities
+namespace Presentation.Utilities
 {
 
   public partial class DataSeed

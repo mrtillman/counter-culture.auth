@@ -10,17 +10,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using CounterCulture.Services;
-using CounterCulture.Constants;
-using CounterCulture.Models;
-using CounterCulture.Utilities;
+using Presentation.Services;
+using Presentation.Constants;
+using Presentation.Models;
+using Presentation.Utilities;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AspNet.Security.OpenIdConnect.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
 using AspNet.Security.OpenIdConnect.Server;
 
-namespace CounterCulture.Controllers
+namespace Presentation.Controllers
 {
     
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

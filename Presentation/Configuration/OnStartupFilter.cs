@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
 using IdentityServer4.EntityFramework.DbContexts;
-using CounterCulture.Utilities;
+using Presentation.Utilities;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace CounterCulture.Configuration
+namespace Presentation.Configuration
 {
   public class OnStartupFilter : IStartupFilter
   {

@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CounterCulture.Services;
-using CounterCulture.Models;
-using CounterCulture.Utilities;
+using Presentation.Services;
+using Presentation.Models;
+using Presentation.Utilities;
 using System.Security.Claims;
 using System.Security.Principal;
 using IdentityServer4.Test;
 
-namespace CounterCulture.Pages
+namespace Presentation.Pages
 {
     public class LogOutModel : PageModel
     {
