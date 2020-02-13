@@ -17,7 +17,7 @@ GRANT ALL PRIVILEGES ON secure.* TO '{{username}}'@'%';
 
 to seed the database:
 0. open terminal
-1. cd to counter-culture/secure/Server
+1. cd to counter-culture/Presentation
 2. run each:
     o. dotnet ef database update -c ConfigurationDbContext
     i. dotnet ef database update -c PersistedGrantDbContext
