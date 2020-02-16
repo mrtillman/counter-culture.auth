@@ -53,6 +53,10 @@ namespace Presentation.Controllers
 
             Logger.LogInformation("register:app", client.ClientName);
 
+            client.ClientSecrets = new List<Secret> {	
+                new Secret(client_secret)	
+            };
+            
             return Ok(client);
         }
 
