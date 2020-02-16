@@ -40,7 +40,7 @@ namespace Presentation.Controllers
             Client client = new Client();
             client.ClientId = String.Empty.NewClientId();
             client.ClientName = registration.ClientName;
-            client.AllowedGrantTypes = GrantTypes.Code;
+            client.AllowedGrantTypes = GrantTypes.CodeAndClientCredentials;
             client.AllowedScopes = registration.AllowedScopes;
             client.RedirectUris = registration.RedirectUris;
             client.ClientSecrets = new List<Secret> {
