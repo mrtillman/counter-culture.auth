@@ -15,6 +15,10 @@ env.*
 *.csv
 /tmp/*
 
+/bin/
+/obj/
+/out/
+
 demo
 spec
 node_modules
