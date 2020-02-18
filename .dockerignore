@@ -1,0 +1,21 @@
+.git
+.ipynb_checkpoints/*
+/notebooks/*
+/unused/*
+Dockerfile
+.DS_Store
+.gitignore
+README.md
+env.*
+/devops/*
+/Specification/
+/Tests/
+
+# To prevent storing dev/temporary container data
+*.csv
+/tmp/*
+
+demo
+spec
+node_modules
+npm-debug.log
