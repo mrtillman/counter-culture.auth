@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using IdentityServer4;
 using IdentityServer4.Models;
-using Presentation.Constants;
 using Common;
 
 namespace Presentation.Utilities
@@ -10,17 +10,14 @@ namespace Presentation.Utilities
   public partial class DataSeed
   {
 
-    private static List<string> _allowedScopes
+    public static string[] _allowedScopes
     {
       get
       {
-        return new List<string> {
-		              "openid",
-                  "counters:read",
-                  "counters:write",
-                  "profile:read",
-                  "profile:write"
-                };
+        return new string[] {
+          IdentityServerConstants.StandardScopes.OpenId,
+          IdentityServerConstants.StandardScopes.Profile
+        };
       }
     }
 
@@ -39,13 +36,13 @@ namespace Presentation.Utilities
                 AccessTokenType = AccessTokenType.Jwt,
                 AccessTokenLifetime = 86400,
                 AllowedScopes = _allowedScopes,
+                AllowOfflineAccess = true,
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 ClientName = CounterCultureAppInfo.Item1,
                 ClientId = CounterCultureAppInfo.Item2,
                 ClientSecrets = new List<Secret> {
                     new Secret(CounterCultureAppInfo.Item3.Sha512())},
                 RedirectUris = {
-                  $"{ServerUrls.APP}/oauth2/callback",
                   $"{ServerUrls.APP}/oauth2/callback"
                 }
             },
@@ -53,13 +50,13 @@ namespace Presentation.Utilities
                 AccessTokenType = AccessTokenType.Jwt,
                 AccessTokenLifetime = 86400,
                 AllowedScopes = _allowedScopes,
+                AllowOfflineAccess = true,
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 ClientName = CounterCultureDevInfo.Item1,
                 ClientId = CounterCultureDevInfo.Item2,
                 ClientSecrets = new List<Secret> {
                     new Secret(CounterCultureDevInfo.Item3.Sha512())},
                 RedirectUris = {
-                  $"{ServerUrls.DEV}/oauth2/callback",
                   $"{ServerUrls.DEV}/oauth2/callback"
                 }
             }

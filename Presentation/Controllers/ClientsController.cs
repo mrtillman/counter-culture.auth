@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using Presentation.Constants;
 using Presentation.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Presentation.Models;
 using IdentityServer4.Models;
-using System.Linq;
 using System.Collections.Generic;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4;
+using Presentation;
 
 namespace Presentation.Controllers
 {
@@ -41,7 +41,8 @@ namespace Presentation.Controllers
             client.ClientId = String.Empty.NewClientId();
             client.ClientName = registration.ClientName;
             client.AllowedGrantTypes = GrantTypes.CodeAndClientCredentials;
-            client.AllowedScopes = registration.AllowedScopes;
+            client.AllowedScopes = DataSeed._allowedScopes;
+            client.AllowOfflineAccess = true;
             client.RedirectUris = registration.RedirectUris;
             client.ClientSecrets = new List<Secret> {
                 new Secret(client_secret.Sha256())
