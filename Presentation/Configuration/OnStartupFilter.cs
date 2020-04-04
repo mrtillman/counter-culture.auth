@@ -50,13 +50,6 @@ namespace Presentation.Configuration
                       .Select(resource => resource.ToEntity()));
         }
 
-        if (!is4Context.ApiResources.Any())
-        {
-          is4Context.ApiResources.AddRange(
-              DataSeed.ApiResources
-                      .Select(resource => resource.ToEntity()));
-        }
-
         if (!userManager.Users.Any())
         {
           DataSeed.Users.ForEach(user =>
@@ -70,11 +63,7 @@ namespace Presentation.Configuration
         is4Context.SaveChanges();
       }
 
-      return builder =>
-      {
-        //builder.UseMiddleware<RequestServicesContainerMiddleware>();
-        next(builder);
-      };
+      return builder => next(builder);
     }
 
   }
