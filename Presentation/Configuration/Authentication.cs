@@ -27,7 +27,7 @@ namespace Presentation.Configuration
         IssuerSigningKey = new SymmetricSecurityKey(signingKey),
         ValidateIssuer = true,
         ValidIssuer = ServerUrls.SECURE,
-        ValidateAudience = true,
+        ValidateAudience = false,
         ValidAudience = $"{ServerUrls.SECURE}/resources"
       };
 
