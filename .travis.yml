@@ -2,7 +2,9 @@ dist: bionic
 language: csharp
 solution: counter-culture.secure.sln
 mono: none
-dotnet: 2.2
-script:
+dotnet: 3.1
+install:
   - dotnet restore
-  - dotnet test
+script:
+  - dotnet build
+  - dotnet test Tests/DataImporter.Tests/DataImporter.Tests.csproj
