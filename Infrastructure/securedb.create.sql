@@ -12,19 +12,3 @@ CREATE USER '{{username}}'@'%' IDENTIFIED BY '{{password}}';
 
 ALTER USER '{{username}}' IDENTIFIED BY '{{password}}';
 GRANT ALL PRIVILEGES ON secure.* TO '{{username}}'@'%';
-
-/*
-
-to seed the database:
-0. open terminal
-1. cd to counter-culture.secure/Presentation
-2. run each:
-    o. dotnet ef database update -c ConfigurationDbContext
-    i. dotnet ef database update -c PersistedGrantDbContext
-   ii. dotnet ef database update -c SecureDbContext
-
-   alternatively,
-
-   dotnet ef database update -c ConfigurationDbContext && dotnet ef database update -c PersistedGrantDbContext && dotnet ef database update -c SecureDbContext
-
-*/
