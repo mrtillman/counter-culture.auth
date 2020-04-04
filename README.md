@@ -22,6 +22,8 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please see
 
 - .NET Core CLI
 - MySQL
+- [Entity Framework Core tools](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet)
+- [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/)
 
 ### Installation
 

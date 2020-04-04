@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using IdentityServer4.EntityFramework.DbContexts;
 using Presentation.Utilities;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
@@ -18,13 +18,13 @@ namespace Presentation.Configuration
 
     private readonly IServiceProvider _serviceProvider;
     public OnStartupFilter(IServiceProvider serviceProvider,
-                        IHostingEnvironment hostingEnvironment)
+                        IWebHostEnvironment hostingEnvironment)
     {
       _serviceProvider = serviceProvider;
       _env = hostingEnvironment;
     }
 
-    public IHostingEnvironment _env { get; set; }
+    public IWebHostEnvironment _env { get; set; }
 
     public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
     {
@@ -72,7 +72,7 @@ namespace Presentation.Configuration
 
       return builder =>
       {
-        builder.UseMiddleware<RequestServicesContainerMiddleware>();
+        //builder.UseMiddleware<RequestServicesContainerMiddleware>();
         next(builder);
       };
     }

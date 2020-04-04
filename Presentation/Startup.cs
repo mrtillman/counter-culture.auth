@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,14 +14,14 @@ namespace Presentation
 {
   public class Startup
     {
-        public Startup(IConfiguration configuration, ILoggerFactory _LoggerFactory, IHostingEnvironment hostingEnvironment)
+        public Startup(IConfiguration configuration, ILoggerFactory _LoggerFactory, IWebHostEnvironment hostingEnvironment)
         {
             Configuration = configuration;
             env = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment env { get; set; }
+        public IWebHostEnvironment env { get; set; }
         private string mySqlConnectionString {
             get {
                 return Configuration["ConnectionStrings:DefaultMySQLConnection"];
@@ -38,12 +39,14 @@ namespace Presentation
         {
             var mode = env.IsProduction() ? ENV.PROD : ENV.DEV;
 
-            services.AddApiVersioning();
+            //services.AddApiVersioning();
 
-            services.AddMvc()
-                    .AddJsonOptions(options => {
-                        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    });
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+                    // .AddJsonOptions(options => {
+                    //     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    // });
+            services.AddControllers()
+                    .AddNewtonsoftJson();
             
             var ServerUrls = new ServerUrls(env);
 
@@ -70,7 +73,7 @@ namespace Presentation
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
-            IHostingEnvironment env)
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
