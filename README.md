@@ -12,7 +12,7 @@ A token server for [counter-culture.io](https://counter-culture.io).
 
 ## Getting Started
 
-Counter-culture.secure is a REST API designed to issue, validate, renew and cancel OAuth 2.0 security tokens. All endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://geeks.counter-culture.io/register) and then [send an authorization request](https://github.com/mrtillman/counter-culture.secure/wiki/How-To-Send-an-Authorization-Request).
+**`counter-culture.secure`** is a REST API designed to issue, validate, renew and cancel OAuth 2.0 security tokens. All endpoints require a valid bearer token. To obtain a token, developers should first [register an app](https://geeks.counter-culture.io/register) and then [send an authorization request](https://github.com/mrtillman/counter-culture.secure/wiki/How-To-Send-an-Authorization-Request).
 
 You can try it out using [Postman](https://learning.getpostman.com/). Please see the [API docs](https://documenter.getpostman.com/view/1403721/S1a7X6L7).
 
@@ -22,8 +22,6 @@ You can try it out using [Postman](https://learning.getpostman.com/). Please see
 
 - .NET Core CLI
 - MySQL
-- [Entity Framework Core tools](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet)
-- [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/)
 
 ### Installation
 
@@ -53,26 +51,46 @@ To prime your MySQL instance, run the script found at `Infrastructure/securedb.c
 
 > Be sure that the database and user that appear in the `DefaultMySQLConnection` match the ones from `Infrastructure/securedb.create.sql`, otherwise you will receive an error when seeding the database.
 
-To seed the `secure` database, visit `counter-culture/Presentation` from the command line and run each of the following [migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/) commands:
+To seed the database:
 
 ```sh
-# create tables for oauth2 clients, scopes, resources and claims
-$ dotnet ef database update -c ConfigurationDbContext
-
-# create tables for authorization codes, refresh tokens, and reference tokens
-$ dotnet ef database update -c PersistedGrantDbContext
-
-# create asp.net identity tables for user management
-$ dotnet ef database update -c SecureDbContext
+cd Presentation && \
+./add-migrations.sh && \
+./seed-db.sh
 ```
 
-You should now have a bunch of tables:
+You should now have the following tables:
 
-![oauth tables 1](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/master/assets/secure.tables.1.png)
-
-Tables not shown in previous image:
-
-![oauth tables 2](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/master/assets/secure.tables.2.png)
+```sh
+ApiProperties
+ApiResources
+ApiScopeClaims
+ApiScopes
+ApiSecrets
+AspNetRoleClaims
+AspNetRoles
+AspNetUserClaims
+AspNetUserLogins
+AspNetUserRoles
+AspNetUserTokens
+AspNetUsers
+ClientClaims
+ClientCorsOrigins
+ClientGrantTypes
+ClientIdPRestrictions
+ClientPostLogoutRedirectUris
+ClientProperties
+ClientRedirectUris
+ClientScopes
+ClientSecrets
+Clients
+DeviceCodes
+IdentityClaims
+IdentityProperties
+IdentityResources
+PersistedGrants
+__EFMigrationsHistory
+```
 
 ## Launching the Server
 
@@ -83,10 +101,18 @@ dotnet run -p Presentation/Presentation.csproj
 
 ### First-Party Clients
 
-During the very first startup, counter-culture.secure registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console, as shown in the example image below. Make note of these values as they appear in your terminal. You will need them to set up counter-culture.app and counter-culture.dev.
+During the very first startup, **`counter-culture.secure`** registers [counter-culture.app](https://github.com/mrtillman/counter-culture.app) and [counter-culture.dev](https://github.com/mrtillman/counter-culture.dev) as first-party OAuth 2.0 clients. The `ClientId`  and `ClientSecret` for each app will be printed to the console, as shown in the example image below. Make note of these values as they appear in your terminal. You will need them to set up counter-culture.app and counter-culture.dev.
 
-<!--TODO: move assets to Surge-->
-![client creds output example](https://raw.githubusercontent.com/mrtillman/counter-culture.secure/master/assets/carbon.client.creds.png)
+```sh
+ClientName: counter-culture.app
+ClientId: ...
+ClientSecret: ...
+
+ClientName: counter-culture.dev
+ClientId: ...
+ClientSecret: ...
+
+```
 
 ## Usage
 
