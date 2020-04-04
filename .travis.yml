@@ -7,4 +7,4 @@ install:
   - dotnet restore
 script:
   - dotnet build
-  - dotnet test Tests/DataImporter.Tests/DataImporter.Tests.csproj
+  - dotnet test Tests/Tests.csproj
