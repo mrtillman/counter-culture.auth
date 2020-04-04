@@ -39,14 +39,14 @@ namespace Presentation
         {
             var mode = env.IsProduction() ? ENV.PROD : ENV.DEV;
 
-            //services.AddApiVersioning();
+            services.AddApiVersioning();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
-                    // .AddJsonOptions(options => {
-                    //     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    // });
             services.AddControllers()
-                    .AddNewtonsoftJson();
+                    .AddNewtonsoftJson()
+                    .AddJsonOptions(options => {
+                         options.JsonSerializerOptions.IgnoreNullValues = true;
+                    });
             
             var ServerUrls = new ServerUrls(env);
 
