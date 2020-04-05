@@ -54,9 +54,9 @@ To prime your MySQL instance, run the script found at `Infrastructure/securedb.c
 To seed the database:
 
 ```sh
-cd Presentation && \
-./add-migrations.sh && \
-./seed-db.sh
+$ cd Presentation
+$ ./add-migrations.sh
+$ ./seed-db.sh
 ```
 
 You should now have the following tables:
@@ -96,7 +96,7 @@ __EFMigrationsHistory
 
 ```sh
 # let it rip
-dotnet run -p Presentation/Presentation.csproj
+$ dotnet run -p Presentation/Presentation.csproj
 ```
 
 ### First-Party Clients
@@ -116,7 +116,7 @@ ClientSecret: ...
 
 ## Usage
 
-Open http://localhost:5000/account/login to view it in the browser. You may log in using one of the following accounts:
+Open http://localhost:5000/account/login to view it in the browser. You may sign in using one of the following demo accounts:
 
 |UserName|Password|
 |---|---|
