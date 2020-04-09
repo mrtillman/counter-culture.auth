@@ -16,7 +16,10 @@ namespace Presentation.Utilities
       {
         return new string[] {
           IdentityServerConstants.StandardScopes.OpenId,
-          IdentityServerConstants.StandardScopes.Profile
+          IdentityServerConstants.StandardScopes.Profile,
+          IdentityServerConstants.StandardScopes.Email,
+          IdentityServerConstants.StandardScopes.Address,
+          IdentityServerConstants.StandardScopes.OfflineAccess
         };
       }
     }
