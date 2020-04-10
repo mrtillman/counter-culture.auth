@@ -1,3 +1,5 @@
+.env
+
 node_modules
 *.swp
 *.*~
@@ -6,9 +8,10 @@ project.lock.json
 *.pyc
 nupkg/
 appsettings/
-appsettings.*
-!appsettings.demo
+appsettings.json
 
+# EF Migrations
+Migrations/
 
 # Visual Studio Code
 .vscode*

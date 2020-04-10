@@ -1,11 +1,6 @@
-using CounterCulture.Repositories;
-using CounterCulture.Models;
-using CounterCulture.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+
+// TODO: add unit tests
 
 namespace Tests
 {
