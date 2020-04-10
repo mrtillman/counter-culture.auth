@@ -116,7 +116,7 @@ ClientSecret: ...
 
 ## Usage
 
-Open http://localhost:5000/account/login to view it in the browser. You may sign in using one of the following demo accounts:
+Open http://counter-culture:5000/account/login to view it in the browser. You may sign in using one of the following demo accounts:
 
 |UserName|Password|
 |---|---|
