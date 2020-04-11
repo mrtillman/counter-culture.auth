@@ -38,6 +38,8 @@ namespace Presentation.Controllers
 
             // TODO: simplify using Automapper
             Client client = new Client();
+            client.AccessTokenType = AccessTokenType.Jwt;
+            client.AccessTokenLifetime = 86400;
             client.ClientId = String.Empty.NewClientId();
             client.ClientName = registration.ClientName;
             client.AllowedGrantTypes = GrantTypes.CodeAndClientCredentials;
