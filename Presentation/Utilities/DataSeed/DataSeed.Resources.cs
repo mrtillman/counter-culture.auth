@@ -11,6 +11,8 @@ namespace Presentation.Utilities
               new IdentityResources.OpenId(),
               new IdentityResources.Profile(),
               new IdentityResources.Email(),
+              new IdentityResources.Address(),
+              new IdentityResources.Phone(),
               new IdentityResource {
                   Name = "subject",
                   UserClaims = new List<string> {

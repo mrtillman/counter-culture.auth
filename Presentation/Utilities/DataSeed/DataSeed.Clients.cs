@@ -18,8 +18,7 @@ namespace Presentation.Utilities
           IdentityServerConstants.StandardScopes.OpenId,
           IdentityServerConstants.StandardScopes.Profile,
           IdentityServerConstants.StandardScopes.Email,
-          IdentityServerConstants.StandardScopes.Address,
-          IdentityServerConstants.StandardScopes.OfflineAccess
+          IdentityServerConstants.StandardScopes.Address
         };
       }
     }
