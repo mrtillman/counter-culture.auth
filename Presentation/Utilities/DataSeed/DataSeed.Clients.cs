@@ -26,7 +26,7 @@ namespace Presentation.Utilities
     }
 
     public static IServerUrls ServerUrls { get; set; }
-    private static StreamWriter file = new StreamWriter("clients.env");
+    private static StreamWriter file;
     public static IEnumerable<Client> Clients
     {
       get
