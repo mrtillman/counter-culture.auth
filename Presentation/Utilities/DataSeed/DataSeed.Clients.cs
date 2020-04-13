@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
@@ -17,6 +18,7 @@ namespace Presentation.Utilities
         return new string[] {
           IdentityServerConstants.StandardScopes.OpenId,
           IdentityServerConstants.StandardScopes.Profile,
+          IdentityServerConstants.StandardScopes.Phone,
           IdentityServerConstants.StandardScopes.Email,
           IdentityServerConstants.StandardScopes.Address
         };
@@ -24,16 +26,30 @@ namespace Presentation.Utilities
     }
 
     public static IServerUrls ServerUrls { get; set; }
+    private static StreamWriter file = new StreamWriter("clients.env");
     public static IEnumerable<Client> Clients
     {
       get
-      { 
-
+      {
+        File.Delete("clients.env");
+        file = new StreamWriter("clients.env");
+        PrintClientInfo(CounterCultureApiInfo);
         PrintClientInfo(CounterCultureAppInfo);
-        
         PrintClientInfo(CounterCultureDevInfo);
+        file.Close();
 
         return new List<Client> {
+            new Client {
+                AccessTokenType = AccessTokenType.Jwt,
+                AccessTokenLifetime = 86400,
+                AllowedScopes = _allowedScopes,
+                AllowOfflineAccess = true,
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                ClientName = CounterCultureApiInfo.Item1,
+                ClientId = CounterCultureApiInfo.Item2,
+                ClientSecrets = new List<Secret> {
+                    new Secret(CounterCultureApiInfo.Item3.Sha512())}
+            },
             new Client {
                 AccessTokenType = AccessTokenType.Jwt,
                 AccessTokenLifetime = 86400,
@@ -67,13 +83,15 @@ namespace Presentation.Utilities
     }
 
     private static void PrintClientInfo(Tuple<string, string, string> clientInfo){
-      var defaultColor = Console.ForegroundColor;
-      Console.ForegroundColor = ConsoleColor.DarkMagenta;
-      Console.WriteLine($"\nClientName: {clientInfo.Item1}");
-      Console.WriteLine($"ClientId: {clientInfo.Item2}");
-      Console.WriteLine($"ClientSecret: {clientInfo.Item3}");
-      Console.ForegroundColor = defaultColor;
+      file.WriteLine($"\n# {clientInfo.Item1}");
+      file.WriteLine($"CLIENT_ID={clientInfo.Item2}");
+      file.WriteLine($"CLIENT_SECRET={clientInfo.Item3}\n");
     }
+
+    private static readonly Tuple<string, string, string> CounterCultureApiInfo = new Tuple<string, string, string>(
+            "counter-culture.api",
+            String.Empty.NewClientId(),
+            String.Empty.NewClientSecret());
 
     private static readonly Tuple<string, string, string> CounterCultureAppInfo = new Tuple<string, string, string>(
             "counter-culture.app",
