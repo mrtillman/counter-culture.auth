@@ -11,8 +11,6 @@ public class ServerUrls : IServerUrls
     environment = Environment;
   }
 
-  // TODO: register using localhost instead of host name
-
   private IWebHostEnvironment environment { get; set; }
 
   public string API

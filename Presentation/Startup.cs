@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Presentation.Configuration;
 using Presentation.Services;
 using Presentation.Constants;
+using Common;
 
 namespace Presentation
 {
@@ -68,6 +69,8 @@ namespace Presentation
 
             // add app version service
             services.AddTransient<IAppVersionService, AppVersionService>();
+            
+            services.AddScoped<IServerUrls, ServerUrls>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
