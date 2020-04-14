@@ -55,7 +55,7 @@ To create the database schema, execute the following [EF Migration](https://docs
 
 ```sh
 $ cd Presentation
-$ ./create-migrations.sh
+$ ./add-migrations.sh
 $ ./apply-migrations.sh
 ```
 
