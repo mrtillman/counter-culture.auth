@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <!-- ~/.microsoft/usersecrets/7ce36dde-0a71-4f85-8832-2796def8c212/secrets.json -->
     <UserSecretsId>7ce36dde-0a71-4f85-8832-2796def8c212</UserSecretsId>
-    <Version>1.0.1-alpha</Version>
+    <Version>1.0.2-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
