@@ -23,7 +23,7 @@ public class ServerUrls : IServerUrls
   {
     get => environment.IsDevelopment()
             ? "http://counter-culture:8080"
-            : "https://www.counter-culture.io";
+            : "https://app.counter-culture.io";
   }
   public string DEV
   {
