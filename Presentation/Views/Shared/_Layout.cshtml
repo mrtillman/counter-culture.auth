@@ -7,7 +7,7 @@
     }
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,13 +19,14 @@
     <link rel="stylesheet" type="text/css" href="~/css/reset.css?ver=dca58cb6" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/site.css?ver=dca58cb6" />
     <meta charset="utf-8" />
     <title>Home | Counter-Culture</title>
 </head>
 <body>
-  <section class="hero is-fullheight is-default is-bold">
+  <div class="container">
+    <section class="hero is-fullheight is-default is-bold">
         <div class="hero-head">
           <nav class="navbar">
             <div class="container">
@@ -36,10 +37,9 @@
                 <div class="navbar-end">
                   <div class="tabs is-right">
                     <ul>
-                      <li class="is-active"><a>Home</a></li>
+                      <li class="is-active"><a href="">Home</a></li>
                       <li><a href="https://docs.counter-culture.io/api/overview">API</a></li>
                       <li><a href="https://app.counter-culture.io">Explore</a></li>
-                      <li><a href="https://app.counter-culture.io/oauth2/callback">Sign In</a></li>
                     </ul>
                   </div>
                 </div>
@@ -50,9 +50,8 @@
         <div class="hero-body">
           @RenderBody()
         </div>
-  </section>
-    @* <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    @RenderSection("scripts", required: false) *@
+    </section>
+  </div>
+  <script src="~/js/bulma.js"></script>
 </body>
 </html>
