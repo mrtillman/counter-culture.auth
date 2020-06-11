@@ -43,6 +43,7 @@ namespace IdentityServer4.Quickstart.UI
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            ViewData["Title"] = "Grants";
             return View("Index", await BuildViewModelAsync());
         }
 
