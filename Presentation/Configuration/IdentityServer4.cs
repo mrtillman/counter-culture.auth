@@ -20,8 +20,10 @@ namespace Presentation.Configuration
     public static void ConfigureIdentityServer4(
       this IServiceCollection services, string mySqlConnectionString, IServerUrls ServerUrls)
     {
-      services.AddIdentityServer(options => 
-                  options.PublicOrigin = ServerUrls.SECURE)
+      services.AddIdentityServer(options => {
+                options.PublicOrigin = ServerUrls.SECURE;
+                options.UserInteraction.LoginUrl = $"{ServerUrls.SECURE}/";
+              })
               .AddDeveloperSigningCredential()
               .AddOperationalStore(options =>
                   options.ConfigureDbContext = builder =>

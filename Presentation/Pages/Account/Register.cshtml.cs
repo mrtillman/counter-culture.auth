@@ -47,7 +47,7 @@ namespace Presentation.Pages
 
             if(ModelState.IsValid && result.Succeeded){
                 
-                return LocalRedirect("/account/login");
+                return LocalRedirect("/");
 
             } else {
                 if(result.Errors.Count() > 0){

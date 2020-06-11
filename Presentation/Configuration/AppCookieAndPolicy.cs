@@ -19,7 +19,7 @@ namespace Presentation.Configuration
       {
         options.Cookie.HttpOnly = true;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-        options.LoginPath = "/account/login";
+        options.LoginPath = "/";
         options.AccessDeniedPath = "/";
         options.SlidingExpiration = true;
       });

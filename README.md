@@ -106,7 +106,7 @@ During the very first startup, **`counter-culture.secure`** registers [counter-c
 
 ## Usage
 
-Open http://counter-culture:5000/account/login to view it in the browser. You may sign in using one of the following demo accounts:
+Open http://counter-culture:5000 to view it in the browser. You may sign in using one of the following demo accounts:
 
 |UserName|Password|
 |---|---|
