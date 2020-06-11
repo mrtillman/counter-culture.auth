@@ -1,5 +1,11 @@
+@using IdentityServer4.Extensions
 @{
-    var version = typeof(IdentityServer4.Hosting.IdentityServerMiddleware).Assembly.GetName().Version.ToString();
+  string name = null;
+  if (!true.Equals(ViewData["signed-out"]))
+  {
+      name = Context.User?.GetDisplayName();
+  }
+  var version = typeof(IdentityServer4.Hosting.IdentityServerMiddleware).Assembly.GetName().Version.ToString();
 }
 
 <div class="welcome-page">
@@ -16,7 +22,7 @@
     <div class="row">
         <div class="col-sm-8">
             <p>
-                IdentityServer publishes a
+                See 
                 <a href="~/.well-known/openid-configuration">discovery document</a>
                 where you can find metadata and links to all the endpoints, key material, etc.
             </p>

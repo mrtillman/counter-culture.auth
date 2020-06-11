@@ -1,34 +1,60 @@
+@model LoginViewModel
+@using IdentityServer4.Extensions
 @{
-    var version = typeof(IdentityServer4.Hosting.IdentityServerMiddleware).Assembly.GetName().Version.ToString();
-    ViewData["Title"] = "Sign In";
+    string name = null;
+    if (!true.Equals(ViewData["signed-out"]))
+    {
+        name = Context.User?.GetDisplayName();
+    }
+    var isLoggedIn = !string.IsNullOrWhiteSpace(name);
 }
 
 <section class="container">
-  @* <partial name="_ValidationSummary" /> *@
-  <div class="columns is-centered is-multiline">
-    <div class="column is-half register">
-      <div class="columns">
-        <div class="column right has-text-centered">
-          <h1 class="title is-4">Sign In</h1>
-          <p class="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-          <form>
-            <div class="field">
-              <div class="control">
-                <input class="input is-medium" name="Username" type="email" placeholder="Email">
+  <partial name="_ValidationSummary" />
+  @if(isLoggedIn){
+    <h1>Hello @name</h1>
+    <p>
+        See 
+        <a href="~/.well-known/openid-configuration">discovery document</a>
+        where you can find metadata and links to all the endpoints, key material, etc.
+    </p>
+    <p>
+        Click <a href="~/grants">here</a> to manage your stored grants.
+    </p>
+  } else if (Model.EnableLocalLogin) {
+    <div class="columns is-centered is-multiline">
+      <div class="column is-half register">
+        <div class="columns">
+          <div class="column right has-text-centered">
+            <h1 class="title is-4">Sign In</h1>
+            <p class="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            <form asp-route="Index">
+              <input type="hidden" asp-for="ReturnUrl" />
+              <div class="field">
+                <div class="control">
+                  <input asp-for="Username" autofocus class="input is-medium" name="Username" type="email" placeholder="Email">
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <input class="input is-medium" name="Password" type="password" placeholder="Password">
+              <div class="field">
+                <div class="control">
+                  <input asp-for="Password" class="input is-medium" name="Password" type="password" placeholder="Password">
+                </div>
               </div>
-            </div>
-            <input type="submit" class="button is-block is-primary is-fullwidth is-medium" value="Submit">
-            <br />
-            <small><em>Don't have an account? <a href="~/Account/Register#sign-up">Create a new one</a></em></small>
-          </form>
+              @if (Model.AllowRememberLogin)
+              {
+                <label asp-for="RememberLogin" class="checkbox pb-4">
+                  <input asp-for="RememberLogin" type="checkbox">
+                  <strong>Remember My Login</strong>
+                </label>
+              }
+              <button class="button is-block is-primary is-fullwidth is-medium" name="button" value="login">Submit</button>
+              <br />
+              <small><em>Don't have an account? <a href="~/Account/Register#sign-up">Create a new one</a></em></small>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 </section>
 
