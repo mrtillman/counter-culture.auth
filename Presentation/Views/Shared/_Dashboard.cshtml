@@ -1,0 +1,93 @@
+@using IdentityServer4.Extensions
+@{
+  string name = null;
+  if (!true.Equals(ViewData["signed-out"]))
+  {
+      name = Context.User?.GetDisplayName();
+  }
+  string title = ViewData["Title"].ToString();
+}
+<!DOCTYPE html>
+<html lang="en" id="self">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png?ver=dca58cb6" />
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png?ver=dca58cb6" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png?ver=dca58cb6" />
+    <link rel="stylesheet" type="text/css" href="~/css/reset.css?ver=dca58cb6" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/site.css?ver=dca58cb6" />
+    <meta charset="utf-8" />
+    <title>@title | Counter-Culture</title>
+</head>
+<body>
+
+    <!-- START NAV -->
+    <nav class="navbar has-background-light">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://counter-culture.io"><img src="./logo.png" alt="Logo" /></a><span class="navbar-burger burger" data-target="navbarMenu"><span></span><span></span><span></span></span>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="tabs is-right">
+              <ul>
+                <li><a href="https://counter-culture.io">Home</a></li>
+                <li><a href="https://docs.counter-culture.io/api/overview">API</a></li>
+                <li><a href="https://app.counter-culture.io">Explore</a></li>
+                @if(!string.IsNullOrWhiteSpace(name)){
+                  <li><a asp-action="Logout" asp-controller="Account">Logout</a></li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- END NAV -->
+    <div class="container">
+        <div class="columns">
+            <div id="sidebar" class="column is-3 is-hidden-mobile">
+                <aside class="menu">
+                    <p class="menu-label">
+                        General
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="~/" class="@(title == "Dashboard" ? "is-active" : "")">Dashboard</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Administration
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="~/grants" class="@(title == "Grants" ? "is-active" : "")">Grants</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column is-9">
+              <div class="sidebar-button close is-hidden-desktop">
+                <a href="#">
+                  <img src="left-chevron.png" width="20" height="34" />
+                </a>
+              </div>
+              <div class="sidebar-button open is-hidden-desktop">
+                <a href="#self">
+                  <img src="left-chevron.png" width="20" height="34"/>
+                </a>
+              </div>
+                <section class="hero is-small">
+                    <div class="hero-body">
+                        @RenderBody()
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script async type="text/javascript" src="../js/bulma.js"></script>
+</body>
+
+</html>
