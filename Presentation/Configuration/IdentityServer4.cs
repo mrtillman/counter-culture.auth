@@ -22,7 +22,7 @@ namespace Presentation.Configuration
     {
       services.AddIdentityServer(options => {
                 options.PublicOrigin = ServerUrls.SECURE;
-                options.UserInteraction.LoginUrl = $"{ServerUrls.SECURE}/";
+                options.UserInteraction.LoginUrl = "~/";
               })
               .AddDeveloperSigningCredential()
               .AddOperationalStore(options =>
