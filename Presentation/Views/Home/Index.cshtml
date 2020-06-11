@@ -7,20 +7,22 @@
         name = Context.User?.GetDisplayName();
     }
     var isLoggedIn = !string.IsNullOrWhiteSpace(name);
+    if(isLoggedIn){
+      Layout = "_Dashboard";
+    }
 }
 
 <section class="container">
   <partial name="_ValidationSummary" />
   @if(isLoggedIn){
-    <h1>Hello @name</h1>
-    <p>
-        See 
-        <a href="~/.well-known/openid-configuration">discovery document</a>
-        where you can find metadata and links to all the endpoints, key material, etc.
-    </p>
-    <p>
-        Click <a href="~/grants">here</a> to manage your stored grants.
-    </p>
+    <div class="container">
+        <h1 class="title">
+            Hello, @name
+        </h1>
+        <h2 class="subtitle">
+            I hope you are having a great day!
+        </h2>
+    </div>
   } else if (Model.EnableLocalLogin) {
     <div class="columns is-centered is-multiline">
       <div class="column is-half register">
