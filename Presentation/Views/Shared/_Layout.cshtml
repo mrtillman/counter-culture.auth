@@ -40,6 +40,9 @@
                       <li class="is-active"><a href="">Home</a></li>
                       <li><a href="https://docs.counter-culture.io/api/overview">API</a></li>
                       <li><a href="https://app.counter-culture.io">Explore</a></li>
+                      @if(!string.IsNullOrWhiteSpace(name)){
+                        <li><a asp-action="Logout" asp-controller="Account">Logout</a></li>
+                      }
                     </ul>
                   </div>
                 </div>
