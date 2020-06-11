@@ -61,7 +61,7 @@ namespace IdentityServer4.Quickstart.UI
         public async Task<IActionResult> Index(string returnUrl)
         {
             
-            ViewData["Title"] = User.IsAuthenticated() ? "Secure" : "Sign In";
+            ViewData["Title"] = User.IsAuthenticated() ? "Dashboard" : "Sign In";
 
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
