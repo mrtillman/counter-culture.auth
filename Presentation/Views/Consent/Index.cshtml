@@ -6,19 +6,37 @@
       <form asp-action="Index" class="consent-form">
         <div class="card">
           <div class="card-content">
-            <p class="is-size-5 has-text-info has-text-weight-bold has-text-centered">An application would like to connect to your account.</p>
+            <p class="is-size-5 has-text-dark-grey has-text-weight-bold has-text-centered">An application would like to connect to your account.</p>
             <partial name="_ValidationSummary" />
             
               <input type="hidden" asp-for="ReturnUrl" />
-                @* @if (Model.ClientLogoUrl != null)
-                {
-                    <div class="client-logo"><img src="@Model.ClientLogoUrl"></div>
-                }*@
-                <div class="level mt-3">
-                    <p class="has-text-centered">
-                      <b class="has-text-weight-bold has-text-danger-dark is-size-5">@Model.ClientName </b>
-                      is requesting your permission. Uncheck the permissions you do not wish to grant.
-                    </p>
+              <div class="level level mt-3">
+                <div class="level-item">
+                  <figure class="image is-128x128">
+                    @if (Model.ClientLogoUrl != null)
+                    {
+                      <img class="is-rounded" src="@Model.ClientLogoUrl" width="128" height="128">
+                    } else{
+                      <img class="is-rounded" src="https://via.placeholder.com/128" width="128" height="128">
+                    }
+                  </figure>
+                </div>       
+              </div>
+              <div class="level mt-3">
+                  <p class="has-text-centered">
+                    <strong class="has-text-weight-bold has-text-danger-dark is-size-5">
+                      @if (Model.ClientUrl != null)
+                      {
+                        <a class="has-text-link" target="_blank" href="@Model.ClientUrl">
+                          @Model.ClientName
+                          </a>
+                      } else{
+                        @Model.ClientName
+                      }
+                    </a>
+                  </strong>
+                   is requesting your permission. Uncheck the permissions you do not wish to grant.
+                  </p>
               </div>
               @if (Model.IdentityScopes.Any())
               {
@@ -61,15 +79,6 @@
             <button name="button" value="no" class="card-footer-item has-text-danger btn-submit">Deny</button>
             <button name="button" value="yes" class="card-footer-item has-text-success btn-submit" autofocus>Allow</button>
           </footer>
-          @* 
-            @if (Model.ClientUrl != null)
-            {
-                <a class="pull-right btn btn-default" target="_blank" href="@Model.ClientUrl">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                    <strong>@Model.ClientName</strong>
-                </a>
-            }
-          *@
         </div>
     </form>
   </div>

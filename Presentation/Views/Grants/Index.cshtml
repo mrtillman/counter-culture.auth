@@ -29,9 +29,13 @@
             <div class="px-3">
               <p>
                 <strong>@grant.ClientName</strong>&nbsp;
-                <small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small>
               </p>
-              <small class="has-text-grey-light">Expires @grant.Expires.Value.ToString("yyyy-MM-dd")</small>
+              @if(grant.Expires.HasValue){
+                <small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small>
+                <small class="has-text-grey-light">Expires @grant.Expires.Value.ToString("yyyy-MM-dd")</small>
+              } else {
+                <p><small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small></p>
+              }
             </div>
           </div>
         </div>
