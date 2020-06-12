@@ -34,6 +34,18 @@ img {
   border: 1px solid red;
 }
 
+.app-grant {
+  flex-wrap: wrap;
+}
+
+.grant-list{
+  margin:auto;
+}
+
+.app-grant > div:last-child {
+  margin-left:auto;
+}
+
 .validation-summary-errors {
   margin-top: 1rem;
   margin-bottom: 1rem !important;
