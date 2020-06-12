@@ -19,6 +19,21 @@ img {
   --textLight: hsla(0, 0%, 0%, 0.33);
 }
 
+.btn-submit{
+  border: 0;
+  background: inherit;
+  cursor: pointer;
+  font-size: 100%;
+}
+
+.btn-submit:focus{
+  outline: none;
+}
+
+.debug{
+  border: 1px solid red;
+}
+
 .validation-summary-errors {
   margin-top: 1rem;
   margin-bottom: 1rem !important;

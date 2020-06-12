@@ -51,6 +51,7 @@ namespace IdentityServer4.Quickstart.UI
         [HttpGet]
         public async Task<IActionResult> Index(string returnUrl)
         {
+            ViewData["Title"] = "Consent";
             var vm = await BuildViewModelAsync(returnUrl);
             if (vm != null)
             {
