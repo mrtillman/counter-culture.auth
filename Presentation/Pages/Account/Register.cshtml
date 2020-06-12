@@ -5,7 +5,6 @@
 }
 
 <section class="container">
-  <partial name="_ValidationSummary" />
   <div class="columns is-multiline">
     <div class="column is-8 is-offset-2 register">
       <div class="columns">
@@ -16,7 +15,11 @@
         </div>
         <div class="column right has-text-centered">
           <h1 id="sign-up" class="title is-4">Join Us</h1>
-          <p class="description">Get started today.</p>
+          @if(ViewContext.ModelState.IsValid){
+            <p class="description">Get started today.</p>
+          } else {
+            <partial name="_ValidationSummary" />
+          }
           <form 
             method="POST"
             asp-page="Register"

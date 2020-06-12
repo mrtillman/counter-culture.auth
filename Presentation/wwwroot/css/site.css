@@ -19,6 +19,11 @@ img {
   --textLight: hsla(0, 0%, 0%, 0.33);
 }
 
+.validation-summary-errors {
+  margin-top: 1rem;
+  margin-bottom: 1rem !important;
+}
+
 body {
   background: var(--background);
   height: 100vh;

@@ -13,7 +13,6 @@
 }
 
 <section class="container">
-  <partial name="_ValidationSummary" />
   @if(isLoggedIn){
     <div class="container">
         <h1 class="title">
@@ -29,7 +28,11 @@
         <div class="columns">
           <div class="column right has-text-centered">
             <h1 class="title is-4">Sign In</h1>
-            <p class="description">Oh, hey! Welcome back.</p>
+            @if(@ViewContext.ModelState.IsValid){
+              <p class="description">Oh, hey! Welcome back.</p>
+            } else {
+              <partial name="_ValidationSummary" />
+            }
             <form asp-route="Index">
               <input type="hidden" asp-for="ReturnUrl" />
               <div class="field">
