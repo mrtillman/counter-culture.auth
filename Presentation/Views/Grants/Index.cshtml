@@ -1,10 +1,11 @@
 ﻿@model GrantsViewModel
 @{
     Layout = "_Dashboard";
+    var appCount = @Model.Grants.Count();
 }
 <div class="panel">
   <div class="panel-block">
-    <p class="has-text-centered has-text-weight-bold">Authorized OAuth 2 Apps</p>
+    <p class="has-text-centered has-text-weight-bold">Authorized Applications</p>
   </div>
   @if (Model.Grants.Any() == false)
   {
@@ -13,7 +14,7 @@
     </div>
   }else{
     <div class="panel-block">
-      <p>You have granted <strong>@Model.Grants.Count()</strong> applications access to your account.</p>
+      <p>You have granted <strong>@appCount</strong> application@(appCount == 1 ? "" : "s") access to your account.</p>
     </div>
     foreach (var grant in Model.Grants)
     {
@@ -31,7 +32,7 @@
                 <strong>@grant.ClientName</strong>&nbsp;
               </p>
               @if(grant.Expires.HasValue){
-                <small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small>
+                <p><small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small></p>
                 <small class="has-text-grey-light">Expires @grant.Expires.Value.ToString("yyyy-MM-dd")</small>
               } else {
                 <p><small class="has-text-grey-light">@grant.Created.ToString("yyyy-MM-dd")</small></p>
