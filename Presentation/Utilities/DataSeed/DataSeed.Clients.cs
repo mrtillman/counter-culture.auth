@@ -27,6 +27,8 @@ namespace Presentation.Utilities
 
     public static IServerUrls ServerUrls { get; set; }
     private static StreamWriter file;
+
+    private static string logoUri = "https://secure.counter-culture.io/android-chrome-512x512.png";
     public static IEnumerable<Client> Clients
     {
       get
@@ -37,7 +39,6 @@ namespace Presentation.Utilities
         PrintClientInfo(CounterCultureAppInfo);
         PrintClientInfo(CounterCultureDevInfo);
         file.Close();
-
         return new List<Client> {
             new Client {
                 AccessTokenType = AccessTokenType.Jwt,
@@ -47,6 +48,8 @@ namespace Presentation.Utilities
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 ClientName = CounterCultureApiInfo.Item1,
                 ClientId = CounterCultureApiInfo.Item2,
+                ClientUri = ServerUrls.API,
+                LogoUri = logoUri,
                 ClientSecrets = new List<Secret> {
                     new Secret(CounterCultureApiInfo.Item3.Sha512())}
             },
@@ -58,6 +61,8 @@ namespace Presentation.Utilities
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 ClientName = CounterCultureAppInfo.Item1,
                 ClientId = CounterCultureAppInfo.Item2,
+                ClientUri = ServerUrls.APP,
+                LogoUri = logoUri,
                 ClientSecrets = new List<Secret> {
                     new Secret(CounterCultureAppInfo.Item3.Sha512())},
                 RedirectUris = {
@@ -72,6 +77,8 @@ namespace Presentation.Utilities
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 ClientName = CounterCultureDevInfo.Item1,
                 ClientId = CounterCultureDevInfo.Item2,
+                ClientUri = ServerUrls.DEV,
+                LogoUri = logoUri,
                 ClientSecrets = new List<Secret> {
                     new Secret(CounterCultureDevInfo.Item3.Sha512())},
                 RedirectUris = {
