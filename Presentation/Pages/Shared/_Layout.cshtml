@@ -5,17 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png?ver=8cb6dca5" />
-    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png?ver=8cb6dca5" />
-    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png?ver=8cb6dca5" />
-    <link rel="stylesheet" type="text/css" href="~/css/reset.css?ver=8cb6dca5" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/apple-touch-icon.png?ver=bf57db63" />
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png?ver=bf57db63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png?ver=bf57db63" />
+    <link rel="stylesheet" type="text/css" href="~/css/reset.css?ver=bf57db63" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/site.css?ver=8cb6dca5" />
+    <link rel="stylesheet" type="text/css" href="~/css/site.css?ver=bf57db63" />
     <title>@ViewData["Title"] | Counter-Culture</title>
 </head>
-<body>
+
+@{
+  var bodyClass = ViewData["Title"]?.ToString() == "Register" ? "has-background-light" : "";
+}
+
+<body class="@bodyClass">
   <div class="container">
     @* <partial name="_CookieConsentPartial" /> *@
     <section class="hero is-fullheight is-default is-bold">
@@ -23,7 +28,7 @@
         <nav class="navbar">
           <div class="container">
             <div class="navbar-brand">
-              <a class="navbar-item" href="https://counter-culture.io"><img src="~/logo.png" alt="Logo" /></a><span class="navbar-burger burger" data-target="navbarMenu"><span></span><span></span><span></span></span>
+              <a class="navbar-item" href="https://counter-culture.io"><img class="logo" src="~/logo.png" alt="Logo" /></a><span class="navbar-burger burger" data-target="navbarMenu"><span></span><span></span><span></span></span>
             </div>
             <div id="navbarMenu" class="navbar-menu">
               <div class="navbar-end">
