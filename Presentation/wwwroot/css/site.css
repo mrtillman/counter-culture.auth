@@ -52,7 +52,6 @@ img {
 }
 
 body {
-  background: var(--background);
   height: 100vh;
   color: var(--textDark);
 }
@@ -130,7 +129,11 @@ input:focus {
   
   .left,
   .right {
-    padding: 4.5rem 1rem;
+    padding: 4.5rem .75rem;
+  }
+
+  .hero-body{
+    padding: 3rem 1rem;
   }
 }
 

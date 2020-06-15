@@ -28,7 +28,7 @@
 <body>
 
     <!-- START NAV -->
-    <nav class="navbar has-background-light">
+    <nav class="navbar">
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="https://counter-culture.io"><img src="./logo.png" alt="Logo" /></a><span class="navbar-burger burger" data-target="navbarMenu"><span></span><span></span><span></span></span>
@@ -41,7 +41,7 @@
                 <li><a href="https://docs.counter-culture.io/api/overview">API</a></li>
                 <li><a href="https://app.counter-culture.io">Explore</a></li>
                 @if(!string.IsNullOrWhiteSpace(name)){
-                  <li><a asp-action="Logout" asp-controller="Account">Logout</a></li>
+                  <li><a asp-action="Logout" asp-controller="Account">Sign Out</a></li>
                 }
               </ul>
             </div>
