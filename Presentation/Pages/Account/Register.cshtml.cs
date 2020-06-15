@@ -1,19 +1,12 @@
 using System;
-using System.Web;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Presentation.Services;
-using Presentation.Models;
-using Presentation.Utilities;
-using IdentityServer4.Test;
 using IdentityServer4.Quickstart.UI;
 using IdentityModel;
 
